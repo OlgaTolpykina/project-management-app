@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 100vh;
+
+  background: linear-gradient(0deg, var(--white), var(--background-gradient) 100%);
+}
+
+main {
+  min-height: calc(100vh - 100px);
+}
