@@ -49,3 +49,16 @@
 .button-wrapper {
   display: flex;
 }
+
+.mat-button-toggle-group {
+  height: 32px;
+  align-items: center;
+}
+
+.mat-button-toggle-appearance-standard {
+  background: var(--green-light);
+}
+
+.mat-button-toggle-checked {
+  background: var(--green);
+}
