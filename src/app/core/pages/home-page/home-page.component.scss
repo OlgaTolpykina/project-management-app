@@ -1,11 +1,10 @@
 :host {
   display: flex;
   flex-wrap: wrap;
-  min-height: 100vh;
+  min-height: calc(100vh - 110px);
+  width: 100%;
 
   padding: 30px;
-}
 
-main {
-  min-height: calc(100vh - 100px);
+  overflow: auto;
 }

@@ -1,3 +1,11 @@
+:host {
+  overflow: auto;
+}
+
+mat-sidenav-container {
+  overflow: auto;
+}
+
 mat-sidenav-container,
 mat-sidenav-content,
 mat-sidenav {

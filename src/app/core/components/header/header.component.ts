@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
 
   scrolled: boolean = false;
 
-  isAuthorized: boolean = false;
+  isAuthorized: boolean = true;
 
   constructor(private transloco: TranslocoService) {}
 
@@ -23,13 +23,9 @@ export class HeaderComponent implements OnInit {
     this.activeLang = this.transloco.getActiveLang();
   }
 
-  @HostListener('document:scroll')
+  @HostListener('document:scroll', [])
   onWindowScroll() {
-    if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
-      this.scrolled = true;
-    } else {
-      this.scrolled = false;
-    }
+    console.log('scrolled');
   }
 
   changeLang(lang: string) {
