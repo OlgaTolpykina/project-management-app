@@ -8,6 +8,7 @@ import {
   ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
+import { TranslocoService } from '@ngneat/transloco';
 
 import { Router } from '@angular/router';
 import { UserSettings } from '../../models/user-settings.model';
@@ -20,28 +21,34 @@ import { MyErrorStateMatcher } from '../../services/error-state.service';
   styleUrls: ['./user-register.component.scss'],
 })
 export class UserRegisterComponent implements OnInit {
+  activeLang: string = 'en';
+
   userSettings: UserSettings = {
+    id: '',
+    login: '',
     userName: '',
     userPassword: '',
     userAuthToken: '',
-    userMail: '',
-    userLastName: '',
   };
 
   authService: UserAuthServiceService;
 
-  constructor(authService: UserAuthServiceService, private router: Router) {
+  constructor(
+    authService: UserAuthServiceService,
+    private router: Router,
+    private transloco: TranslocoService,
+  ) {
     this.authService = authService;
   }
 
   ngOnInit(): void {
+    this.activeLang = this.transloco.getActiveLang();
     this.userSettings = this.authService.userSettings;
-    this.registryFormGroup.controls['emailFormControl'].setValue(this.userSettings.userMail);
-    this.registryFormGroup.controls['passwordFormControl'].setValue(this.userSettings.userPassword);
+    this.registryFormGroup.controls['loginFormControl'].setValue(this.userSettings.login);
   }
 
   registryFormGroup: FormGroup = new FormGroup({
-    emailFormControl: new FormControl('', [Validators.required, Validators.email]),
+    loginFormControl: new FormControl('', [Validators.required, Validators.minLength(8)]),
     nameFormControl: new FormControl('', [Validators.required, Validators.minLength(4)]),
     passwordFormControl: new FormControl('', [
       Validators.required,
@@ -69,7 +76,7 @@ export class UserRegisterComponent implements OnInit {
   getUserSettings() {
     this.userSettings.userName = this.registryFormGroup.controls['nameFormControl'].value;
     this.userSettings.userPassword = this.registryFormGroup.controls['passwordFormControl'].value;
-    this.userSettings.userMail = this.registryFormGroup.controls['emailFormControl'].value;
+    this.userSettings.login = this.registryFormGroup.controls['loginFormControl'].value;
   }
 
   getRegistry() {

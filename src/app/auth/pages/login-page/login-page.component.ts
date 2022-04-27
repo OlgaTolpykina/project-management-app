@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  // Output,
-  // Input
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -13,6 +8,8 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslocoService } from '@ngneat/transloco';
+
 import { UserSettings } from '../../models/user-settings.model';
 import { UserAuthServiceService } from '../../services/user-auth-service.service';
 import { MyErrorStateMatcher } from '../../services/error-state.service';
@@ -23,27 +20,34 @@ import { MyErrorStateMatcher } from '../../services/error-state.service';
   styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent implements OnInit {
+  activeLang: string = 'en';
+
   userSettings: UserSettings = {
+    id: '',
+    login: '',
     userName: '',
     userPassword: '',
     userAuthToken: '',
-    userMail: '',
-    userLastName: '',
   };
 
   matcher = new MyErrorStateMatcher();
 
   authService: UserAuthServiceService;
 
-  constructor(authService: UserAuthServiceService, private router: Router) {
+  constructor(
+    authService: UserAuthServiceService,
+    private router: Router,
+    private transloco: TranslocoService,
+  ) {
     this.authService = authService;
   }
 
   ngOnInit(): void {
+    this.activeLang = this.transloco.getActiveLang();
     this.authService.logInOutUser('false');
     const savedUser: UserSettings | null = this.authService.getSavedLocalUser();
-    this.userSettings.userMail = savedUser?.userMail as string;
-    this.authorizeForm.controls['emailFormControl'].setValue(this.userSettings.userMail);
+    this.userSettings.login = savedUser?.login as string;
+    this.authorizeForm.controls['loginFormControl'].setValue(this.userSettings.login);
   }
 
   private passwordMatchingValidator(): ValidatorFn {
@@ -59,7 +63,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   public authorizeForm: FormGroup = new FormGroup({
-    emailFormControl: new FormControl('', [Validators.required, Validators.email]),
+    loginFormControl: new FormControl('', [Validators.required, Validators.minLength(8)]),
     passwordFormControl: new FormControl('', [
       Validators.required,
       Validators.minLength(8),
@@ -83,21 +87,19 @@ export class LoginPageComponent implements OnInit {
   }
 
   public getUserSettings() {
-    this.userSettings.userMail = this.authorizeForm.controls['emailFormControl'].value;
+    this.userSettings.login = this.authorizeForm.controls['loginFormControl'].value;
     this.userSettings.userPassword = this.authorizeForm.controls['passwordFormControl'].value;
     this.authorizeUserSettings();
   }
 
   private async authorizeUserSettings() {
-    if (this.userSettings.userMail === this.authService.getSavedLocalUser()?.userMail) {
+    if (this.userSettings.login === this.authService.getSavedLocalUser()?.login) {
       if (this.authorizeForm.status === 'VALID') {
-        await this.authService.authorizeUser(this.userSettings);
+        this.authService.authorizeUser(this.userSettings);
         this.router.navigate(['home']);
       }
     } else {
       this.authService.userSettings = this.userSettings;
-      // this.authorizeForm.controls['nameFormControl'].setValue('');
-      // this.authorizeForm.controls['passwordFormControl'].setValue('');
       this.router.navigate(['/register']);
     }
   }

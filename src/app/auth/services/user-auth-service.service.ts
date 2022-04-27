@@ -7,11 +7,11 @@ import { UserSettings } from '../models/user-settings.model';
 })
 export class UserAuthServiceService {
   public userSettings: UserSettings = {
+    id: '',
+    login: '',
     userName: '',
     userPassword: '',
     userAuthToken: '',
-    userMail: '',
-    userLastName: '',
   };
 
   redirectUrl: string | null = null;
@@ -71,7 +71,7 @@ export class UserAuthServiceService {
     let newUser: UserSettings = user;
     const localSavedUser: UserSettings | null = this.getSavedLocalUser();
     if (localSavedUser) {
-      if (newUser.userMail === localSavedUser.userMail) {
+      if (newUser.login === localSavedUser.login) {
         newUser = localSavedUser;
         this.logInOutUser('true');
         localStorage.setItem('isAuthorized', 'true');

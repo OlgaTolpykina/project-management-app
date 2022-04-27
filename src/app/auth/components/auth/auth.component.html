@@ -1,12 +1,1 @@
-<div class="container">
-  <div class="logo">PMApp</div>
-  <mat-button-toggle-group name="language" aria-label="Text Language">
-    <mat-button-toggle value="en" [checked]="true" (click)="changeLang('en')">EN</mat-button-toggle>
-    <mat-button-toggle value="ru" (click)="changeLang('ru')">RU</mat-button-toggle>
-  </mat-button-toggle-group>
-  <div class="button-wrapper" *transloco="let t">
-    <a routerLink="/auth/login" class="link button-link">{{ t("login") }}</a>
-    <a routerLink="/auth/register" class="link button-link">{{ t("signUp") }}</a>
-  </div>
-</div>
 <router-outlet></router-outlet>

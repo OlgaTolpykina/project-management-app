@@ -12,7 +12,7 @@ const authRoutes: Routes = [
     component: AuthComponent,
     children: [
       { path: 'login', component: LoginPageComponent },
-      { path: 'register', component: UserRegisterComponent, pathMatch: 'full' },
+      { path: 'signUp', component: UserRegisterComponent, pathMatch: 'full' },
     ],
   },
   // { path: 'login', component: LoginPageComponent },

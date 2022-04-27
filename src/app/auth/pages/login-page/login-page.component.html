@@ -1,31 +1,31 @@
-<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center top">
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center top" *transloco="let t">
   <mat-card class="box">
     <mat-card-header>
-      <mat-card-title>Log in</mat-card-title>
+      <mat-card-title>{{ t("login") }}</mat-card-title>
     </mat-card-header>
     <form class="example-form" [formGroup]="authorizeForm" (ngSubmit)="getUserSettings()">
       <mat-card-content>
         <mat-form-field class="example-full-width">
-          <mat-label>mail</mat-label>
+          <mat-label>login</mat-label>
           <input
-            type="email"
+            type="login"
             matInput
-            formControlName="emailFormControl"
+            formControlName="loginFormControl"
             [errorStateMatcher]="matcher"
-            placeholder="Ex. pat@example.com"
-            name="userMail"
+            placeholder="Login"
+            name="userLogin"
           />
           <mat-hint></mat-hint>
+          <mat-error *ngIf="authorizeForm.controls['loginFormControl'].hasError('required')">
+            Please enter a login
+          </mat-error>
           <mat-error
             *ngIf="
-              authorizeForm.controls['emailFormControl'].hasError('email') &&
-              !authorizeForm.hasError('required')
+              authorizeForm.controls['loginFormControl'].hasError('minlength') &&
+              !authorizeForm.controls['loginFormControl'].hasError('required')
             "
           >
-            The login email is invalid
-          </mat-error>
-          <mat-error *ngIf="authorizeForm.controls['emailFormControl'].hasError('required')">
-            Please enter a login email
+            login should be minimum of 8 characters.
           </mat-error>
         </mat-form-field>
         <mat-form-field class="example-full-width">
@@ -52,14 +52,14 @@
           </mat-error>
         </mat-form-field>
       </mat-card-content>
-      <div class="buttons-container">
-        <button type="submit" class="btn-block">Log in</button>
+      <div class="buttons-container" *transloco="let t">
+        <button type="submit" class="link button-link">{{ t("login") }}</button>
         <a
-          class="btn-block"
-          routerLink="/auth/register"
+          class="link button-link"
+          routerLink="/auth/signUp"
           routerLinkActive="active"
           (click)="getUserSettings()"
-          >Registration</a
+          >{{ t("signUp") }}</a
         >
       </div>
     </form>
