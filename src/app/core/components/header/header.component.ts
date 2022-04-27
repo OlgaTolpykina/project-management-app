@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
@@ -13,10 +13,23 @@ export class HeaderComponent implements OnInit {
 
   activeLang: string = 'en';
 
+  scrolled: boolean = false;
+
+  isAuthorized: boolean = false;
+
   constructor(private transloco: TranslocoService) {}
 
   ngOnInit(): void {
     this.activeLang = this.transloco.getActiveLang();
+  }
+
+  @HostListener('document:scroll')
+  onWindowScroll() {
+    if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
+      this.scrolled = true;
+    } else {
+      this.scrolled = false;
+    }
   }
 
   changeLang(lang: string) {

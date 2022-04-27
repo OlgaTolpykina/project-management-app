@@ -1,5 +1,9 @@
 {
   "login": "Login",
   "signUp": "Sign-up",
+  "newBoard": "Create new board",
+  "editProfile": "Edit profile",
+  "logout": "Logout",
+  "search": "Search",
   "home": "Home page works!"
 }
