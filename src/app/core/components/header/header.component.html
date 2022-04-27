@@ -1,9 +1,16 @@
-<div class="logo">PMApp</div>
-<mat-button-toggle-group name="language" aria-label="Text Language">
-  <mat-button-toggle value="en" [checked]="true" (click)="changeLang('en')">EN</mat-button-toggle>
-  <mat-button-toggle value="ru" (click)="changeLang('ru')">RU</mat-button-toggle>
-</mat-button-toggle-group>
-<div class="button-wrapper" *transloco="let t">
-  <a routerLink="/" class="link button-link">{{ t("login") }}</a>
-  <a routerLink="/" class="link button-link">{{ t("signUp") }}</a>
-</div>
+<mat-toolbar>
+  <div class="logo">PMApp</div>
+  <div fxHide.gt-xs>
+    <button mat-icon-button (click)="onToggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <mat-button-toggle-group name="language" aria-label="Text Language" fxHide.xs>
+    <mat-button-toggle value="en" [checked]="true" (click)="changeLang('en')">EN</mat-button-toggle>
+    <mat-button-toggle value="ru" (click)="changeLang('ru')">RU</mat-button-toggle>
+  </mat-button-toggle-group>
+  <div class="button-wrapper" *transloco="let t" fxHide.xs>
+    <a matRipple routerLink="/" class="link button-link">{{ t("login") }}</a>
+    <a matRipple routerLink="/" class="link button mat-elevation-z4">{{ t("signUp") }}</a>
+  </div>
+</mat-toolbar>

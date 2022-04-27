@@ -1,0 +1,36 @@
+.nav-icon {
+  color: var(--amber-dark);
+}
+
+.nav-caption {
+  display: inline-block;
+  padding-left: 6px;
+
+  color: var(--primary);
+}
+
+.mat-button-toggle-group {
+  height: 32px;
+  align-items: center;
+  border: none;
+}
+
+.mat-button-toggle-appearance-standard {
+  background: var(--amber-light);
+  &.mat-button-toggle + .mat-button-toggle {
+    border-left: none;
+  }
+}
+
+.mat-button-toggle-checked {
+  background: var(--amber);
+}
+
+.nav-lang {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  margin-top: 10px;
+}
