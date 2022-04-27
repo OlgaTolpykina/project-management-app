@@ -1,0 +1,21 @@
+.not-found-container {
+  position: relative;
+  background-color: rgb(228, 227, 227);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  font-size: 4vh;
+  text-align: center;
+  gap: 5%;
+  padding: 15%;
+}
+
+.not-found-image {
+  width: 200px;
+  height: 200px;
+  background-image: url(../../../../assets/svg/404.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
