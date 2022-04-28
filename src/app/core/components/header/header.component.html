@@ -2,10 +2,18 @@
   <mat-toolbar>
     <div class="logo">PMApp</div>
     <mat-button-toggle-group name="language" aria-label="Text Language" fxHide.sm fxHide.xs>
-      <mat-button-toggle value="en" [checked]="true" (click)="changeLang('en')"
+      <mat-button-toggle
+        value="en"
+        [checked]="transloco.getActiveLang() === 'en'"
+        (click)="changeLang('en')"
         >EN</mat-button-toggle
       >
-      <mat-button-toggle value="ru" (click)="changeLang('ru')">RU</mat-button-toggle>
+      <mat-button-toggle
+        value="ru"
+        [checked]="transloco.getActiveLang() === 'ru'"
+        (click)="changeLang('ru')"
+        >RU</mat-button-toggle
+      >
     </mat-button-toggle-group>
     <div *ngIf="!isAuthorized; else authorized">
       <div class="button-wrapper" *transloco="let t" fxHide.sm fxHide.xs>

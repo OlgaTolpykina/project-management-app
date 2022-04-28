@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
 
   isAuthorized: boolean = false;
 
-  constructor(private transloco: TranslocoService) {}
+  constructor(public transloco: TranslocoService) {}
 
   ngOnInit(): void {
     this.activeLang = this.transloco.getActiveLang();

@@ -13,7 +13,7 @@ export class SidenavListComponent implements OnInit {
 
   activeLang: string = 'en';
 
-  constructor(private transloco: TranslocoService) {}
+  constructor(public transloco: TranslocoService) {}
 
   ngOnInit(): void {
     this.activeLang = this.transloco.getActiveLang();

@@ -9,10 +9,18 @@
   </a>
   <div class="nav-lang">
     <mat-button-toggle-group mat-list-item name="language" aria-label="Text Language">
-      <mat-button-toggle value="en" [checked]="true" (click)="changeLang('en')"
+      <mat-button-toggle
+        value="en"
+        [checked]="transloco.getActiveLang() === 'en'"
+        (click)="changeLang('en')"
         >EN</mat-button-toggle
       >
-      <mat-button-toggle value="ru" (click)="changeLang('ru')">RU</mat-button-toggle>
+      <mat-button-toggle
+        value="ru"
+        [checked]="transloco.getActiveLang() === 'ru'"
+        (click)="changeLang('ru')"
+        >RU</mat-button-toggle
+      >
     </mat-button-toggle-group>
   </div>
 </mat-nav-list>
