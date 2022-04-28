@@ -15,7 +15,7 @@
         >RU</mat-button-toggle
       >
     </mat-button-toggle-group>
-    <div *ngIf="!isAuthorized; else authorized">
+    <div *ngIf="!(authService.isAuthorized === 'true'); else authorized">
       <div class="button-wrapper" *transloco="let t" fxHide.sm fxHide.xs>
         <a matRipple routerLink="/" class="link button-link">{{ t("team") }}</a>
         <a matRipple routerLink="/auth/login" class="link button-link">{{ t("login") }}</a>
@@ -40,8 +40,10 @@
     </mat-form-field>
     <div class="button-wrapper" *transloco="let t" fxHide.sm fxHide.xs>
       <a matRipple routerLink="/" class="link button-link">{{ t("newBoard") }}</a>
-      <a matRipple routerLink="/" class="link button-link">{{ t("editProfile") }}</a>
-      <a matRipple routerLink="/" class="link button mat-elevation-z4">{{ t("logout") }}</a>
+      <a matRipple routerLink="/auth/signUp" class="link button-link">{{ t("editProfile") }}</a>
+      <a matRipple routerLink="/auth/login" class="link button mat-elevation-z4">{{
+        t("logout")
+      }}</a>
     </div>
   </div>
 </ng-template>

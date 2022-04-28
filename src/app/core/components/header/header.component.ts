@@ -1,5 +1,6 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
+import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
 
 @Component({
   selector: 'app-header',
@@ -15,9 +16,13 @@ export class HeaderComponent implements OnInit {
 
   scrolled: boolean = false;
 
-  isAuthorized: boolean = true;
+  isAuthorized: boolean = false;
 
-  constructor(public transloco: TranslocoService) {}
+  authService: UserAuthServiceService;
+
+  constructor(public transloco: TranslocoService, authService: UserAuthServiceService) {
+    this.authService = authService;
+  }
 
   ngOnInit(): void {
     this.activeLang = this.transloco.getActiveLang();
