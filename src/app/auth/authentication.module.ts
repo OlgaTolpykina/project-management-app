@@ -9,10 +9,9 @@ import { SharedModule } from '@shared/shared.module';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { UserRegisterComponent } from './pages/user-register/user-register.component';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
-import { AuthComponent } from './components/auth/auth.component';
 
 @NgModule({
-  declarations: [LoginPageComponent, UserRegisterComponent, AuthComponent],
+  declarations: [LoginPageComponent, UserRegisterComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -23,6 +22,5 @@ import { AuthComponent } from './components/auth/auth.component';
     AuthenticationRoutingModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  bootstrap: [AuthComponent],
 })
 export class AuthenticationModule {}
