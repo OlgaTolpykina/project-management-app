@@ -37,7 +37,12 @@
             [placeholder]="'Password' | transloco"
             name="userPassword"
           />
-          <mat-icon matSuffix (click)="togglePasswordVisibility()">visibility</mat-icon>
+          <mat-icon matSuffix *ngIf="!showPassword" (click)="togglePasswordVisibility()"
+            >visibility</mat-icon
+          >
+          <mat-icon matSuffix *ngIf="showPassword" (click)="togglePasswordVisibility()"
+            >visibility_off</mat-icon
+          >
           <mat-error
             *ngIf="(authorizeForm.controls['passwordFormControl'].errors?.['passwordStrength'] || 
           authorizeForm.controls['passwordFormControl'].errors?.['minlength'])"

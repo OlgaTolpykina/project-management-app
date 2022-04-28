@@ -55,7 +55,12 @@
             [placeholder]="'Password' | transloco"
             name="userPassword"
           />
-          <mat-icon matSuffix (click)="togglePasswordVisibility()">visibility</mat-icon>
+          <mat-icon matSuffix *ngIf="!showPassword" (click)="togglePasswordVisibility()"
+            >visibility</mat-icon
+          >
+          <mat-icon matSuffix *ngIf="showPassword" (click)="togglePasswordVisibility()"
+            >visibility_off</mat-icon
+          >
           <mat-error
             *ngIf="(registryFormGroup.controls['passwordFormControl'].errors?.['passwordStrength'] || 
           registryFormGroup.controls['passwordFormControl'].errors?.['minlength'])"
@@ -73,10 +78,23 @@
         <mat-form-field class="example-full-width">
           <input
             matInput
+            [type]="showConfirmPassword ? 'text' : 'password'"
             formControlName="passwordDuplicateFormControl"
             [placeholder]="'confirm Password' | transloco"
             name="userPassword"
           />
+          <mat-icon
+            matSuffix
+            *ngIf="!showConfirmPassword"
+            (click)="toggleConfirmPasswordVisibility()"
+            >visibility</mat-icon
+          >
+          <mat-icon
+            matSuffix
+            *ngIf="showConfirmPassword"
+            (click)="toggleConfirmPasswordVisibility()"
+            >visibility_off</mat-icon
+          >
           <mat-error
             *ngIf="
               registryFormGroup.controls['passwordDuplicateFormControl'].hasError('passwordMatch')
