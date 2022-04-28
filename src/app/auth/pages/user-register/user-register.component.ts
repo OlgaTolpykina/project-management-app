@@ -55,6 +55,10 @@ export class UserRegisterComponent implements OnInit {
       Validators.minLength(8),
       this.validatePasswordStrength(),
     ]),
+    passwordDuplicateFormControl: new FormControl('', [
+      Validators.required,
+      this.passwordMatchingValidator(),
+    ]),
   });
 
   matcher = new MyErrorStateMatcher();
@@ -70,6 +74,18 @@ export class UserRegisterComponent implements OnInit {
       const numericCheck = /[0-9]+/.test(value);
       const validPassword = upperCaseCheck && lowerCaseCheck && numericCheck;
       return !validPassword ? { passwordStrength: true } : null;
+    };
+  }
+
+  private passwordMatchingValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const { value } = control;
+      if (!value) {
+        return null;
+      }
+      const validPassword =
+        value === (this.registryFormGroup.controls['passwordFormControl'].value as string);
+      return !validPassword ? { passwordMatch: true } : null;
     };
   }
 

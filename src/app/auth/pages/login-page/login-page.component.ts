@@ -100,7 +100,7 @@ export class LoginPageComponent implements OnInit {
       }
     } else {
       this.authService.userSettings = this.userSettings;
-      this.router.navigate(['/register']);
+      this.router.navigate(['/auth/signUp']);
     }
   }
 }

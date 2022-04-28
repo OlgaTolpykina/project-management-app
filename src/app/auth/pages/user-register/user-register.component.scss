@@ -12,7 +12,7 @@
   float: left;
   padding: 60px 50px 40px 50px;
   width: 100%;
-  background-color: #e5e5e5;
+  background-color: #bbb2c1;
   border-radius: 10px;
   transform: scale(1);
   -webkit-transform: scale(1);
@@ -76,7 +76,6 @@
 }
 
 .login-wrapper mat-card-header {
-  // text-align: center;
   width: 100%;
   display: block;
   font-weight: 700;
@@ -94,6 +93,13 @@
   padding: 40px 70px 50px;
 }
 
+.mat-form-field {
+  margin: 15px auto;
+  input {
+    color: var(--primary);
+  }
+}
+
 .login-wrapper .mat-stroked-button {
   border: 1px solid currentColor;
   line-height: 54px;
@@ -109,6 +115,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 5%;
   margin: inherit;
+  margin-top: 40px;
   padding: inherit;
   height: 62px;
 }
@@ -118,8 +125,7 @@ link {
 }
 
 .button-link {
-  width: 100px;
-  height: 30px;
+  height: 35px;
   margin: 5px;
 
   font-size: 16px;
