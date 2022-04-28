@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
 
   @HostListener('document:scroll', [])
   onWindowScroll() {
-    console.log('scrolled');
+    this.scrolled = document.documentElement.scrollTop > 0;
   }
 
   changeLang(lang: string) {
