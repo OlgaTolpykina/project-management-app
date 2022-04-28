@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  BASE_URL: 'https://project-managment-14.herokuapp.com',
 };
 
 /*
