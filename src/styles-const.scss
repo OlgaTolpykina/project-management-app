@@ -1,8 +1,13 @@
 :root {
-  --primary: rgb(123, 31, 162);
+  --primary: #7b1fa2;
   --primary-transparent: rgba(123, 31, 162, 0.3);
   --background-gradient: #eae6ff;
   --white: #fff;
   --green-light: #90ee90;
   --green: #008000;
+  --amber: #ffd640;
+  --amber-light: #fbeec2;
+  --amber-dark: #f5c105;
+
+  --hover: rgba(251, 238, 194, 0.1);
 }

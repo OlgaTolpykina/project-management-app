@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
@@ -7,19 +7,33 @@ import { TranslocoService } from '@ngneat/transloco';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  @Output() public sidenavToggle = new EventEmitter();
+
   availableLangs: string[] | { id: string; label: string }[] = [];
 
   activeLang: string = 'en';
 
-  constructor(private transloco: TranslocoService) {}
+  scrolled: boolean = false;
+
+  isAuthorized: boolean = true;
+
+  constructor(public transloco: TranslocoService) {}
 
   ngOnInit(): void {
     this.activeLang = this.transloco.getActiveLang();
-    // this.availableLangs = this.transloco.getAvailableLangs();
+  }
+
+  @HostListener('document:scroll', [])
+  onWindowScroll() {
+    this.scrolled = document.documentElement.scrollTop > 0;
   }
 
   changeLang(lang: string) {
     this.transloco.setActiveLang(lang);
     this.activeLang = lang;
   }
+
+  onToggleSidenav = () => {
+    this.sidenavToggle.emit();
+  };
 }

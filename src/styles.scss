@@ -1,5 +1,9 @@
 @import "styles-const.scss";
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   height: 100%;
@@ -12,4 +16,20 @@ body {
 
 * {
   box-sizing: border-box;
+}
+
+*::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--white);
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 30px;
+  border-radius: 30px;
+  background-color: var(--primary);
 }

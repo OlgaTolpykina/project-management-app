@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './core/pages/home-page/home-page.component';
 import { NotFoundComponent } from '@shared/not-found/not-found.component';
-import { AuthorizeGuard } from './auth/guards/authorize.guard';
+// import { AuthorizeGuard } from './auth/guards/authorize.guard';
 
 const routes: Routes = [
   {
@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    canActivate: [AuthorizeGuard],
+    // canActivate: [AuthorizeGuard],
     component: HomePageComponent,
   },
   {
