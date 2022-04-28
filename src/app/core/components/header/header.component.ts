@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
     this.activeLang = lang;
   }
 
-  public onToggleSidenav = () => {
+  onToggleSidenav = () => {
     this.sidenavToggle.emit();
   };
 }
