@@ -1,4 +1,5 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import { ScrollService } from '@core/services/scroll.service';
 import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
@@ -15,9 +16,9 @@ export class HeaderComponent implements OnInit {
 
   scrolled: boolean = false;
 
-  isAuthorized: boolean = true;
+  isAuthorized: boolean = false;
 
-  constructor(public transloco: TranslocoService) {}
+  constructor(public transloco: TranslocoService, private scroll: ScrollService) {}
 
   ngOnInit(): void {
     this.activeLang = this.transloco.getActiveLang();
@@ -36,4 +37,8 @@ export class HeaderComponent implements OnInit {
   onToggleSidenav = () => {
     this.sidenavToggle.emit();
   };
+
+  onScrollToAnchor(elementId: string) {
+    this.scroll.anchorScroll$.next(elementId);
+  }
 }

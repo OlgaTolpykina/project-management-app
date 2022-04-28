@@ -135,7 +135,7 @@ mat-form-field {
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
-  min-height: 300px;
+  min-height: 500px;
   margin-bottom: 50px;
 
   &-title {
@@ -148,8 +148,35 @@ mat-form-field {
   }
 
   &-wrapper {
-    width: 500px;
-    height: 250px;
+    width: 600px;
+    height: 400px;
     background-color: var(--primary);
+  }
+}
+
+.go-top {
+  display: none;
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  right: 20px;
+  bottom: 100px;
+
+  border: none;
+  border-radius: 50%;
+  outline: none;
+  background-color: var(--primary-transparent);
+
+  color: var(--primary);
+
+  transition: all 0.5s;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 2px 2px 2px var(--primary);
+  }
+
+  &-visible {
+    display: block;
   }
 }
