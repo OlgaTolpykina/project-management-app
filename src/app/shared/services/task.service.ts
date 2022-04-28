@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { BASE_URL } from '@app/constants';
+import { environment } from '../../../environments/environment.prod';
 import { Error } from '@shared/types/error.model';
 import { Task } from '@shared/types/task.model';
 
@@ -10,7 +10,7 @@ import { Task } from '@shared/types/task.model';
   providedIn: 'root',
 })
 export class TaskService {
-  url = `${BASE_URL}/boards`;
+  url = `${environment.BASE_URL}/boards`;
 
   constructor(private http: HttpClient) {}
 

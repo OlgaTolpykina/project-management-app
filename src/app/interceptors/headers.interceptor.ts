@@ -13,11 +13,7 @@ export class HeadersInterceptor implements HttpInterceptor {
     //TODO: Maybe receive token from auth service
     const token = localStorage.getItem('token');
 
-    if (token)
-      headers = headers.set(
-        'Authorization',
-        `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3YTM3ZWQxOS1kODE1LTRkZjktOTJiOC04MWRjNjMxZTNmOTQiLCJsb2dpbiI6InJhYmJpdCIsImlhdCI6MTY1MTEzMDk0NH0.mZ-70NSKXOYvicCGNHSoGFS0XorMrGJOmwJEOx7CfMU`,
-      );
+    if (token) headers = headers.set('Authorization', `Bearer ${token}`);
     const newReq = request.clone({
       headers,
     });
