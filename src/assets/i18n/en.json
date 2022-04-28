@@ -12,5 +12,16 @@
   "OT": "Olga Tolpykina",
   "AK": "Alexandr Karatkevich",
   "SS": "Sergey Serzhan",
-  "home": "Home page works!"
+  "home": "Home page works!",
+  "Name is required": "Name is required",
+  "Name": "Name",
+  "Login": "Login",
+  "required": "required",
+  "Password": "Password",
+  "not match": "not match",
+  "confirm Password": "Confirm Password",
+  "Please enter a password": "Please enter a password",
+  "Your password must have at least one lower case, one upper case and one numeric character. Password should be minimum of 8 characters.": "Your password must have at least one lower case, one upper case and one numeric character. Password should be minimum of 8 characters.",
+  "login should be minimum of 8 characters.": "login should be minimum of 8 characters.",
+  "min length required": "min length required"
 }

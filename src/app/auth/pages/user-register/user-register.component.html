@@ -1,0 +1,116 @@
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center top" *transloco="let t">
+  <mat-card class="box">
+    <mat-card-header>
+      <mat-card-title>{{ t("signUp") }}</mat-card-title>
+    </mat-card-header>
+    <form class="example-form" [formGroup]="registryFormGroup" (ngSubmit)="getRegistry()">
+      <mat-card-content>
+        <mat-form-field class="example-full-width">
+          <input
+            type="name"
+            matInput
+            formControlName="nameFormControl"
+            [errorStateMatcher]="matcher"
+            name="userName"
+            [placeholder]="'Name' | transloco"
+          />
+          <mat-error *ngIf="registryFormGroup.controls['nameFormControl'].hasError('required')">
+            {{ t("Name is required") }}
+          </mat-error>
+          <mat-error
+            *ngIf="registryFormGroup.controls['nameFormControl'].errors?.['minlength'] && !registryFormGroup.hasError('required')"
+          >
+            {{ t("Name is required") }} <strong>{{ t("min length required") }} 4 </strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>{{ t("Login") }}</mat-label>
+          <input
+            type="login"
+            matInput
+            formControlName="loginFormControl"
+            [errorStateMatcher]="matcher"
+            [placeholder]="'Login' | transloco"
+            name="login"
+          />
+          <mat-hint></mat-hint>
+          <mat-error *ngIf="registryFormGroup.controls['loginFormControl'].hasError('required')">
+            {{ t("Login") }} <strong>{{ t("required") }}</strong>
+          </mat-error>
+          <mat-error
+            *ngIf="
+              registryFormGroup.controls['loginFormControl'].hasError('minlength') &&
+              !registryFormGroup.controls['loginFormControl'].hasError('required')
+            "
+          >
+            {{ t("login should be minimum of 8 characters.") }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>{{ t("Password") }}</mat-label>
+          <input
+            matInput
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="passwordFormControl"
+            [placeholder]="'Password' | transloco"
+            name="userPassword"
+          />
+          <mat-icon matSuffix *ngIf="!showPassword" (click)="togglePasswordVisibility()"
+            >visibility</mat-icon
+          >
+          <mat-icon matSuffix *ngIf="showPassword" (click)="togglePasswordVisibility()"
+            >visibility_off</mat-icon
+          >
+          <mat-error
+            *ngIf="(registryFormGroup.controls['passwordFormControl'].errors?.['passwordStrength'] || 
+          registryFormGroup.controls['passwordFormControl'].errors?.['minlength'])"
+          >
+            {{
+              t(
+                "Your password must have at least one lower case, one upper case and one numeric character. Password should be minimum of 8 characters."
+              )
+            }}
+          </mat-error>
+          <mat-error *ngIf="registryFormGroup.controls['passwordFormControl'].hasError('required')">
+            {{ t("Please enter a password") }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            formControlName="passwordDuplicateFormControl"
+            [placeholder]="'confirm Password' | transloco"
+            name="userPassword"
+          />
+          <mat-icon
+            matSuffix
+            *ngIf="!showConfirmPassword"
+            (click)="toggleConfirmPasswordVisibility()"
+            >visibility</mat-icon
+          >
+          <mat-icon
+            matSuffix
+            *ngIf="showConfirmPassword"
+            (click)="toggleConfirmPasswordVisibility()"
+            >visibility_off</mat-icon
+          >
+          <mat-error
+            *ngIf="
+              registryFormGroup.controls['passwordDuplicateFormControl'].hasError('passwordMatch')
+            "
+          >
+            {{ t("Password") }} {{ t("not match") }}
+          </mat-error>
+          <mat-error *ngIf="registryFormGroup.controls['passwordFormControl'].hasError('required')">
+            {{ t("confirm Password") }}
+          </mat-error>
+        </mat-form-field>
+      </mat-card-content>
+      <div class="buttons-container" *transloco="let t">
+        <a class="" routerLink="/auth/login" routerLinkActive="active">{{ t("login") }}</a>
+        <button type="submit" class="link button-link">{{ t("signUp") }}</button>
+      </div>
+    </form>
+  </mat-card>
+</div>
