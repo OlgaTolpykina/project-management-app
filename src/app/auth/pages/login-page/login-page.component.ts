@@ -42,6 +42,12 @@ export class LoginPageComponent implements OnInit {
     this.authorizeForm.controls['loginFormControl'].setValue(this.userSettings.login);
   }
 
+  public showPassword: boolean = false;
+
+  public togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
   private passwordMatchingValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const { value } = control;

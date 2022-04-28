@@ -32,10 +32,12 @@
           <mat-label>{{ t("Password") }}</mat-label>
           <input
             matInput
+            [type]="showPassword ? 'text' : 'password'"
             formControlName="passwordFormControl"
             [placeholder]="'Password' | transloco"
             name="userPassword"
           />
+          <mat-icon matSuffix (click)="togglePasswordVisibility()">visibility</mat-icon>
           <mat-error
             *ngIf="(authorizeForm.controls['passwordFormControl'].errors?.['passwordStrength'] || 
           authorizeForm.controls['passwordFormControl'].errors?.['minlength'])"

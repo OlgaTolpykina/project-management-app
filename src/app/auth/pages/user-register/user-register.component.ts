@@ -38,6 +38,12 @@ export class UserRegisterComponent implements OnInit {
     this.registryFormGroup.controls['loginFormControl'].setValue(this.userSettings.login);
   }
 
+  public showPassword: boolean = false;
+
+  public togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
   registryFormGroup: FormGroup = new FormGroup({
     loginFormControl: new FormControl('', [Validators.required, Validators.minLength(8)]),
     nameFormControl: new FormControl('', [Validators.required, Validators.minLength(4)]),
