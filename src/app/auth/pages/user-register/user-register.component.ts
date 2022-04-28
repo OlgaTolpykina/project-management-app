@@ -8,7 +8,6 @@ import {
   ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
-import { TranslocoService } from '@ngneat/transloco';
 
 import { Router } from '@angular/router';
 import { UserSettings } from '../../models/user-settings.model';
@@ -21,8 +20,6 @@ import { MyErrorStateMatcher } from '../../services/error-state.service';
   styleUrls: ['./user-register.component.scss'],
 })
 export class UserRegisterComponent implements OnInit {
-  activeLang: string = 'en';
-
   userSettings: UserSettings = {
     id: '',
     login: '',
@@ -33,16 +30,11 @@ export class UserRegisterComponent implements OnInit {
 
   authService: UserAuthServiceService;
 
-  constructor(
-    authService: UserAuthServiceService,
-    private router: Router,
-    private transloco: TranslocoService,
-  ) {
+  constructor(authService: UserAuthServiceService, private router: Router) {
     this.authService = authService;
   }
 
   ngOnInit(): void {
-    this.activeLang = this.transloco.getActiveLang();
     this.userSettings = this.authService.userSettings;
     this.registryFormGroup.controls['loginFormControl'].setValue(this.userSettings.login);
   }
