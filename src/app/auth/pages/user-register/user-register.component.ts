@@ -1,4 +1,3 @@
-/* eslint-disable max-classes-per-file */
 import { Component, OnInit } from '@angular/core';
 import {
   FormControl,

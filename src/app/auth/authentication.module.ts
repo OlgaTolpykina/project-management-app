@@ -1,8 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
 
 import { SharedModule } from '@shared/shared.module';
 
@@ -17,8 +15,6 @@ import { AuthenticationRoutingModule } from './authentication-routing.module';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    MatInputModule,
-    MatIconModule,
     AuthenticationRoutingModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
