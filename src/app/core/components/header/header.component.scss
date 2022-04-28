@@ -8,6 +8,7 @@
 
 .nav {
   width: 100%;
+  transition: all 0.8s;
 }
 
 .nav-scroll {
@@ -49,6 +50,7 @@
 }
 
 .button {
+  display: block;
   width: 105px;
   height: 40px;
   margin: 5px;
