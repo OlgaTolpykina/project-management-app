@@ -1,11 +1,6 @@
 export interface User {
-  id: string;
+  id?: string;
   name: string;
   login: string;
-}
-
-export interface UserAuthInfo {
-  name: string;
-  login: string;
-  password: string;
+  password?: string;
 }

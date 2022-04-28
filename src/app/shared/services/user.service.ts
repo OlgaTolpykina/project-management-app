@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 
 import { BASE_URL } from '@app/constants';
 import { User } from '@shared/types/user.model';
-import { UserAuthInfo } from '@shared/types/user.model';
 import { Error } from '@shared/types/error.model';
 
 @Injectable({
@@ -23,12 +22,12 @@ export class UserService {
     return this.http.get<User | Error>(`${this.url}/${userId}`);
   }
 
-  deleteUser(userId: string): void {
-    this.http.delete(`${this.url}/${userId}`);
+  deleteUser(userId: string): Observable<any> {
+    return this.http.delete(`${this.url}/${userId}`);
   }
 
   //TODO: May return User object
-  updateUser(userId: string, body: UserAuthInfo): void {
-    this.http.put(`${this.url}/${userId}`, body);
+  updateUser(userId: string, body: User): Observable<User | Error> {
+    return this.http.put<User | Error>(`${this.url}/${userId}`, body);
   }
 }

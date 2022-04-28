@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { BASE_URL } from '@app/constants';
 import { Error } from '@shared/types/error.model';
 import { AuthInfo } from '@shared/types/be-auth.model';
-import { UserAuthInfo } from '@shared/types/user.model';
 import { User } from '@shared/types/user.model';
 
 @Injectable({
@@ -18,7 +17,7 @@ export class BeAuthService {
     return this.http.post<{ token: string } | Error>(`${BASE_URL}/signin`, body);
   }
 
-  signup(body: UserAuthInfo): Observable<User | Error> {
+  signup(body: User): Observable<User | Error> {
     return this.http.post<User | Error>(`${BASE_URL}/signup`, body);
   }
 }
