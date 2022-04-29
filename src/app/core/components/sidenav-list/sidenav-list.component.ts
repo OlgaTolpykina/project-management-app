@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ScrollService } from '@core/services/scroll.service';
 import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
@@ -13,7 +14,7 @@ export class SidenavListComponent implements OnInit {
 
   activeLang: string = 'en';
 
-  constructor(public transloco: TranslocoService) {}
+  constructor(public transloco: TranslocoService, private scroll: ScrollService) {}
 
   ngOnInit(): void {
     this.activeLang = this.transloco.getActiveLang();
@@ -27,4 +28,9 @@ export class SidenavListComponent implements OnInit {
   public onSidenavClose = () => {
     this.sidenavClose.emit();
   };
+
+  onScrollToAnchor(elementId: string) {
+    this.sidenavClose.emit();
+    this.scroll.anchorScroll$.next(elementId);
+  }
 }
