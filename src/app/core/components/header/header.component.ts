@@ -1,6 +1,8 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ScrollService } from '@core/services/scroll.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { CreateBoardComponent } from '@shared/components/modals/create-board/create-board.component';
 
 @Component({
   selector: 'app-header',
@@ -16,9 +18,13 @@ export class HeaderComponent implements OnInit {
 
   scrolled: boolean = false;
 
-  isAuthorized: boolean = false;
+  isAuthorized: boolean = true;
 
-  constructor(public transloco: TranslocoService, private scroll: ScrollService) {}
+  constructor(
+    public transloco: TranslocoService,
+    private scroll: ScrollService,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.activeLang = this.transloco.getActiveLang();
@@ -40,5 +46,16 @@ export class HeaderComponent implements OnInit {
 
   onScrollToAnchor(elementId: string) {
     this.scroll.anchorScroll$.next(elementId);
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(CreateBoardComponent, {
+      height: '400px',
+      width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }

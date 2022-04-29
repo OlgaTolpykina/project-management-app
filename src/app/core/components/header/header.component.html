@@ -41,7 +41,9 @@
       <mat-placeholder class="placeholder">{{ t("search") }}</mat-placeholder>
     </mat-form-field>
     <div class="button-wrapper" *transloco="let t" fxHide.sm fxHide.xs>
-      <a matRipple routerLink="/" class="link button-link">{{ t("newBoard") }}</a>
+      <a matRipple routerLink="/boards" class="link button-link" (click)="openDialog()">{{
+        t("newBoard")
+      }}</a>
       <a matRipple routerLink="/" class="link button-link">{{ t("editProfile") }}</a>
       <a matRipple routerLink="/" class="link button mat-elevation-z4">{{ t("logout") }}</a>
     </div>
