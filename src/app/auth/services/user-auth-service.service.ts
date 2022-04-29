@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { catchError, Subject, throwError } from 'rxjs';
 import { UserSettings } from '../models/user-settings.model';
+import { BeAuthService } from '../../shared/services/be-auth.service';
+
+import { Error } from '@shared/types/error.model';
+import { User } from '@shared/types/user.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +21,13 @@ export class UserAuthServiceService {
 
   redirectUrl: string | null = null;
 
+  loadedUser: User = {
+    id: '',
+    name: '',
+    login: '',
+    password: '',
+  };
+
   public isAuthorized: string = 'false';
 
   private changeUserSource = new Subject<string>();
@@ -26,7 +38,12 @@ export class UserAuthServiceService {
 
   isUserAuthorized$ = this.isUserAuthorized.asObservable();
 
-  // constructor() { }
+  beAuthService: BeAuthService;
+
+  constructor(beAuthService: BeAuthService) {
+    this.beAuthService = beAuthService;
+  }
+
   getIsAuthorizedStatus(): void {
     this.isAuthorized = localStorage.getItem('isAuthorized')
       ? (localStorage.getItem('isAuthorized') as string)
@@ -54,9 +71,19 @@ export class UserAuthServiceService {
 
   registryUser(user: UserSettings) {
     const newUser: UserSettings = user;
-    newUser.userAuthToken = this.getUserAuthToken(user);
-    this.saveLocalUser(newUser);
-    this.authorizeUser(newUser);
+    this.beAuthService
+      .signup({ login: newUser.login, password: newUser.userPassword, name: newUser.userName })
+      .pipe(catchError(this.handleError))
+      .subscribe(async (data: User | Error) => {
+        if (!(data instanceof Error)) {
+          console.log(data);
+          this.loadedUser = { ...data } as User;
+          newUser.id = this.loadedUser.id as string;
+          this.userSettings.id = this.loadedUser.id as string;
+          this.saveLocalUser(newUser);
+          await this.authorizeUser(newUser);
+        } else console.log(data);
+      });
   }
 
   getUserAuthToken(user: UserSettings): string {
@@ -66,17 +93,27 @@ export class UserAuthServiceService {
     return token;
   }
 
-  authorizeUser(user: UserSettings) {
+  async authorizeUser(user: UserSettings) {
     this.userSettings = user;
     let newUser: UserSettings = user;
     const localSavedUser: UserSettings | null = this.getSavedLocalUser();
     if (localSavedUser) {
       if (newUser.login === localSavedUser.login) {
         newUser = localSavedUser;
-        this.logInOutUser('true');
-        localStorage.setItem('isAuthorized', 'true');
-        this.changeUserSource.next(newUser.userName);
-        this.isUserAuthorized.next(true);
+        this.beAuthService
+          .signin({ login: newUser.login, password: newUser.userPassword })
+          .pipe(catchError(this.handleError))
+          .subscribe((data: { token: string } | Error) => {
+            console.log(data);
+            if (!(data instanceof Error)) {
+              this.userSettings.userAuthToken = (data as { token: string }).token;
+              this.saveLocalUser(this.userSettings);
+              this.logInOutUser('true');
+              localStorage.setItem('isAuthorized', 'true');
+              this.changeUserSource.next(newUser.userName);
+              this.isUserAuthorized.next(true);
+            }
+          });
       }
     }
   }
@@ -86,5 +123,14 @@ export class UserAuthServiceService {
     this.isAuthorized = status;
     const userStatus: boolean = status as unknown as boolean;
     this.isUserAuthorized.next(userStatus);
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      console.error('An error occurred:', error.error);
+    } else {
+      console.error(`Backend returned code ${error.status}, body was: `, error.error);
+    }
+    return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 }
