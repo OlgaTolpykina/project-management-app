@@ -12,6 +12,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   scrolled: boolean = false;
 
+  currentItem = 0;
+
+  isEnabled = true;
+
   constructor(private scroll: ScrollService) {}
 
   ngOnInit(): void {
@@ -25,7 +29,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
         });
       }
     });
-
     this.subscriptions.add(subscription);
   }
 
