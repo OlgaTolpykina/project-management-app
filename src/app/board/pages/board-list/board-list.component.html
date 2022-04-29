@@ -1,0 +1,12 @@
+<section class="boards" *transloco="let t">
+  <h1 class="boards-title">
+    {{ t("boards-title") }}
+  </h1>
+  <div class="boards-container">
+    <app-board-item
+      *ngFor="let board of boards; index as i"
+      [board]="board"
+      [backgroundImgUrl]="boardsBackgroundImgsUrl[i]"
+    ></app-board-item>
+  </div>
+</section>

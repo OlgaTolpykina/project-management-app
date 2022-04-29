@@ -13,7 +13,13 @@ export class HeadersInterceptor implements HttpInterceptor {
     //TODO: Maybe receive token from auth service
     const token = localStorage.getItem('token');
 
-    if (token) headers = headers.set('Authorization', `Bearer ${token}`);
+    if (request.url.includes('unsplash'))
+      headers = headers.set(
+        'Authorization',
+        'Client-ID sh3V-2sbNtpVMAyIb1k3FrskCAotZPiDkYWZ9VuF9JY',
+      );
+    else if (token) headers = headers.set('Authorization', `Bearer ${token}`);
+
     const newReq = request.clone({
       headers,
     });
