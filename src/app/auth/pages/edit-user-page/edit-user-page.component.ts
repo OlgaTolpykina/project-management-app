@@ -106,7 +106,7 @@ export class EditUserPageComponent implements OnInit {
   getRegistry() {
     this.getUserSettings();
     if (this.registryFormGroup.status === 'VALID') {
-      this.authService.registryUser(this.userSettings);
+      this.authService.updateUser(this.userSettings);
       this.router.navigate(['home']);
     }
   }

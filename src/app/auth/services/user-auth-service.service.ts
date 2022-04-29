@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Subject, throwError } from 'rxjs';
 import { UserSettings } from '../models/user-settings.model';
 import { BeAuthService } from '../../shared/services/be-auth.service';
+import { UserService } from '../../shared/services/user.service';
 
 import { Error } from '@shared/types/error.model';
 import { User } from '@shared/types/user.model';
@@ -40,8 +41,11 @@ export class UserAuthServiceService {
 
   beAuthService: BeAuthService;
 
-  constructor(beAuthService: BeAuthService) {
+  userService: UserService;
+
+  constructor(beAuthService: BeAuthService, userService: UserService) {
     this.beAuthService = beAuthService;
+    this.userService = userService;
   }
 
   getIsAuthorizedStatus(): void {
@@ -67,6 +71,7 @@ export class UserAuthServiceService {
 
   saveLocalUser(user: UserSettings) {
     localStorage.setItem('savedUser', JSON.stringify(user));
+    localStorage.setItem('token', user.userAuthToken);
   }
 
   registryUser(user: UserSettings) {
@@ -86,11 +91,25 @@ export class UserAuthServiceService {
       });
   }
 
-  getUserAuthToken(user: UserSettings): string {
+  updateUser(user: UserSettings) {
     const newUser: UserSettings = user;
-    newUser.userAuthToken = 'AIzaSyDymexQ-mAOw13v6xGt4nDgQk9RavcQs4s';
-    const token = 'AIzaSyDymexQ-mAOw13v6xGt4nDgQk9RavcQs4s';
-    return token;
+    this.userService
+      .updateUser(user.id, {
+        name: newUser.userName,
+        login: newUser.login,
+        password: newUser.userPassword,
+      })
+      .pipe(catchError(this.handleError))
+      .subscribe(async (data: User | Error) => {
+        if (!(data instanceof Error)) {
+          console.log(data);
+          this.loadedUser = { ...data } as User;
+          newUser.id = this.loadedUser.id as string;
+          this.userSettings.id = this.loadedUser.id as string;
+          this.saveLocalUser(newUser);
+          await this.authorizeUser(newUser);
+        } else console.log(data);
+      });
   }
 
   async authorizeUser(user: UserSettings) {
