@@ -10,9 +10,12 @@
   "welcome-title": "Добро пожаловать в",
   "welcome-subtitle": "Совместно с командой вы сможете оптимизировать рабочий процесс, повысить эффективность и вывести свои результаты совершенно на новый уровень!",
   "OT": "Ольга Толпыкина",
-  "AK": "Александр Караткевич",
+  "AK": "Александр Короткевич",
   "SS": "Сергей Сержан",
   "home": "Домашняя страница работает!",
+  "Home": "Домой",
+  "Back": "Назад",
+  "save": "Сохранить",
   "Name is required": "Введите имя",
   "Name": "Имя",
   "Login": "Логин",
@@ -21,7 +24,7 @@
   "not match": "не совпадает",
   "confirm Password": "Подтвердите Пароль",
   "Please enter a password": "Введите пароль",
-  "Your password must have at least one lower case, one upper case and one numeric character. Password should be minimum of 8 characters.": "Пароль должен содержать прописные и заглавные буквы и цифры. Длина пароля не менее 8 символов.",
+  "password strength message": "Пароль должен содержать прописные и заглавные буквы и цифры. Длина пароля не менее 8 символов.",
   "login should be minimum of 8 characters.": "Логин длиной не менее 8 символов",
   "min length required": "минимальная длина необходима"
 }

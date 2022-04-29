@@ -47,11 +47,7 @@
             *ngIf="(authorizeForm.controls['passwordFormControl'].errors?.['passwordStrength'] || 
           authorizeForm.controls['passwordFormControl'].errors?.['minlength'])"
           >
-            {{
-              t(
-                "Your password must have at least one lower case, one upper case and one numeric character. Password should be minimum of 8 characters."
-              )
-            }}
+            {{ t("password strength message") }}
           </mat-error>
           <mat-error
             *ngIf="authorizeForm.controls['passwordFormControl'].errors?.['passwordMatch']"

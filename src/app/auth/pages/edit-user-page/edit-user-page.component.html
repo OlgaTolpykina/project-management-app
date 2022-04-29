@@ -63,7 +63,7 @@
           >
           <mat-error
             *ngIf="(registryFormGroup.controls['passwordFormControl'].errors?.['passwordStrength'] || 
-          registryFormGroup.controls['passwordFormControl'].errors?.['minlength'])"
+            registryFormGroup.controls['passwordFormControl'].errors?.['minlength'])"
             >{{ t("password strength message") }}
           </mat-error>
           <mat-error *ngIf="registryFormGroup.controls['passwordFormControl'].hasError('required')">
@@ -103,8 +103,10 @@
         </mat-form-field>
       </mat-card-content>
       <div class="buttons-container" *transloco="let t">
-        <a class="" routerLink="/auth/login" routerLinkActive="active">{{ t("login") }}</a>
-        <button type="submit" class="link button-link">{{ t("signUp") }}</button>
+        <a class="" routerLink="{{ authService.redirectUrl }}" routerLinkActive="active">{{
+          t("Back")
+        }}</a>
+        <button type="submit" class="link button-link">{{ t("save") }}</button>
       </div>
     </form>
   </mat-card>

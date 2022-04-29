@@ -13,6 +13,9 @@
   "AK": "Alexandr Karatkevich",
   "SS": "Sergey Serzhan",
   "home": "Home page works!",
+  "Home": "Home",
+  "Back": "Back",
+  "save": "Save",
   "Name is required": "Name is required",
   "Name": "Name",
   "Login": "Login",
@@ -21,7 +24,7 @@
   "not match": "not match",
   "confirm Password": "Confirm Password",
   "Please enter a password": "Please enter a password",
-  "Your password must have at least one lower case, one upper case and one numeric character. Password should be minimum of 8 characters.": "Your password must have at least one lower case, one upper case and one numeric character. Password should be minimum of 8 characters.",
+  "password strength message": "Your password must have at least one lower case, one upper case and one numeric character. Password should be minimum of 8 characters.",
   "login should be minimum of 8 characters.": "login should be minimum of 8 characters.",
   "min length required": "min length required"
 }
