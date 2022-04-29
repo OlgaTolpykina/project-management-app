@@ -23,5 +23,7 @@
   "Please enter a password": "Введите пароль",
   "Your password must have at least one lower case, one upper case and one numeric character. Password should be minimum of 8 characters.": "Пароль должен содержать прописные и заглавные буквы и цифры. Длина пароля не менее 8 символов.",
   "login should be minimum of 8 characters.": "Логин длиной не менее 8 символов",
-  "min length required": "минимальная длина необходима"
+  "min length required": "минимальная длина необходима",
+  "boards-title": "Ваши доски",
+  "delete": "Удалить"
 }

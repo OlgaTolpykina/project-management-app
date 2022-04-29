@@ -8,7 +8,8 @@
       "@auth/*": ["src/app/auth/*"],
       "@core/*": ["src/app/core/*"],
       "@app/*": ["src/app/*"],
-      "@environments/*": ["src/environments/*"]
+      "@environments/*": ["src/environments/*"],
+      "@board/*": ["src/app/board/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
