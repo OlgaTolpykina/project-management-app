@@ -1,9 +1,9 @@
 <mat-nav-list *transloco="let t">
-  <a mat-list-item routerLink="/" (click)="onSidenavClose()">
+  <a mat-list-item routerLink="/auth/login" (click)="onSidenavClose()">
     <mat-icon class="nav-icon">account_circle</mat-icon>
     <span class="nav-caption">{{ t("login") }}</span>
   </a>
-  <a mat-list-item routerLink="/" (click)="onSidenavClose()">
+  <a mat-list-item routerLink="/auth/signUp" (click)="onSidenavClose()">
     <mat-icon class="nav-icon">assignment</mat-icon>
     <span class="nav-caption">{{ t("signUp") }}</span>
   </a>
