@@ -6,6 +6,6 @@ export const boardsReducer = createReducer(
   initialBoardsState,
   on(createNewBoard, (state, { board }) => ({
     ...state,
-    boards: [...board],
+    boards: [...state.boards, board],
   })),
 );
