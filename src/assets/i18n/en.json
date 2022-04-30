@@ -26,5 +26,7 @@
   "Please enter a password": "Please enter a password",
   "password strength message": "Your password must have at least one lower case, one upper case and one numeric character. Password should be minimum of 8 characters.",
   "login should be minimum of 8 characters.": "login should be minimum of 8 characters.",
-  "min length required": "min length required"
+  "min length required": "min length required",
+  "edit Profile": "edit Profile",
+  "Delete Profile": "Delete Profile"
 }

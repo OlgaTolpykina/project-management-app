@@ -20,7 +20,6 @@ import { MyErrorStateMatcher } from '../../services/error-state.service';
 })
 export class LoginPageComponent implements OnInit {
   userSettings: UserSettings = {
-    id: '',
     login: '',
     userName: '',
     userPassword: '',
@@ -39,7 +38,11 @@ export class LoginPageComponent implements OnInit {
     this.authService.logInOutUser('false');
     const savedUser: UserSettings | null = this.authService.getSavedLocalUser();
     this.userSettings.login = savedUser?.login as string;
+    this.userSettings.id = savedUser?.id as string;
+    this.userSettings.userName = savedUser?.userName as string;
+    this.userSettings.userAuthToken = savedUser?.userAuthToken as string;
     this.authorizeForm.controls['loginFormControl'].setValue(this.userSettings.login);
+    console.log(this.userSettings);
   }
 
   public showPassword: boolean = false;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { catchError, Subject, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 import { UserSettings } from '../models/user-settings.model';
 import { BeAuthService } from '../../shared/services/be-auth.service';
 import { UserService } from '../../shared/services/user.service';
@@ -13,7 +14,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class UserAuthServiceService {
   public userSettings: UserSettings = {
-    id: '',
     login: '',
     userName: '',
     userPassword: '',
@@ -23,7 +23,6 @@ export class UserAuthServiceService {
   redirectUrl: string | null = null;
 
   loadedUser: User = {
-    id: '',
     name: '',
     login: '',
     password: '',
@@ -43,7 +42,7 @@ export class UserAuthServiceService {
 
   userService: UserService;
 
-  constructor(beAuthService: BeAuthService, userService: UserService) {
+  constructor(beAuthService: BeAuthService, userService: UserService, private router: Router) {
     this.beAuthService = beAuthService;
     this.userService = userService;
   }
@@ -81,7 +80,6 @@ export class UserAuthServiceService {
       .pipe(catchError(this.handleError))
       .subscribe(async (data: User | Error) => {
         if (!(data instanceof Error)) {
-          console.log(data);
           this.loadedUser = { ...data } as User;
           newUser.id = this.loadedUser.id as string;
           this.userSettings.id = this.loadedUser.id as string;
@@ -94,7 +92,7 @@ export class UserAuthServiceService {
   updateUser(user: UserSettings) {
     const newUser: UserSettings = user;
     this.userService
-      .updateUser(user.id, {
+      .updateUser(user.id as string, {
         name: newUser.userName,
         login: newUser.login,
         password: newUser.userPassword,
@@ -102,12 +100,11 @@ export class UserAuthServiceService {
       .pipe(catchError(this.handleError))
       .subscribe(async (data: User | Error) => {
         if (!(data instanceof Error)) {
-          console.log(data);
           this.loadedUser = { ...data } as User;
           newUser.id = this.loadedUser.id as string;
           this.userSettings.id = this.loadedUser.id as string;
           this.saveLocalUser(newUser);
-          await this.authorizeUser(newUser);
+          // await this.authorizeUser(newUser);
         } else console.log(data);
       });
   }
@@ -123,7 +120,6 @@ export class UserAuthServiceService {
           .signin({ login: newUser.login, password: newUser.userPassword })
           .pipe(catchError(this.handleError))
           .subscribe((data: { token: string } | Error) => {
-            console.log(data);
             if (!(data instanceof Error)) {
               this.userSettings.userAuthToken = (data as { token: string }).token;
               this.saveLocalUser(this.userSettings);
@@ -135,6 +131,20 @@ export class UserAuthServiceService {
           });
       }
     }
+  }
+
+  deleteUser() {
+    this.userService
+      .deleteUser(this.getSavedLocalUser()?.id as string)
+      .pipe(catchError(this.handleError))
+      .subscribe(async (data) => {
+        if (!(data instanceof Error)) {
+          this.logInOutUser('false');
+          localStorage.removeItem('savedUser');
+          localStorage.removeItem('token');
+          this.router.navigate(['home']);
+        }
+      });
   }
 
   logInOutUser(status: string) {

@@ -26,6 +26,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.activeLang = this.transloco.getActiveLang();
+    this.authService.getIsAuthorizedStatus();
   }
 
   @HostListener('document:scroll', [])

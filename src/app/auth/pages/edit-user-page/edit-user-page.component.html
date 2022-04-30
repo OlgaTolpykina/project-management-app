@@ -1,7 +1,7 @@
 <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center top" *transloco="let t">
   <mat-card class="box">
     <mat-card-header>
-      <mat-card-title>{{ t("signUp") }}</mat-card-title>
+      <mat-card-title>{{ t("edit Profile") }}</mat-card-title>
     </mat-card-header>
     <form class="example-form" [formGroup]="registryFormGroup" (ngSubmit)="getRegistry()">
       <mat-card-content>
@@ -64,7 +64,8 @@
           <mat-error
             *ngIf="(registryFormGroup.controls['passwordFormControl'].errors?.['passwordStrength'] || 
             registryFormGroup.controls['passwordFormControl'].errors?.['minlength'])"
-            >{{ t("password strength message") }}
+          >
+            {{ t("password strength message") }}
           </mat-error>
           <mat-error *ngIf="registryFormGroup.controls['passwordFormControl'].hasError('required')">
             {{ t("Please enter a password") }}
@@ -82,14 +83,14 @@
             matSuffix
             *ngIf="!showConfirmPassword"
             (click)="toggleConfirmPasswordVisibility()"
-            >visibility</mat-icon
-          >
+            >visibility
+          </mat-icon>
           <mat-icon
             matSuffix
             *ngIf="showConfirmPassword"
             (click)="toggleConfirmPasswordVisibility()"
-            >visibility_off</mat-icon
-          >
+            >visibility_off
+          </mat-icon>
           <mat-error
             *ngIf="
               registryFormGroup.controls['passwordDuplicateFormControl'].hasError('passwordMatch')
@@ -109,5 +110,8 @@
         <button type="submit" class="link button-link">{{ t("save") }}</button>
       </div>
     </form>
+    <button type="" class="link button-link delete" (click)="authService.deleteUser()">
+      {{ t("Delete Profile") }}
+    </button>
   </mat-card>
 </div>
