@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ScrollService } from '@core/services/scroll.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { CreateBoardComponent } from '@shared/components/modals/create-board/create-board.component';
 
 @Component({
   selector: 'app-sidenav-list',
@@ -14,7 +16,13 @@ export class SidenavListComponent implements OnInit {
 
   activeLang: string = 'en';
 
-  constructor(public transloco: TranslocoService, private scroll: ScrollService) {}
+  isAuthorized: boolean = true;
+
+  constructor(
+    public transloco: TranslocoService,
+    private scroll: ScrollService,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.activeLang = this.transloco.getActiveLang();
@@ -32,5 +40,13 @@ export class SidenavListComponent implements OnInit {
   onScrollToAnchor(elementId: string) {
     this.sidenavClose.emit();
     this.scroll.anchorScroll$.next(elementId);
+  }
+
+  openDialog() {
+    this.sidenavClose.emit();
+    this.dialog.open(CreateBoardComponent, {
+      height: '400px',
+      width: '300px',
+    });
   }
 }

@@ -49,13 +49,9 @@ export class HeaderComponent implements OnInit {
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(CreateBoardComponent, {
+    this.dialog.open(CreateBoardComponent, {
       height: '400px',
       width: '300px',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
     });
   }
 }
