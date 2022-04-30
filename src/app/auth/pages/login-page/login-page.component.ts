@@ -42,7 +42,6 @@ export class LoginPageComponent implements OnInit {
     this.userSettings.userName = savedUser?.userName as string;
     this.userSettings.userAuthToken = savedUser?.userAuthToken as string;
     this.authorizeForm.controls['loginFormControl'].setValue(this.userSettings.login);
-    console.log(this.userSettings);
   }
 
   public showPassword: boolean = false;
