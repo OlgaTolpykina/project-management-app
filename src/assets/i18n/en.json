@@ -24,6 +24,11 @@
   "Your password must have at least one lower case, one upper case and one numeric character. Password should be minimum of 8 characters.": "Your password must have at least one lower case, one upper case and one numeric character. Password should be minimum of 8 characters.",
   "login should be minimum of 8 characters.": "login should be minimum of 8 characters.",
   "min length required": "min length required",
+  "title": "Title",
   "boards-title": "Your boards",
+  "board-title": "Board title",
+  "board-title-placeholder": "Enter title of the board",
+  "create": "Create",
+  "cancel": "Cancel",
   "delete": "Delete"
 }
