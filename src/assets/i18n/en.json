@@ -28,5 +28,7 @@
   "login should be minimum of 8 characters.": "login should be minimum of 8 characters.",
   "min length required": "min length required",
   "edit Profile": "edit Profile",
-  "Delete Profile": "Delete Profile"
+  "Delete Profile": "Delete Profile",
+  "boards-title": "Your boards",
+  "delete": "Delete"
 }

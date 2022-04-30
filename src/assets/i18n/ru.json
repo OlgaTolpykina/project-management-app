@@ -28,5 +28,7 @@
   "login should be minimum of 8 characters.": "Логин длиной не менее 8 символов",
   "min length required": "минимальная длина необходима",
   "edit Profile": "Изменение профиля",
-  "Delete Profile": "Удалить Профиль"
+  "Delete Profile": "Удалить Профиль",
+  "boards-title": "Ваши доски",
+  "delete": "Удалить"
 }
