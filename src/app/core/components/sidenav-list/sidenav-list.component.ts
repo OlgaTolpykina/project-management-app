@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ScrollService } from '@core/services/scroll.service';
 import { TranslocoService } from '@ngneat/transloco';
-import { CreateBoardComponent } from '@shared/components/modals/create-board/create-board.component';
+import { CreateBoardComponent } from '@board/components/create-board/create-board.component';
 
 @Component({
   selector: 'app-sidenav-list',
