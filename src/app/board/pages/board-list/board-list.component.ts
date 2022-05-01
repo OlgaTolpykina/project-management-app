@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BackgroundImgService } from '@app/board/services/background-img.service';
 
 import { Board } from '@shared/types/board.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-board-list',
@@ -24,7 +25,11 @@ export class BoardListComponent implements OnInit {
 
   boardsBackgroundImgsUrl: string[] = [];
 
-  constructor(private http: HttpClient, private backgroundImgService: BackgroundImgService) {}
+  constructor(
+    private http: HttpClient,
+    private backgroundImgService: BackgroundImgService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.boardsBackgroundImgsUrl = [];
@@ -37,5 +42,10 @@ export class BoardListComponent implements OnInit {
         console.log(this.boardsBackgroundImgsUrl);
       });
     }
+  }
+
+  openBoard(boardId: string) {
+    console.log(boardId);
+    this.router.navigateByUrl('/b/' + boardId);
   }
 }

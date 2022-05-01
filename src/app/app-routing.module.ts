@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './core/pages/home-page/home-page.component';
+import { HomePageComponent } from '@core/pages/home-page/home-page.component';
 import { NotFoundComponent } from '@shared/not-found/not-found.component';
 // import { AuthorizeGuard } from './auth/guards/authorize.guard';
 
@@ -22,6 +22,10 @@ const routes: Routes = [
   {
     path: 'boards',
     loadChildren: () => import('./board/board.module').then((m) => m.BoardModule),
+  },
+  {
+    path: 'b/:id',
+    loadChildren: () => import('./tasks/tasks.module').then((m) => m.TasksModule),
   },
   { path: '**', component: NotFoundComponent },
 ];

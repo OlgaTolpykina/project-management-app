@@ -7,6 +7,7 @@
       *ngFor="let board of boards; index as i"
       [board]="board"
       [backgroundImgUrl]="boardsBackgroundImgsUrl[i]"
+      (click)="openBoard(board.id)"
     ></app-board-item>
   </div>
 </section>

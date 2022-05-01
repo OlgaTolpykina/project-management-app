@@ -23,8 +23,4 @@ export class BoardItemComponent implements OnInit {
     e.stopPropagation();
     this.router.navigate(['/home']);
   }
-
-  onViewBoardDetails(): void {
-    this.router.navigate(['/boards', 'boardId']);
-  }
 }

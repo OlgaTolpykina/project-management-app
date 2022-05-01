@@ -9,7 +9,8 @@
       "@core/*": ["src/app/core/*"],
       "@app/*": ["src/app/*"],
       "@environments/*": ["src/environments/*"],
-      "@board/*": ["src/app/board/*"]
+      "@board/*": ["src/app/board/*"],
+      "@tasks/*": ["src/app/tasks/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
