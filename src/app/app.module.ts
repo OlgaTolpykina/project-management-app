@@ -12,6 +12,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { appState } from './redux/app.state';
+import { BoardsEffects } from './redux/effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,7 +33,7 @@ import { appState } from './redux/app.state';
         strictActionTypeUniqueness: true,
       },
     }),
-    EffectsModule.forRoot(),
+    EffectsModule.forRoot([BoardsEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
     }),
