@@ -43,5 +43,6 @@
   "board-title-placeholder": "Enter title of the board",
   "create": "Create",
   "cancel": "Cancel",
-  "delete": "Delete"
+  "delete": "Delete",
+  "delete user prompt": "Are you really want to delete User Profile?"
 }

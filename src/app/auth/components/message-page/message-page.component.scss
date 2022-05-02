@@ -31,3 +31,42 @@
     align-items: center;
   }
 }
+
+.buttons-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5%;
+  margin: inherit;
+  margin-top: 40px;
+  padding: inherit;
+  height: 62px;
+}
+
+link {
+  text-decoration: none;
+}
+
+.button-link {
+  height: 35px;
+  margin: 5px;
+
+  font-size: 16px;
+  line-height: 30px;
+  text-align: center;
+  color: var(--white);
+
+  background-color: var(--primary);
+  border-radius: 5px;
+
+  transition: box-shadow 0.5s;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 2px 2px 2px var(--primary-transparent);
+  }
+}
+
+.delete {
+  width: 100%;
+  background-color: red;
+}

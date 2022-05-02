@@ -87,6 +87,7 @@ export class UserAuthServiceService {
           this.userSettings.id = this.loadedUser.id as string;
           this.saveLocalUser(newUser);
           this.getMessageForUser('register profile', 'home');
+          await this.authorizeUser(this.userSettings);
         }
       });
   }
@@ -148,6 +149,7 @@ export class UserAuthServiceService {
               this.changeUserSource.next(newUser.userName);
               this.isUserAuthorized.next(true);
               this.getMessageForUser('Welcome in profile', 'home');
+              this.logInOutUser('true');
             }
           });
       }
@@ -161,7 +163,7 @@ export class UserAuthServiceService {
             await this.saveLocalUser(this.userSettings);
             await this.getUserData(newUser.login);
             await this.saveLocalUser(this.userSettings);
-            this.logInOutUser('true');
+            await this.logInOutUser('true');
             this.changeUserSource.next(newUser.userName);
             this.isUserAuthorized.next(true);
             this.getMessageForUser('Welcome in profile', 'home');
@@ -185,7 +187,7 @@ export class UserAuthServiceService {
       });
   }
 
-  logInOutUser(status: string) {
+  async logInOutUser(status: string) {
     localStorage.setItem('isAuthorized', status);
     this.isAuthorized = status;
     const userStatus: boolean = status === 'true' ? true : false;

@@ -110,7 +110,12 @@
         <button type="submit" class="link button-link">{{ t("save") }}</button>
       </div>
     </form>
-    <button type="" class="link button-link delete" (click)="authService.deleteUser()">
+    <button
+      type=""
+      class="link button-link delete"
+      (click)="authService.messageForUser = 'delete user prompt'"
+      routerLink="/auth/message"
+    >
       {{ t("Delete Profile") }}
     </button>
   </mat-card>

@@ -1,3 +1,19 @@
 <div class="message-container" fxLayout="row" fxLayoutAlign="center top" *transloco="let t">
-  <div class="box">{{ t(messageForUser) }}</div>
+  <div class="box">
+    {{ t(messageForUser) }}
+    <div class="buttons-container" *ngIf="messageForUser === 'delete user prompt'">
+      <button
+        type=""
+        class="link button-link delete"
+        routerLink="/auth/editUser"
+        (click)="authService.messageForUser = 'delete profile'"
+        (click)="authService.deleteUser()"
+      >
+        {{ t("delete") }}
+      </button>
+      <button class="link button-link" routerLink="/auth/editUser" routerLinkActive="active">
+        {{ t("cancel") }}
+      </button>
+    </div>
+  </div>
 </div>
