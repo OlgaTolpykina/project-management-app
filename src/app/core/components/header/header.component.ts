@@ -21,19 +21,12 @@ export class HeaderComponent implements OnInit {
 
   isAuthorized: boolean = false;
 
-  authService: UserAuthServiceService;
-
-  constructor(public transloco: TranslocoService, authService: UserAuthServiceService) {
-    this.authService = authService;
-  }
   constructor(
     public transloco: TranslocoService,
     private scroll: ScrollService,
     public dialog: MatDialog,
-  authService: UserAuthServiceService
-  ) {
-this.authService = authService;
-}
+    public authService: UserAuthServiceService,
+  ) {}
 
   ngOnInit(): void {
     this.activeLang = this.transloco.getActiveLang();

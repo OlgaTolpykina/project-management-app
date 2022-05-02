@@ -1,5 +1,5 @@
 <mat-nav-list *transloco="let t">
-  <div *ngIf="!isAuthorized; else authorized">
+  <div *ngIf="!(authService.isAuthorized === 'true'); else authorized">
     <a mat-list-item routerLink="/auth/login" (click)="onSidenavClose()">
       <mat-icon class="nav-icon">account_circle</mat-icon>
       <span class="nav-caption">{{ t("login") }}</span>
@@ -41,7 +41,12 @@
       <mat-icon class="nav-icon">assignment_ind</mat-icon>
       <span class="nav-caption">{{ t("editProfile") }}</span>
     </a>
-    <a mat-list-item routerLink="/auth/login" (click)="onSidenavClose()">
+    <a
+      mat-list-item
+      (click)="authService.logInOutUser('false')"
+      (click)="authService.getMessageForUser('log Out', 'home')"
+      (click)="onSidenavClose()"
+    >
       <mat-icon class="nav-icon">account_circle</mat-icon>
       <span class="nav-caption">{{ t("logout") }}</span>
     </a>
