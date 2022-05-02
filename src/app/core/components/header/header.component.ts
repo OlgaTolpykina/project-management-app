@@ -1,6 +1,9 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ScrollService } from '@core/services/scroll.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
+import { CreateBoardComponent } from '@board/components/create-board/create-board.component';
 
 @Component({
   selector: 'app-header',
@@ -23,6 +26,14 @@ export class HeaderComponent implements OnInit {
   constructor(public transloco: TranslocoService, authService: UserAuthServiceService) {
     this.authService = authService;
   }
+  constructor(
+    public transloco: TranslocoService,
+    private scroll: ScrollService,
+    public dialog: MatDialog,
+  authService: UserAuthServiceService
+  ) {
+this.authService = authService;
+}
 
   ngOnInit(): void {
     this.activeLang = this.transloco.getActiveLang();
@@ -42,4 +53,15 @@ export class HeaderComponent implements OnInit {
   onToggleSidenav = () => {
     this.sidenavToggle.emit();
   };
+
+  onScrollToAnchor(elementId: string) {
+    this.scroll.anchorScroll$.next(elementId);
+  }
+
+  openDialog() {
+    this.dialog.open(CreateBoardComponent, {
+      height: '400px',
+      width: '300px',
+    });
+  }
 }

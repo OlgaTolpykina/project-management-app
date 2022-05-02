@@ -1,12 +1,18 @@
 <mat-nav-list *transloco="let t">
-  <a mat-list-item routerLink="/auth/login" (click)="onSidenavClose()">
-    <mat-icon class="nav-icon">account_circle</mat-icon>
-    <span class="nav-caption">{{ t("login") }}</span>
-  </a>
-  <a mat-list-item routerLink="/auth/signUp" (click)="onSidenavClose()">
-    <mat-icon class="nav-icon">assignment</mat-icon>
-    <span class="nav-caption">{{ t("signUp") }}</span>
-  </a>
+  <div *ngIf="!isAuthorized; else authorized">
+    <a mat-list-item routerLink="/auth/login" (click)="onSidenavClose()">
+      <mat-icon class="nav-icon">account_circle</mat-icon>
+      <span class="nav-caption">{{ t("login") }}</span>
+    </a>
+    <a mat-list-item routerLink="/auth/signUp" (click)="onSidenavClose()">
+      <mat-icon class="nav-icon">assignment</mat-icon>
+      <span class="nav-caption">{{ t("signUp") }}</span>
+    </a>
+    <a mat-list-item routerLink="/" (click)="onScrollToAnchor('team')">
+      <mat-icon class="nav-icon">group_work</mat-icon>
+      <span class="nav-caption">{{ t("team") }}</span>
+    </a>
+  </div>
   <div class="nav-lang">
     <mat-button-toggle-group mat-list-item name="language" aria-label="Text Language">
       <mat-button-toggle
@@ -24,3 +30,20 @@
     </mat-button-toggle-group>
   </div>
 </mat-nav-list>
+
+<ng-template #authorized>
+  <ng-container *transloco="let t">
+    <a mat-list-item routerLink="/boards" (click)="openDialog()">
+      <mat-icon class="nav-icon">dashboard</mat-icon>
+      <span class="nav-caption">{{ t("newBoard") }}</span>
+    </a>
+    <a mat-list-item routerLink="/auth/editUser" (click)="onSidenavClose()">
+      <mat-icon class="nav-icon">assignment_ind</mat-icon>
+      <span class="nav-caption">{{ t("editProfile") }}</span>
+    </a>
+    <a mat-list-item routerLink="/auth/login" (click)="onSidenavClose()">
+      <mat-icon class="nav-icon">account_circle</mat-icon>
+      <span class="nav-caption">{{ t("logout") }}</span>
+    </a>
+  </ng-container>
+</ng-template>

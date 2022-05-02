@@ -8,6 +8,11 @@ import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { httpInterceptorProviders } from './interceptors';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { appState } from './redux/app.state';
+import { BoardsEffects } from './redux/effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +23,20 @@ import { httpInterceptorProviders } from './interceptors';
     SharedModule,
     HttpClientModule,
     CoreModule,
+    StoreModule.forRoot(appState, {
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+        strictStateSerializability: true,
+        strictActionSerializability: true,
+        strictActionWithinNgZone: true,
+        strictActionTypeUniqueness: true,
+      },
+    }),
+    EffectsModule.forRoot([BoardsEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+    }),
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
