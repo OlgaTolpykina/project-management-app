@@ -7,7 +7,7 @@
       *ngFor="let board of boards$ | async; index as i"
       [board]="board"
       [backgroundImgUrl]="boardsBackgroundImgsUrl[i]"
-      (click)="openBoard(board.id)"
+      (click)="openBoard(board)"
     ></app-board-item>
   </div>
 </section>

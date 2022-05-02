@@ -3,8 +3,16 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { BoardService } from '@shared/services/board.service';
 import { AppState } from './state.model';
 import { Action, Store } from '@ngrx/store';
-import { catchError, map, Observable, of, switchMap } from 'rxjs';
-import { getAllBoards, getAllBoardsFailed, getAllBoardsSuccessfully } from './actions';
+import { catchError, map, Observable, of, switchMap, withLatestFrom } from 'rxjs';
+import {
+  getAllBoards,
+  getAllBoardsFailed,
+  getAllBoardsSuccessfully,
+  setSelectedBoardId,
+  getSelectedBoardFailed,
+  getSelectedBoardSuccessfully,
+} from './actions';
+import { selectSelectedBoardId } from './selectors';
 
 @Injectable({ providedIn: 'any' })
 export class BoardsEffects {
@@ -21,6 +29,19 @@ export class BoardsEffects {
         this.boardService.getAllBoards().pipe(
           map((boards) => getAllBoardsSuccessfully({ boards })),
           catchError((error) => of(getAllBoardsFailed({ error }))),
+        ),
+      ),
+    ),
+  );
+
+  getBoardById: Observable<Action> = createEffect(() =>
+    this.actions.pipe(
+      ofType(setSelectedBoardId),
+      withLatestFrom(this.store.select(selectSelectedBoardId)),
+      switchMap(([, id]: [Action, string]) =>
+        this.boardService.getBoardById(id).pipe(
+          map((selectedBoard) => getSelectedBoardSuccessfully({ selectedBoard })),
+          catchError((error) => of(getSelectedBoardFailed({ error }))),
         ),
       ),
     ),

@@ -4,8 +4,13 @@ import {
   getAllBoards,
   getAllBoardsFailed,
   getAllBoardsSuccessfully,
+  getSelectedBoard,
+  getSelectedBoardFailed,
+  getSelectedBoardSuccessfully,
+  setSelectedBoard,
+  setSelectedBoardId,
 } from './actions';
-import { initialBoardsState } from './state.model';
+import { initialBoardsState, initialSelectedBoardState } from './state.model';
 
 export const boardsReducer = createReducer(
   initialBoardsState,
@@ -20,6 +25,28 @@ export const boardsReducer = createReducer(
     return { ...state, boards };
   }),
   on(getAllBoardsFailed, (state, { error }) => ({
+    ...state,
+    error,
+  })),
+);
+
+export const selectedBoardReducer = createReducer(
+  initialSelectedBoardState,
+  on(setSelectedBoardId, (state, { selectedBoardId }) => ({
+    ...state,
+    selectedBoardId: selectedBoardId,
+  })),
+  on(setSelectedBoard, (state, { selectedBoard }) => ({
+    ...state,
+    selectedBoard: selectedBoard,
+  })),
+  on(getSelectedBoard, (state) => {
+    return { ...state };
+  }),
+  on(getSelectedBoardSuccessfully, (state, { selectedBoard }) => {
+    return { ...state, selectedBoard: selectedBoard };
+  }),
+  on(getSelectedBoardFailed, (state, { error }) => ({
     ...state,
     error,
   })),

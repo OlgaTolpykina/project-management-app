@@ -8,6 +8,7 @@ import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/redux/state.model';
 import { Router } from '@angular/router';
+import { setSelectedBoard } from '@app/redux/actions';
 
 @Component({
   selector: 'app-board-list',
@@ -60,8 +61,9 @@ export class BoardListComponent implements OnInit {
     });
   }
 
-  openBoard(boardId: string) {
-    console.log(boardId);
-    this.router.navigateByUrl('/b/' + boardId);
+  openBoard(board: Board) {
+    const selectedBoardId = board.id!;
+    this.store.dispatch(setSelectedBoard({ selectedBoard: board }));
+    this.router.navigateByUrl('/b/' + selectedBoardId);
   }
 }
