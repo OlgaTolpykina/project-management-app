@@ -1,0 +1,15 @@
+<div class="carousel">
+  <ng-container *ngFor="let slide of slides; let i = index">
+    <div class="slide" *ngIf="i === currentSlide" @carouselAnimation>
+      <img [src]="slide.src" width="150" height="150" [alt]="slide.alt" />
+      <p class="slide-description">{{ slide.description }}</p>
+    </div>
+  </ng-container>
+
+  <button mat-mini-fab class="control prev" (click)="onPreviousClick()">
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </button>
+  <button mat-mini-fab class="control next" (click)="onNextClick()">
+    <mat-icon>keyboard_arrow_right</mat-icon>
+  </button>
+</div>

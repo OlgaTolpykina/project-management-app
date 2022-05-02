@@ -25,5 +25,10 @@
   "login should be minimum of 8 characters.": "Логин длиной не менее 8 символов",
   "min length required": "минимальная длина необходима",
   "boards-title": "Ваши доски",
+  "title": "Заголовок",
+  "board-title": "Название доски",
+  "board-title-placeholder": "Введите название доски",
+  "create": "Создать",
+  "cancel": "Отмена",
   "delete": "Удалить"
 }

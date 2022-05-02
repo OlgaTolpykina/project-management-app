@@ -14,8 +14,8 @@ export class BoardService {
 
   constructor(private http: HttpClient) {}
 
-  getAllBoards(): Observable<Board[] | Error> {
-    return this.http.get<Board[] | Error>(this.url);
+  getAllBoards(): Observable<Board[]> {
+    return this.http.get<Board[]>(this.url);
   }
 
   createBoard(body: { title: string }): Observable<Board | Error> {
