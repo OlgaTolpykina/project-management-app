@@ -20,6 +20,8 @@ export class UserAuthServiceService {
     userAuthToken: '',
   };
 
+  messageForUser: string = '';
+
   redirectUrl: string | null = null;
 
   loadedUser: User = {
@@ -68,7 +70,7 @@ export class UserAuthServiceService {
     return null;
   }
 
-  saveLocalUser(user: UserSettings) {
+  private async saveLocalUser(user: UserSettings) {
     localStorage.setItem('savedUser', JSON.stringify(user));
     localStorage.setItem('token', user.userAuthToken);
   }
@@ -77,15 +79,15 @@ export class UserAuthServiceService {
     const newUser: UserSettings = user;
     this.beAuthService
       .signup({ login: newUser.login, password: newUser.userPassword, name: newUser.userName })
-      .pipe(catchError(this.handleError))
+      .pipe(catchError((error) => this.handleError(error)))
       .subscribe(async (data: User | Error) => {
         if (!(data instanceof Error)) {
           this.loadedUser = { ...data } as User;
           newUser.id = this.loadedUser.id as string;
           this.userSettings.id = this.loadedUser.id as string;
           this.saveLocalUser(newUser);
-          await this.authorizeUser(newUser);
-        } else console.log(data);
+          this.getMessageForUser('register profile', 'home');
+        }
       });
   }
 
@@ -97,15 +99,33 @@ export class UserAuthServiceService {
         login: newUser.login,
         password: newUser.userPassword,
       })
-      .pipe(catchError(this.handleError))
+      .pipe(catchError((error) => this.handleError(error)))
       .subscribe(async (data: User | Error) => {
         if (!(data instanceof Error)) {
           this.loadedUser = { ...data } as User;
           newUser.id = this.loadedUser.id as string;
           this.userSettings.id = this.loadedUser.id as string;
           this.saveLocalUser(newUser);
-          // await this.authorizeUser(newUser);
-        } else console.log(data);
+          const url: string = this.redirectUrl ? this.redirectUrl : 'home';
+          this.getMessageForUser('update profile', url);
+        }
+      });
+  }
+
+  private async getUserData(login: string): Promise<void> {
+    this.userService
+      .getAllUsers()
+      .pipe(catchError((error) => this.handleError(error)))
+      .subscribe(async (data: User[] | Error) => {
+        if (!(data instanceof Error)) {
+          const users: User[] = JSON.parse(JSON.stringify(data));
+          const currentUser: User = users.filter((item) => {
+            return item.login === login;
+          })[0];
+          this.userSettings.id = currentUser.id;
+          this.userSettings.userName = currentUser.name as string;
+          await this.saveLocalUser(this.userSettings);
+        }
       });
   }
 
@@ -118,7 +138,7 @@ export class UserAuthServiceService {
         newUser = localSavedUser;
         this.beAuthService
           .signin({ login: newUser.login, password: newUser.userPassword })
-          .pipe(catchError(this.handleError))
+          .pipe(catchError((error) => this.handleError(error)))
           .subscribe((data: { token: string } | Error) => {
             if (!(data instanceof Error)) {
               this.userSettings.userAuthToken = (data as { token: string }).token;
@@ -127,9 +147,26 @@ export class UserAuthServiceService {
               localStorage.setItem('isAuthorized', 'true');
               this.changeUserSource.next(newUser.userName);
               this.isUserAuthorized.next(true);
+              this.getMessageForUser('Welcome in profile', 'home');
             }
           });
       }
+    } else {
+      this.beAuthService
+        .signin({ login: newUser.login, password: newUser.userPassword })
+        .pipe(catchError((error) => this.handleError(error)))
+        .subscribe(async (data: { token: string } | Error) => {
+          if (!(data instanceof Error)) {
+            this.userSettings.userAuthToken = (data as { token: string }).token;
+            await this.saveLocalUser(this.userSettings);
+            await this.getUserData(newUser.login);
+            await this.saveLocalUser(this.userSettings);
+            this.logInOutUser('true');
+            this.changeUserSource.next(newUser.userName);
+            this.isUserAuthorized.next(true);
+            this.getMessageForUser('Welcome in profile', 'home');
+          }
+        });
     }
   }
 
@@ -140,9 +177,10 @@ export class UserAuthServiceService {
       .subscribe(async (data) => {
         if (!(data instanceof Error)) {
           this.logInOutUser('false');
+          // localStorage.clear();
           localStorage.removeItem('savedUser');
           localStorage.removeItem('token');
-          this.router.navigate(['home']);
+          this.getMessageForUser('delete profile', 'home');
         }
       });
   }
@@ -150,16 +188,49 @@ export class UserAuthServiceService {
   logInOutUser(status: string) {
     localStorage.setItem('isAuthorized', status);
     this.isAuthorized = status;
-    const userStatus: boolean = status as unknown as boolean;
+    const userStatus: boolean = status === 'true' ? true : false;
+    if (!userStatus) {
+      //localStorage.clear();
+      localStorage.removeItem('savedUser');
+      localStorage.removeItem('token');
+    }
     this.isUserAuthorized.next(userStatus);
   }
 
+  getMessageForUser(message: string, redirectUrl?: string | null) {
+    this.messageForUser = message;
+    const url = redirectUrl ? redirectUrl : this.router.url;
+    this.router.navigate(['auth/message']);
+    setTimeout(() => {
+      this.router.navigate([url]);
+    }, 3000);
+  }
+
   private handleError(error: HttpErrorResponse) {
-    if (error.status === 0) {
+    if (error.error.statusCode === 0) {
       console.error('An error occurred:', error.error);
     } else {
-      console.error(`Backend returned code ${error.status}, body was: `, error.error);
+      console.error(
+        `Backend returned code ${error.error.statusCode}, body was: `,
+        error.error.message,
+      );
+      switch (error.error.statusCode) {
+        case 404:
+          this.getMessageForUser('signUp first');
+          break;
+        case 409:
+          this.getMessageForUser(`user exist`);
+          break;
+        case 403:
+          this.getMessageForUser('login&password not found');
+          break;
+        default:
+          this.getMessageForUser(error.error?.message as string);
+          break;
+      }
     }
-    return throwError(() => new Error('Something bad happened; please try again later.'));
+    return throwError(() => {
+      new Error('Something bad happened; please try again later.');
+    });
   }
 }

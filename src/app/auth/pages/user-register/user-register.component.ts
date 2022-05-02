@@ -8,7 +8,6 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 
-import { Router } from '@angular/router';
 import { UserSettings } from '../../models/user-settings.model';
 import { UserAuthServiceService } from '../../services/user-auth-service.service';
 import { MyErrorStateMatcher } from '../../services/error-state.service';
@@ -29,7 +28,7 @@ export class UserRegisterComponent implements OnInit {
 
   authService: UserAuthServiceService;
 
-  constructor(authService: UserAuthServiceService, private router: Router) {
+  constructor(authService: UserAuthServiceService) {
     this.authService = authService;
   }
 
@@ -102,7 +101,6 @@ export class UserRegisterComponent implements OnInit {
     this.getUserSettings();
     if (this.registryFormGroup.status === 'VALID') {
       this.authService.registryUser(this.userSettings);
-      this.router.navigate(['home']);
     }
   }
 }

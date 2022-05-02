@@ -10,7 +10,7 @@ import {
 import { Router } from '@angular/router';
 
 import { UserSettings } from '../../models/user-settings.model';
-import { UserAuthServiceService } from '../../services/user-auth-service.service';
+import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
 import { MyErrorStateMatcher } from '../../services/error-state.service';
 
 @Component({
@@ -56,9 +56,14 @@ export class LoginPageComponent implements OnInit {
       if (!value) {
         return null;
       }
-      const validPassword =
-        value === (this.authService.getSavedLocalUser()?.userPassword as string);
-      return !validPassword ? { passwordMatch: true } : null;
+      if (this.authService.getSavedLocalUser()) {
+        const validPassword =
+          value === (this.authService.getSavedLocalUser()?.userPassword as string);
+        return !validPassword ? { passwordMatch: true } : null;
+      } else {
+        const validPassword = true;
+        return !validPassword ? { passwordMatch: true } : null;
+      }
     };
   }
 
@@ -68,7 +73,7 @@ export class LoginPageComponent implements OnInit {
       Validators.required,
       Validators.minLength(8),
       this.validatePasswordStrength(),
-      this.passwordMatchingValidator(),
+      // this.passwordMatchingValidator(),
     ]),
   });
 
@@ -96,11 +101,13 @@ export class LoginPageComponent implements OnInit {
     if (this.userSettings.login === this.authService.getSavedLocalUser()?.login) {
       if (this.authorizeForm.status === 'VALID') {
         this.authService.authorizeUser(this.userSettings);
-        this.router.navigate(['home']);
       }
     } else {
-      this.authService.userSettings = this.userSettings;
-      this.router.navigate(['/auth/signUp']);
+      localStorage.removeItem('savedUser');
+      localStorage.removeItem('token');
+      if (this.authorizeForm.status === 'VALID') {
+        this.authService.authorizeUser(this.userSettings);
+      }
     }
   }
 }

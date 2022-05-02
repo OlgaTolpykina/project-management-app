@@ -1,0 +1,33 @@
+.message-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.box {
+  position: relative;
+  top: 45px;
+  height: fit-content;
+  opacity: 1;
+  float: left;
+  padding: 60px 30px 40px 30px;
+  width: 95%;
+  background-color: #bbb2c1;
+  border-radius: 10px;
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  z-index: 5;
+  max-width: 320px;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 200%;
+  text-align: center;
+  color: var(--primary);
+  a {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
