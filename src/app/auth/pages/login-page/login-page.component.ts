@@ -94,10 +94,11 @@ export class LoginPageComponent implements OnInit {
   public getUserSettings() {
     this.userSettings.login = this.authorizeForm.controls['loginFormControl'].value;
     this.userSettings.userPassword = this.authorizeForm.controls['passwordFormControl'].value;
-    this.authorizeUserSettings();
+    this.authService.userSettings = this.userSettings;
   }
 
-  private async authorizeUserSettings() {
+  async authorizeUserSettings() {
+    this.getUserSettings();
     if (this.userSettings.login === this.authService.getSavedLocalUser()?.login) {
       if (this.authorizeForm.status === 'VALID') {
         this.authService.authorizeUser(this.userSettings);

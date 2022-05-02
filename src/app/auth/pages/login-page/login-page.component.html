@@ -3,7 +3,7 @@
     <mat-card-header>
       <mat-card-title>{{ t("login") }}</mat-card-title>
     </mat-card-header>
-    <form class="example-form" [formGroup]="authorizeForm" (ngSubmit)="getUserSettings()">
+    <form class="example-form" [formGroup]="authorizeForm" (ngSubmit)="authorizeUserSettings()">
       <mat-card-content>
         <mat-form-field class="example-full-width">
           <mat-label>{{ t("Login") }}</mat-label>
