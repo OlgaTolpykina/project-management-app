@@ -15,7 +15,12 @@
     }}</a>
   </div>
 </section>
-<section class="team" #team *transloco="let t">
+<section class="team" id="team" *transloco="let t">
   <h1 class="team-title">About our team</h1>
-  <div class="team-wrapper"></div>
+  <div class="team-wrapper">
+    <app-carousel></app-carousel>
+  </div>
 </section>
+<button matRipple class="go-top" [class.go-top-visible]="scrolled" (click)="onScrollToTop()">
+  TOP
+</button>

@@ -4,6 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { BackgroundImgService } from '@app/board/services/background-img.service';
 
 import { Board } from '@shared/types/board.model';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '@app/redux/state.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -23,25 +26,38 @@ export class BoardListComponent implements OnInit {
     },
   ];
 
+  boards$: Observable<Board[]> = this.store.pipe(
+    map((data) => {
+      return [...data.boards.boards, ...this.boards];
+    }),
+  );
+
   boardsBackgroundImgsUrl: string[] = [];
+
+  unsubscribe$ = new Subject<void>();
 
   constructor(
     private http: HttpClient,
     private backgroundImgService: BackgroundImgService,
+    private store: Store<AppState>,
     private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.boardsBackgroundImgsUrl = [];
 
-    if (this.boards.length) {
-      this.backgroundImgService.getBackgroundImgs(this.boards.length).subscribe((res) => {
-        res.forEach((imgObj) => {
-          this.boardsBackgroundImgsUrl.push(imgObj.urls.small);
-        });
-        console.log(this.boardsBackgroundImgsUrl);
-      });
-    }
+    this.boards$.pipe(takeUntil(this.unsubscribe$)).subscribe((value) => {
+      if (value.length) {
+        this.backgroundImgService
+          .getBackgroundImgs(value.length)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe((res) => {
+            res.forEach((imgObj) => {
+              this.boardsBackgroundImgsUrl.push(imgObj.urls.small);
+            });
+          });
+      }
+    });
   }
 
   openBoard(boardId: string) {
