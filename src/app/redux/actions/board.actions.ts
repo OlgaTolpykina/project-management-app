@@ -14,3 +14,5 @@ export const getAllBoardsFailed = createAction(
   '[BOARDS] GET ALL BOARDS FAILED',
   props<{ error: Error }>(),
 );
+
+export const deleteBoard = createAction('[BOARDS] DELETE BOARD', props<{ id: string }>());

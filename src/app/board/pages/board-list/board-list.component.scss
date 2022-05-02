@@ -18,6 +18,33 @@
   width: 100%;
 }
 
+.create-board {
+  position: relative;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  height: 100px;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.create-board-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+}
+
+.create-board-title::before {
+  content: url("../../../../assets/svg/plus.svg");
+  vertical-align: -50%;
+  padding-right: 10px;
+}
+
 @media (max-width: 1000px) {
   .boards-container {
     grid-template-columns: repeat(3, 1fr);

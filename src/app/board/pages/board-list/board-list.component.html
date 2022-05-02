@@ -8,5 +8,8 @@
       [board]="board"
       [backgroundImgUrl]="boardsBackgroundImgsUrl[i]"
     ></app-board-item>
+    <mat-card class="create-board" (click)="openDialog()">
+      <mat-card-title class="create-board-title">{{ t("newBoard") }}</mat-card-title>
+    </mat-card>
   </div>
 </section>

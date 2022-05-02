@@ -11,8 +11,7 @@ import { httpInterceptorProviders } from './interceptors';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { appState } from './redux/app.state';
-import { BoardsEffects } from './redux/effects';
+import { BoardsEffects } from './redux/effects/effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,16 +22,19 @@ import { BoardsEffects } from './redux/effects';
     SharedModule,
     HttpClientModule,
     CoreModule,
-    StoreModule.forRoot(appState, {
-      runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true,
-        strictStateSerializability: true,
-        strictActionSerializability: true,
-        strictActionWithinNgZone: true,
-        strictActionTypeUniqueness: true,
+    StoreModule.forRoot(
+      {},
+      {
+        runtimeChecks: {
+          strictStateImmutability: true,
+          strictActionImmutability: true,
+          strictStateSerializability: true,
+          strictActionSerializability: true,
+          strictActionWithinNgZone: true,
+          strictActionTypeUniqueness: true,
+        },
       },
-    }),
+    ),
     EffectsModule.forRoot([BoardsEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
