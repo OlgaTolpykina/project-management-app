@@ -92,7 +92,8 @@
 }
 
 .mat-form-field {
-  margin: 15px auto;
+  margin: 25px auto;
+  margin-bottom: 25px;
   input {
     color: var(--primary);
   }
@@ -134,11 +135,18 @@ link {
   background-color: var(--primary);
   border-radius: 5px;
 
-  transition: box-shadow 0.5s;
   cursor: pointer;
 
+  transition: all 0.8s;
+
   &:hover {
-    box-shadow: 2px 2px 2px var(--primary-transparent);
+    background-color: var(--amber-light);
+    border-radius: 5px;
+    color: var(--primary);
+  }
+
+  &:active {
+    color: var(--amber-light);
   }
 }
 

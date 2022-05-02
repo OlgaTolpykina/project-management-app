@@ -37,14 +37,6 @@
           <mat-error *ngIf="registryFormGroup.controls['loginFormControl'].hasError('required')">
             {{ t("Login") }} <strong>{{ t("required") }}</strong>
           </mat-error>
-          <mat-error
-            *ngIf="
-              registryFormGroup.controls['loginFormControl'].hasError('minlength') &&
-              !registryFormGroup.controls['loginFormControl'].hasError('required')
-            "
-          >
-            {{ t("login should be minimum of 8 characters.") }}
-          </mat-error>
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <mat-label>{{ t("Password") }}</mat-label>

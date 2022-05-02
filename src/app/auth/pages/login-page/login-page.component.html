@@ -19,14 +19,6 @@
           <mat-error *ngIf="authorizeForm.controls['loginFormControl'].hasError('required')">
             {{ t("Login") }} <strong>{{ t("required") }}</strong>
           </mat-error>
-          <mat-error
-            *ngIf="
-              authorizeForm.controls['loginFormControl'].hasError('minlength') &&
-              !authorizeForm.controls['loginFormControl'].hasError('required')
-            "
-          >
-            {{ t("login should be minimum of 8 characters.") }}
-          </mat-error>
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <mat-label>{{ t("Password") }}</mat-label>
@@ -62,7 +54,7 @@
       <div class="buttons-container" *transloco="let t">
         <button type="submit" class="link button-link">{{ t("login") }}</button>
         <a
-          class=""
+          class="link"
           routerLink="/auth/signUp"
           routerLinkActive="active"
           (click)="getUserSettings()"

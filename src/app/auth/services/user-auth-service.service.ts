@@ -106,6 +106,7 @@ export class UserAuthServiceService {
           this.loadedUser = { ...data } as User;
           newUser.id = this.loadedUser.id as string;
           this.userSettings.id = this.loadedUser.id as string;
+          newUser.userPassword = '';
           this.saveLocalUser(newUser);
           const url: string = this.redirectUrl ? this.redirectUrl : 'home';
           this.getMessageForUser('update profile', url);
@@ -143,6 +144,7 @@ export class UserAuthServiceService {
           .subscribe((data: { token: string } | Error) => {
             if (!(data instanceof Error)) {
               this.userSettings.userAuthToken = (data as { token: string }).token;
+              this.userSettings.userPassword = '';
               this.saveLocalUser(this.userSettings);
               this.logInOutUser('true');
               localStorage.setItem('isAuthorized', 'true');
@@ -160,6 +162,7 @@ export class UserAuthServiceService {
         .subscribe(async (data: { token: string } | Error) => {
           if (!(data instanceof Error)) {
             this.userSettings.userAuthToken = (data as { token: string }).token;
+            this.userSettings.userPassword = '';
             await this.saveLocalUser(this.userSettings);
             await this.getUserData(newUser.login);
             await this.saveLocalUser(this.userSettings);

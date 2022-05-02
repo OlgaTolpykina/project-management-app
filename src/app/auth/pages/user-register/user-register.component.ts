@@ -50,7 +50,7 @@ export class UserRegisterComponent implements OnInit {
   }
 
   registryFormGroup: FormGroup = new FormGroup({
-    loginFormControl: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    loginFormControl: new FormControl('', [Validators.required]),
     nameFormControl: new FormControl('', [Validators.required, Validators.minLength(4)]),
     passwordFormControl: new FormControl('', [
       Validators.required,

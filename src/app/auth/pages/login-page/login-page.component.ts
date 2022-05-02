@@ -68,7 +68,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   public authorizeForm: FormGroup = new FormGroup({
-    loginFormControl: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    loginFormControl: new FormControl('', [Validators.required]),
     passwordFormControl: new FormControl('', [
       Validators.required,
       Validators.minLength(8),
