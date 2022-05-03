@@ -8,16 +8,17 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 
+import { Router } from '@angular/router';
 import { UserSettings } from '../../models/user-settings.model';
 import { UserAuthServiceService } from '../../services/user-auth-service.service';
 import { MyErrorStateMatcher } from '../../services/error-state.service';
 
 @Component({
-  selector: 'app-user-register',
-  templateUrl: './user-register.component.html',
-  styleUrls: ['./user-register.component.scss'],
+  selector: 'app-edit-user-page',
+  templateUrl: './edit-user-page.component.html',
+  styleUrls: ['./edit-user-page.component.scss'],
 })
-export class UserRegisterComponent implements OnInit {
+export class EditUserPageComponent implements OnInit {
   userSettings: UserSettings = {
     id: '',
     login: '',
@@ -28,13 +29,18 @@ export class UserRegisterComponent implements OnInit {
 
   authService: UserAuthServiceService;
 
-  constructor(authService: UserAuthServiceService) {
+  constructor(authService: UserAuthServiceService, private router: Router) {
     this.authService = authService;
   }
 
   ngOnInit(): void {
-    this.userSettings = this.authService.userSettings;
+    this.userSettings =
+      this.authService.getSavedLocalUser() !== null
+        ? (this.authService.getSavedLocalUser() as UserSettings)
+        : this.authService.userSettings;
     this.registryFormGroup.controls['loginFormControl'].setValue(this.userSettings.login);
+    this.registryFormGroup.controls['nameFormControl'].setValue(this.userSettings.userName);
+    this.registryFormGroup.controls['passwordFormControl'].setValue(this.userSettings.userPassword);
   }
 
   public showPassword: boolean = false;
@@ -100,7 +106,7 @@ export class UserRegisterComponent implements OnInit {
   getRegistry() {
     this.getUserSettings();
     if (this.registryFormGroup.status === 'VALID') {
-      this.authService.registryUser(this.userSettings);
+      this.authService.updateUser(this.userSettings);
     }
   }
 }
