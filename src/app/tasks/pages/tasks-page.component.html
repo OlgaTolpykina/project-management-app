@@ -13,7 +13,10 @@
   </div>
   <div class="tasks-columns">
     <div class="tasks-columns_inner">
-      <app-column></app-column>
+      <app-column
+        *ngFor="let column of columns | orderBy: columnOrder"
+        [column]="column"
+      ></app-column>
       <div class="column-wrapper">
         <button matRipple class="add-column">
           <mat-icon>add</mat-icon>
