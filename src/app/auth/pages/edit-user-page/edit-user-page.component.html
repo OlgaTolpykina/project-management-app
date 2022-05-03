@@ -1,7 +1,7 @@
 <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center top" *transloco="let t">
   <mat-card class="box">
     <mat-card-header>
-      <mat-card-title>{{ t("signUp") }}</mat-card-title>
+      <mat-card-title>{{ t("edit Profile") }}</mat-card-title>
     </mat-card-header>
     <form class="example-form" [formGroup]="registryFormGroup" (ngSubmit)="getRegistry()">
       <mat-card-content>
@@ -55,8 +55,9 @@
           >
           <mat-error
             *ngIf="(registryFormGroup.controls['passwordFormControl'].errors?.['passwordStrength'] || 
-          registryFormGroup.controls['passwordFormControl'].errors?.['minlength'])"
-            >{{ t("password strength message") }}
+            registryFormGroup.controls['passwordFormControl'].errors?.['minlength'])"
+          >
+            {{ t("password strength message") }}
           </mat-error>
           <mat-error *ngIf="registryFormGroup.controls['passwordFormControl'].hasError('required')">
             {{ t("Please enter a password") }}
@@ -74,14 +75,14 @@
             matSuffix
             *ngIf="!showConfirmPassword"
             (click)="toggleConfirmPasswordVisibility()"
-            >visibility</mat-icon
-          >
+            >visibility
+          </mat-icon>
           <mat-icon
             matSuffix
             *ngIf="showConfirmPassword"
             (click)="toggleConfirmPasswordVisibility()"
-            >visibility_off</mat-icon
-          >
+            >visibility_off
+          </mat-icon>
           <mat-error
             *ngIf="
               registryFormGroup.controls['passwordDuplicateFormControl'].hasError('passwordMatch')
@@ -95,9 +96,19 @@
         </mat-form-field>
       </mat-card-content>
       <div class="buttons-container" *transloco="let t">
-        <a class="" routerLink="/auth/login" routerLinkActive="active">{{ t("login") }}</a>
-        <button type="submit" class="link button-link">{{ t("signUp") }}</button>
+        <a class="link" routerLink="{{ authService.redirectUrl }}" routerLinkActive="active">{{
+          t("Back")
+        }}</a>
+        <button type="submit" class="link button-link">{{ t("save") }}</button>
       </div>
     </form>
+    <button
+      type=""
+      class="link button-link delete"
+      (click)="authService.messageForUser = 'delete user prompt'"
+      routerLink="/auth/message"
+    >
+      {{ t("Delete Profile") }}
+    </button>
   </mat-card>
 </div>
