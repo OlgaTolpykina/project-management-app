@@ -44,7 +44,7 @@ export class UserAuthServiceService {
 
   userService: UserService;
 
-  constructor(beAuthService: BeAuthService, userService: UserService, private router: Router) {
+  constructor(beAuthService: BeAuthService, userService: UserService, public router: Router) {
     this.beAuthService = beAuthService;
     this.userService = userService;
   }
@@ -150,7 +150,7 @@ export class UserAuthServiceService {
               localStorage.setItem('isAuthorized', 'true');
               this.changeUserSource.next(newUser.userName);
               this.isUserAuthorized.next(true);
-              this.getMessageForUser('Welcome in profile', 'home');
+              this.getMessageForUser('Welcome in profile', 'boards');
               this.logInOutUser('true');
             }
           });
@@ -169,7 +169,7 @@ export class UserAuthServiceService {
             await this.logInOutUser('true');
             this.changeUserSource.next(newUser.userName);
             this.isUserAuthorized.next(true);
-            this.getMessageForUser('Welcome in profile', 'home');
+            this.getMessageForUser('Welcome in profile', 'boards');
           }
         });
     }

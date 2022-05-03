@@ -22,6 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'boards',
+    canActivate: [AuthorizeGuard],
     loadChildren: () => import('./board/board.module').then((m) => m.BoardModule),
   },
   { path: '**', component: NotFoundComponent },

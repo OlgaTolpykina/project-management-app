@@ -21,7 +21,6 @@ export class AuthorizeGuard implements CanActivate {
     state: RouterStateSnapshot,
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const { url } = state;
-
     return this.checkLogin(url);
   }
 
@@ -29,10 +28,10 @@ export class AuthorizeGuard implements CanActivate {
     if (this.authService.isAuthorized === 'true' || url === '/home') {
       return true;
     }
-    if (url === '/auth/editUser') {
-      this.authService.redirectUrl = url;
-    }
-    this.authService.redirectUrl = url;
+    // if (url === '/auth/editUser') {
+    //   this.authService.redirectUrl = url;
+    // }
+    //this.authService.redirectUrl = url;
     return this.router.parseUrl('/auth/login');
   }
 }

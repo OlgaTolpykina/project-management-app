@@ -37,7 +37,12 @@
       <mat-icon class="nav-icon">dashboard</mat-icon>
       <span class="nav-caption">{{ t("newBoard") }}</span>
     </a>
-    <a mat-list-item routerLink="/auth/editUser" (click)="onSidenavClose()">
+    <a
+      mat-list-item
+      routerLink="/auth/editUser"
+      (click)="authService.redirectUrl = authService.router.url"
+      (click)="onSidenavClose()"
+    >
       <mat-icon class="nav-icon">assignment_ind</mat-icon>
       <span class="nav-caption">{{ t("editProfile") }}</span>
     </a>
