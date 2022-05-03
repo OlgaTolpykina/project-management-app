@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
 
   scrolled: boolean = false;
 
-  isAuthorized: boolean = false;
+  isAuthorized: boolean = true;
 
   constructor(
     public transloco: TranslocoService,

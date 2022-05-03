@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { selectSelectedBoardTitle } from '@app/redux/selectors';
+import { AppState } from '@app/redux/state.model';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-tasks',
@@ -7,5 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./tasks-page.component.scss'],
 })
 export class TasksPageComponent {
-  constructor(private route: ActivatedRoute) {}
+  board$ = this.store.select(selectSelectedBoardTitle);
+
+  constructor(private store: Store<AppState>) {}
 }

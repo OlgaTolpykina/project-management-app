@@ -23,7 +23,6 @@ export class BoardService {
   }
 
   getBoardById(boardId: string): Observable<Board> {
-    console.log(boardId);
     return this.http.get<Board>(`${this.url}/${boardId}`);
   }
 

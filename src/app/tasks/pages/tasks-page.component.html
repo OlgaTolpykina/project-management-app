@@ -1,4 +1,25 @@
 <div class="tasks-sidebar">
-  <p class="tasks-sidebar_item">Boards</p>
+  <a routerLink="/boards" class="tasks-sidebar_item">All Boards</a>
 </div>
-<div>Board title</div>
+<div class="tasks-content">
+  <p class="tasks-board">
+    Board title: <span>{{ board$ | async }}</span>
+  </p>
+  <div class="tasks-buttons">
+    <button matRipple class="tasks-buttons_item">
+      <mat-icon>filter_list</mat-icon>
+      <span>Filter</span>
+    </button>
+  </div>
+  <div class="tasks-columns">
+    <div class="tasks-columns_inner">
+      <app-column></app-column>
+      <div class="column-wrapper">
+        <button matRipple class="add-column">
+          <mat-icon>add</mat-icon>
+          <span>Add new column</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

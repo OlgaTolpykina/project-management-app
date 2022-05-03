@@ -10,6 +10,11 @@ export const selectSelectedBoard = createSelector(
   (state: SelectedBoardState) => state.selectedBoard,
 );
 
+export const selectSelectedBoardTitle = createSelector(
+  selectSelectedBoardState,
+  (state: SelectedBoardState) => state.selectedBoard?.title,
+);
+
 export const selectSelectedBoardId = createSelector(
   selectSelectedBoardState,
   (state: SelectedBoardState) => state.selectedBoardId,

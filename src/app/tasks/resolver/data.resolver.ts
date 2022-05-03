@@ -25,16 +25,13 @@ export class DataResolver implements Resolve<Board | never> {
         .pipe(
           map((board) => {
             if (!board) {
-              console.log('request');
               this.store.dispatch(setSelectedBoardId({ selectedBoardId }));
             }
-            console.log(board);
             return board;
           }),
         )
         .subscribe((board) => {
           if (board) {
-            console.log(board);
             resolve(board);
           } else if (board === null) {
             reject(board);
