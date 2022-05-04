@@ -7,6 +7,7 @@ import { Board } from '@shared/types/board.model';
 import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/redux/state.model';
+import { ProgressBarService } from '@core/services/loading/progress-bar.service';
 
 @Component({
   selector: 'app-board-list',
@@ -39,6 +40,7 @@ export class BoardListComponent implements OnInit {
     private http: HttpClient,
     private backgroundImgService: BackgroundImgService,
     private store: Store<AppState>,
+    public progressBar: ProgressBarService,
   ) {}
 
   ngOnInit(): void {
