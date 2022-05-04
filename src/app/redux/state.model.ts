@@ -6,11 +6,11 @@ export interface AppState {
 }
 
 interface BoardsState {
-  boards: Board[];
+  boards: Board[] | undefined;
 }
 
 export const initialBoardsState: BoardsState = {
-  boards: [],
+  boards: undefined,
 };
 
 export interface SelectedBoardState {

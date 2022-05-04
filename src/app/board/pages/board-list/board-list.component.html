@@ -2,12 +2,15 @@
   <h1 class="boards-title">
     {{ t("boards-title") }}
   </h1>
-  <div class="boards-container">
+  <div class="boards-container" *ngIf="boards$ | async as boards">
     <app-board-item
-      *ngFor="let board of boards$ | async; index as i"
+      *ngFor="let board of boards; index as i"
       [board]="board"
       [backgroundImgUrl]="boardsBackgroundImgsUrl[i]"
       (click)="openBoard(board)"
     ></app-board-item>
+    <mat-card class="create-board" (click)="openDialog()">
+      <mat-card-title class="create-board-title">{{ t("newBoard") }}</mat-card-title>
+    </mat-card>
   </div>
 </section>

@@ -11,8 +11,8 @@ import { httpInterceptorProviders } from './interceptors';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { BoardsEffects } from './redux/effects/effects';
 import { appState } from './redux/app.state';
-import { BoardsEffects } from './redux/effects';
 
 @NgModule({
   declarations: [AppComponent],

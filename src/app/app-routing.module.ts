@@ -21,7 +21,7 @@ const routes: Routes = [
     loadChildren: () => import('./auth/authentication.module').then((m) => m.AuthenticationModule),
   },
   {
-    path: 'boards',
+    path: 'main',
     canActivate: [AuthorizeGuard],
     loadChildren: () => import('./board/board.module').then((m) => m.BoardModule),
   },

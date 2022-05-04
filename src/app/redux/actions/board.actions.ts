@@ -36,3 +36,4 @@ export const getSelectedBoardFailed = createAction(
   '[SELECTED BOARD EFFECT] GET BOARD BY ID FAILED',
   props<{ error: Error }>(),
 );
+export const deleteBoard = createAction('[BOARDS] DELETE BOARD', props<{ id: string }>());

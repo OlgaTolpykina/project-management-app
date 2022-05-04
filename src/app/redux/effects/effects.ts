@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { BoardService } from '@shared/services/board.service';
-import { AppState } from './state.model';
+import { AppState } from '../state.model';
 import { Action, Store } from '@ngrx/store';
 import { catchError, map, Observable, of, switchMap, withLatestFrom } from 'rxjs';
 import {
@@ -11,8 +11,8 @@ import {
   setSelectedBoardId,
   getSelectedBoardFailed,
   getSelectedBoardSuccessfully,
-} from './actions';
-import { selectSelectedBoardId } from './selectors';
+} from '../actions/board.actions';
+import { selectSelectedBoardId } from '../selectors';
 
 @Injectable({ providedIn: 'any' })
 export class BoardsEffects {
