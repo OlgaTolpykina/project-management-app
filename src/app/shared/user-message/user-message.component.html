@@ -1,0 +1,26 @@
+<div class="message-container" fxLayout="row" fxLayoutAlign="center top" *transloco="let t">
+  <div class="box">
+    {{ t(messageService.messageForUser) }}
+
+    <div class="buttons-container" *ngIf="0">
+      <button type="" class="link button-link delete" routerLink="">
+        {{ t("delete") }}
+      </button>
+      <button class="link button-link" routerLink="/" routerLinkActive="active">
+        {{ t("cancel") }}
+      </button>
+    </div>
+
+    <div class="buttons-container" *ngIf="1">
+      <button
+        type="button"
+        class="link button-link"
+        routerLink=""
+        routerLinkActive="active"
+        (click)="messageService.router.navigate([messageService.redirectUrl])"
+      >
+        {{ t("Back") }}
+      </button>
+    </div>
+  </div>
+</div>

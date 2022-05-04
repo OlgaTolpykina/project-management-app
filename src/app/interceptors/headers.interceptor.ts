@@ -11,10 +11,15 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
+import { MessageService } from '@shared/services/message.service';
 
 @Injectable()
 export class HeadersInterceptor implements HttpInterceptor {
-  constructor(private authService: UserAuthServiceService, private router: Router) {}
+  constructor(
+    private authService: UserAuthServiceService,
+    private router: Router,
+    private messageService: MessageService,
+  ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let headers = request.headers;
@@ -36,14 +41,22 @@ export class HeadersInterceptor implements HttpInterceptor {
       headers,
     });
     return next.handle(newReq).pipe(
-      tap((err) => {
-        if (err instanceof HttpErrorResponse) {
-          if (err.status == 401) {
-            this.authService.redirectUrl = this.router.url;
-            this.authService.logInOutUser('false');
+      tap(
+        (res) => {
+          return res;
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            if (err.status == 401) {
+              this.authService.redirectUrl = this.router.url;
+              this.authService.handleError(err);
+              this.authService.logInOutUser('false');
+            } else {
+              this.messageService.getMessageForUser(err.statusText, this.router.url);
+            }
           }
-        }
-      }),
+        },
+      ),
     );
   }
 }

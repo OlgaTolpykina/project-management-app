@@ -219,7 +219,7 @@ export class UserAuthServiceService {
     }, 3000);
   }
 
-  private handleError(error: HttpErrorResponse) {
+  handleError(error: HttpErrorResponse) {
     if (error.error.statusCode === 0) {
       console.log('An error occurred:', error.error);
     } else {
