@@ -8,12 +8,11 @@ import { HomePageComponent } from '@core/pages/home-page/home-page.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'boards',
     pathMatch: 'full',
   },
   {
     path: 'home',
-    canActivate: [AuthorizeGuard],
     component: HomePageComponent,
   },
   {

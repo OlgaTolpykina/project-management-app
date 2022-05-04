@@ -25,13 +25,13 @@ export class AuthorizeGuard implements CanActivate {
   }
 
   checkLogin(url: string): true | UrlTree {
-    if (this.authService.isAuthorized === 'true' || url === '/home') {
+    if (this.authService.isAuthorized === 'true') {
       return true;
     }
-    // if (url === '/auth/editUser') {
-    //   this.authService.redirectUrl = url;
-    // }
-    //this.authService.redirectUrl = url;
+    if (this.authService.isAuthorized !== 'true' || url === 'boards') {
+      return this.router.parseUrl('/home');
+    }
+    this.authService.redirectUrl = url;
     return this.router.parseUrl('/auth/login');
   }
 }

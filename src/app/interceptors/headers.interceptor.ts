@@ -1,9 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { Router } from '@angular/router';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor,
+  HttpErrorResponse,
+} from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
 
 @Injectable()
 export class HeadersInterceptor implements HttpInterceptor {
+  constructor(private authService: UserAuthServiceService, private router: Router) {}
+
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let headers = request.headers;
 
@@ -23,6 +35,15 @@ export class HeadersInterceptor implements HttpInterceptor {
     const newReq = request.clone({
       headers,
     });
-    return next.handle(newReq);
+    return next.handle(newReq).pipe(
+      tap((err) => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.status == 401) {
+            this.authService.redirectUrl = this.router.url;
+            this.authService.logInOutUser('false');
+          }
+        }
+      }),
+    );
   }
 }

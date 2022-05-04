@@ -45,5 +45,6 @@
   "cancel": "Cancel",
   "delete": "Delete",
   "delete user prompt": "Are you really want to delete User Profile?",
-  "password should not be empty": "password should not be empty"
+  "password should not be empty": "password should not be empty",
+  "Unauthorized": "Unauthorized! Authorization missing, or out of date! Please LogIn again!"
 }
