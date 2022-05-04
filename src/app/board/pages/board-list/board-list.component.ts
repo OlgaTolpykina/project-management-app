@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 import { BackgroundImgService } from '@app/board/services/background-img.service';
 
 import { Board } from '@shared/types/board.model';
-import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/redux/state.model';
+import { selectBoards } from '../../../redux/selectors';
+import { CreateBoardComponent } from '@board/components/create-board/create-board.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-board-list',
@@ -14,38 +16,23 @@ import { AppState } from '@app/redux/state.model';
   styleUrls: ['./board-list.component.scss'],
 })
 export class BoardListComponent implements OnInit {
-  boards: Board[] = [
-    {
-      id: '9a111e19-24ec-43e1-b8c4-13776842b8d5',
-      title: 'Homework tasks',
-    },
-    {
-      id: '9a111e19-24ec-43e1-b8c4-13776842b8d9',
-      title: 'Main job tasks',
-    },
-  ];
-
-  boards$: Observable<Board[]> = this.store.pipe(
-    map((data) => {
-      return [...data.boards.boards, ...this.boards];
-    }),
-  );
+  boards$: Observable<Board[] | undefined> = this.store.select(selectBoards);
 
   boardsBackgroundImgsUrl: string[] = [];
 
   unsubscribe$ = new Subject<void>();
 
   constructor(
-    private http: HttpClient,
     private backgroundImgService: BackgroundImgService,
     private store: Store<AppState>,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
     this.boardsBackgroundImgsUrl = [];
 
     this.boards$.pipe(takeUntil(this.unsubscribe$)).subscribe((value) => {
-      if (value.length) {
+      if (value?.length) {
         this.backgroundImgService
           .getBackgroundImgs(value.length)
           .pipe(takeUntil(this.unsubscribe$))
@@ -55,6 +42,13 @@ export class BoardListComponent implements OnInit {
             });
           });
       }
+    });
+  }
+
+  openDialog(): void {
+    this.dialog.open(CreateBoardComponent, {
+      height: '400px',
+      width: '300px',
     });
   }
 }

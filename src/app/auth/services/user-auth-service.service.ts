@@ -150,7 +150,7 @@ export class UserAuthServiceService {
               localStorage.setItem('isAuthorized', 'true');
               this.changeUserSource.next(newUser.userName);
               this.isUserAuthorized.next(true);
-              this.getMessageForUser('Welcome in profile', 'boards');
+              this.getMessageForUser('Welcome in profile', 'main');
               this.logInOutUser('true');
             }
           });
@@ -169,7 +169,7 @@ export class UserAuthServiceService {
             await this.logInOutUser('true');
             this.changeUserSource.next(newUser.userName);
             this.isUserAuthorized.next(true);
-            this.getMessageForUser('Welcome in profile', 'boards');
+            this.getMessageForUser('Welcome in profile', 'main');
           }
         });
     }

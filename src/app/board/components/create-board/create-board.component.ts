@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@app/redux/state.model';
 import { Board } from '@shared/types/board.model';
 import { Error } from '@shared/types/error.model';
-import { createNewBoard } from '@app/redux/actions';
+import { createNewBoard } from '@app/redux/actions/board.actions';
 
 @Component({
   selector: 'app-create-board',

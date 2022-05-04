@@ -1,3 +1,1 @@
-import { AppState } from './state.model';
-
-export const selectBoards = (state: AppState) => state.boards.boards;
+export const selectBoards = (state: any) => state.boards.boards;
