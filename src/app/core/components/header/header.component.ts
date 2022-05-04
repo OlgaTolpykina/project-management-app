@@ -2,6 +2,7 @@ import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/
 import { MatDialog } from '@angular/material/dialog';
 import { ScrollService } from '@core/services/scroll.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
 import { CreateBoardComponent } from '@board/components/create-board/create-board.component';
 
 @Component({
@@ -18,17 +19,19 @@ export class HeaderComponent implements OnInit {
 
   scrolled: boolean = false;
 
-  isAuthorized: boolean = true;
+  isAuthorized: boolean = false;
 
   constructor(
     public transloco: TranslocoService,
     private scroll: ScrollService,
     public dialog: MatDialog,
+    public authService: UserAuthServiceService,
   ) {}
 
   ngOnInit(): void {
     this.activeLang = localStorage.getItem('lang') || 'en';
     this.transloco.setActiveLang(this.activeLang);
+    this.authService.getIsAuthorizedStatus();
   }
 
   @HostListener('document:scroll', [])

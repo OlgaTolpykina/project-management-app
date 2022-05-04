@@ -86,6 +86,7 @@
   font-weight: 700;
   line-height: 30px;
   margin: 0;
+  margin-top: 10px;
   text-align: left;
 }
 
@@ -94,7 +95,8 @@
 }
 
 .mat-form-field {
-  margin: 15px auto;
+  margin: 25px auto;
+  margin-bottom: 30px;
   input {
     color: var(--primary);
   }
@@ -118,10 +120,19 @@
   margin-top: 40px;
   padding: inherit;
   height: 62px;
+  a {
+    text-decoration-line: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 link {
   text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .button-link {
@@ -136,10 +147,16 @@ link {
   background-color: var(--primary);
   border-radius: 5px;
 
-  transition: box-shadow 0.5s;
+  transition: all 0.8s;
   cursor: pointer;
 
   &:hover {
-    box-shadow: 2px 2px 2px var(--primary-transparent);
+    background-color: var(--amber-light);
+    border-radius: 5px;
+    color: var(--primary);
+  }
+
+  &:active {
+    color: var(--amber-light);
   }
 }

@@ -1,7 +1,7 @@
 export interface UserSettings {
-  id: string;
+  id?: string;
   login: string;
   userName: string;
-  userPassword: string;
+  userPassword?: string;
   userAuthToken: string;
 }

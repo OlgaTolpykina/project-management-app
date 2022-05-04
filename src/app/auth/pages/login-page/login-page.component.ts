@@ -10,7 +10,7 @@ import {
 import { Router } from '@angular/router';
 
 import { UserSettings } from '../../models/user-settings.model';
-import { UserAuthServiceService } from '../../services/user-auth-service.service';
+import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
 import { MyErrorStateMatcher } from '../../services/error-state.service';
 
 @Component({
@@ -20,7 +20,6 @@ import { MyErrorStateMatcher } from '../../services/error-state.service';
 })
 export class LoginPageComponent implements OnInit {
   userSettings: UserSettings = {
-    id: '',
     login: '',
     userName: '',
     userPassword: '',
@@ -39,6 +38,9 @@ export class LoginPageComponent implements OnInit {
     this.authService.logInOutUser('false');
     const savedUser: UserSettings | null = this.authService.getSavedLocalUser();
     this.userSettings.login = savedUser?.login as string;
+    this.userSettings.id = savedUser?.id as string;
+    this.userSettings.userName = savedUser?.userName as string;
+    this.userSettings.userAuthToken = savedUser?.userAuthToken as string;
     this.authorizeForm.controls['loginFormControl'].setValue(this.userSettings.login);
   }
 
@@ -54,19 +56,24 @@ export class LoginPageComponent implements OnInit {
       if (!value) {
         return null;
       }
-      const validPassword =
-        value === (this.authService.getSavedLocalUser()?.userPassword as string);
-      return !validPassword ? { passwordMatch: true } : null;
+      if (this.authService.getSavedLocalUser()) {
+        const validPassword =
+          value === (this.authService.getSavedLocalUser()?.userPassword as string);
+        return !validPassword ? { passwordMatch: true } : null;
+      } else {
+        const validPassword = true;
+        return !validPassword ? { passwordMatch: true } : null;
+      }
     };
   }
 
   public authorizeForm: FormGroup = new FormGroup({
-    loginFormControl: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    loginFormControl: new FormControl('', [Validators.required]),
     passwordFormControl: new FormControl('', [
       Validators.required,
       Validators.minLength(8),
       this.validatePasswordStrength(),
-      this.passwordMatchingValidator(),
+      // this.passwordMatchingValidator(),
     ]),
   });
 
@@ -87,18 +94,21 @@ export class LoginPageComponent implements OnInit {
   public getUserSettings() {
     this.userSettings.login = this.authorizeForm.controls['loginFormControl'].value;
     this.userSettings.userPassword = this.authorizeForm.controls['passwordFormControl'].value;
-    this.authorizeUserSettings();
+    this.authService.userSettings = this.userSettings;
   }
 
-  private async authorizeUserSettings() {
+  async authorizeUserSettings() {
+    this.getUserSettings();
     if (this.userSettings.login === this.authService.getSavedLocalUser()?.login) {
       if (this.authorizeForm.status === 'VALID') {
         this.authService.authorizeUser(this.userSettings);
-        this.router.navigate(['home']);
       }
     } else {
-      this.authService.userSettings = this.userSettings;
-      this.router.navigate(['/auth/signUp']);
+      localStorage.removeItem('savedUser');
+      localStorage.removeItem('token');
+      if (this.authorizeForm.status === 'VALID') {
+        this.authService.authorizeUser(this.userSettings);
+      }
     }
   }
 }

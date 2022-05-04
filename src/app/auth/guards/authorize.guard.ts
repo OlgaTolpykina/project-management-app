@@ -21,16 +21,17 @@ export class AuthorizeGuard implements CanActivate {
     state: RouterStateSnapshot,
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const { url } = state;
-
     return this.checkLogin(url);
   }
 
   checkLogin(url: string): true | UrlTree {
-    if (this.authService.isAuthorized === 'true') {
+    if (this.authService.isAuthorized === 'true' || url === '/home') {
       return true;
     }
-    console.log('router works');
-    this.authService.redirectUrl = url;
+    // if (url === '/auth/editUser') {
+    //   this.authService.redirectUrl = url;
+    // }
+    //this.authService.redirectUrl = url;
     return this.router.parseUrl('/auth/login');
   }
 }

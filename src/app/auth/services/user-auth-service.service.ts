@@ -1,20 +1,34 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { catchError, Subject, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 import { UserSettings } from '../models/user-settings.model';
+import { BeAuthService } from '../../shared/services/be-auth.service';
+import { UserService } from '../../shared/services/user.service';
+
+import { Error } from '@shared/types/error.model';
+import { User } from '@shared/types/user.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserAuthServiceService {
   public userSettings: UserSettings = {
-    id: '',
     login: '',
     userName: '',
     userPassword: '',
     userAuthToken: '',
   };
 
+  messageForUser: string = '';
+
   redirectUrl: string | null = null;
+
+  loadedUser: User = {
+    name: '',
+    login: '',
+    password: '',
+  };
 
   public isAuthorized: string = 'false';
 
@@ -26,7 +40,15 @@ export class UserAuthServiceService {
 
   isUserAuthorized$ = this.isUserAuthorized.asObservable();
 
-  // constructor() { }
+  beAuthService: BeAuthService;
+
+  userService: UserService;
+
+  constructor(beAuthService: BeAuthService, userService: UserService, public router: Router) {
+    this.beAuthService = beAuthService;
+    this.userService = userService;
+  }
+
   getIsAuthorizedStatus(): void {
     this.isAuthorized = localStorage.getItem('isAuthorized')
       ? (localStorage.getItem('isAuthorized') as string)
@@ -48,43 +70,172 @@ export class UserAuthServiceService {
     return null;
   }
 
-  saveLocalUser(user: UserSettings) {
+  private async saveLocalUser(user: UserSettings) {
     localStorage.setItem('savedUser', JSON.stringify(user));
+    localStorage.setItem('token', user.userAuthToken);
   }
 
   registryUser(user: UserSettings) {
     const newUser: UserSettings = user;
-    newUser.userAuthToken = this.getUserAuthToken(user);
-    this.saveLocalUser(newUser);
-    this.authorizeUser(newUser);
+    this.beAuthService
+      .signup({ login: newUser.login, password: newUser.userPassword, name: newUser.userName })
+      .pipe(catchError((error) => this.handleError(error)))
+      .subscribe(async (data: User | Error) => {
+        if (!(data instanceof Error)) {
+          this.loadedUser = { ...data } as User;
+          newUser.id = this.loadedUser.id as string;
+          this.userSettings.id = this.loadedUser.id as string;
+          this.saveLocalUser(newUser);
+          this.getMessageForUser('register profile', 'home');
+          await this.authorizeUser(this.userSettings);
+        }
+      });
   }
 
-  getUserAuthToken(user: UserSettings): string {
+  updateUser(user: UserSettings) {
     const newUser: UserSettings = user;
-    newUser.userAuthToken = 'AIzaSyDymexQ-mAOw13v6xGt4nDgQk9RavcQs4s';
-    const token = 'AIzaSyDymexQ-mAOw13v6xGt4nDgQk9RavcQs4s';
-    return token;
+    this.userService
+      .updateUser(user.id as string, {
+        name: newUser.userName,
+        login: newUser.login,
+        password: newUser.userPassword,
+      })
+      .pipe(catchError((error) => this.handleError(error)))
+      .subscribe(async (data: User | Error) => {
+        if (!(data instanceof Error)) {
+          this.loadedUser = { ...data } as User;
+          newUser.id = this.loadedUser.id as string;
+          this.userSettings.id = this.loadedUser.id as string;
+          newUser.userPassword = '';
+          this.saveLocalUser(newUser);
+          const url: string = this.redirectUrl ? this.redirectUrl : 'home';
+          this.getMessageForUser('update profile', url);
+        }
+      });
   }
 
-  authorizeUser(user: UserSettings) {
+  private async getUserData(login: string): Promise<void> {
+    this.userService
+      .getAllUsers()
+      .pipe(catchError((error) => this.handleError(error)))
+      .subscribe(async (data: User[] | Error) => {
+        if (!(data instanceof Error)) {
+          const users: User[] = JSON.parse(JSON.stringify(data));
+          const currentUser: User = users.filter((item) => {
+            return item.login === login;
+          })[0];
+          this.userSettings.id = currentUser.id;
+          this.userSettings.userName = currentUser.name as string;
+          await this.saveLocalUser(this.userSettings);
+        }
+      });
+  }
+
+  async authorizeUser(user: UserSettings) {
     this.userSettings = user;
     let newUser: UserSettings = user;
     const localSavedUser: UserSettings | null = this.getSavedLocalUser();
     if (localSavedUser) {
       if (newUser.login === localSavedUser.login) {
         newUser = localSavedUser;
-        this.logInOutUser('true');
-        localStorage.setItem('isAuthorized', 'true');
-        this.changeUserSource.next(newUser.userName);
-        this.isUserAuthorized.next(true);
+        this.beAuthService
+          .signin({ login: newUser.login, password: newUser.userPassword })
+          .pipe(catchError((error) => this.handleError(error)))
+          .subscribe((data: { token: string } | Error) => {
+            if (!(data instanceof Error)) {
+              this.userSettings.userAuthToken = (data as { token: string }).token;
+              this.userSettings.userPassword = '';
+              this.saveLocalUser(this.userSettings);
+              this.logInOutUser('true');
+              localStorage.setItem('isAuthorized', 'true');
+              this.changeUserSource.next(newUser.userName);
+              this.isUserAuthorized.next(true);
+              this.getMessageForUser('Welcome in profile', 'boards');
+              this.logInOutUser('true');
+            }
+          });
       }
+    } else {
+      this.beAuthService
+        .signin({ login: newUser.login, password: newUser.userPassword })
+        .pipe(catchError((error) => this.handleError(error)))
+        .subscribe(async (data: { token: string } | Error) => {
+          if (!(data instanceof Error)) {
+            this.userSettings.userAuthToken = (data as { token: string }).token;
+            this.userSettings.userPassword = '';
+            await this.saveLocalUser(this.userSettings);
+            await this.getUserData(newUser.login);
+            await this.saveLocalUser(this.userSettings);
+            await this.logInOutUser('true');
+            this.changeUserSource.next(newUser.userName);
+            this.isUserAuthorized.next(true);
+            this.getMessageForUser('Welcome in profile', 'boards');
+          }
+        });
     }
   }
 
-  logInOutUser(status: string) {
+  deleteUser() {
+    this.userService
+      .deleteUser(this.getSavedLocalUser()?.id as string)
+      .pipe(catchError(this.handleError))
+      .subscribe(async (data) => {
+        if (!(data instanceof Error)) {
+          this.logInOutUser('false');
+          // localStorage.clear();
+          localStorage.removeItem('savedUser');
+          localStorage.removeItem('token');
+          this.getMessageForUser('delete profile', 'home');
+        }
+      });
+  }
+
+  async logInOutUser(status: string) {
     localStorage.setItem('isAuthorized', status);
     this.isAuthorized = status;
-    const userStatus: boolean = status as unknown as boolean;
+    const userStatus: boolean = status === 'true' ? true : false;
+    if (!userStatus) {
+      //localStorage.clear();
+      localStorage.removeItem('savedUser');
+      localStorage.removeItem('token');
+    }
     this.isUserAuthorized.next(userStatus);
+  }
+
+  getMessageForUser(message: string, redirectUrl?: string | null) {
+    this.messageForUser = message;
+    const url = redirectUrl ? redirectUrl : this.router.url;
+    this.router.navigate(['auth/message']);
+    setTimeout(() => {
+      this.router.navigate([url]);
+    }, 3000);
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error.statusCode === 0) {
+      console.error('An error occurred:', error.error);
+    } else {
+      console.error(
+        `Backend returned code ${error.error.statusCode}, body was: `,
+        error.error.message,
+      );
+      switch (error.error.statusCode) {
+        case 404:
+          this.getMessageForUser('signUp first');
+          break;
+        case 409:
+          this.getMessageForUser(`user exist`);
+          break;
+        case 403:
+          this.getMessageForUser('login&password not found');
+          break;
+        default:
+          this.getMessageForUser(error.error?.message as string);
+          break;
+      }
+    }
+    return throwError(() => {
+      new Error('Something bad happened; please try again later.');
+    });
   }
 }
