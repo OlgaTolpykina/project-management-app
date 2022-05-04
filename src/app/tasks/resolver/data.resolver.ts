@@ -21,6 +21,7 @@ export class DataResolver implements Resolve<Board | never> {
     const selectedBoardId = <string>route.paramMap.get('id');
 
     return new Promise((resolve, reject) => {
+      if (this.unsubscribe$) this.unsubscribe$.unsubscribe();
       this.unsubscribe$ = this.selectedBoard$
         .pipe(
           map((board) => {
