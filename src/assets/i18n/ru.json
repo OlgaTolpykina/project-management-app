@@ -49,5 +49,7 @@
   "newColumn": "Добавить колонку",
   "newTask": "Добавить задачу",
   "delete user prompt": "Вы уверены, что хотите удалить Профиль и все данные?",
-  "password should not be empty": "Пароль не должен быть пуст"
+  "password should not be empty": "Пароль не должен быть пуст",
+  "title required": "Введите название",
+  "title length": "Пожалуйста, выберите более короткое название"
 }

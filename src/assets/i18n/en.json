@@ -49,5 +49,7 @@
   "newColumn": "Add new column",
   "newTask": "Add new task",
   "delete user prompt": "Are you really want to delete User Profile?",
-  "password should not be empty": "password should not be empty"
+  "password should not be empty": "password should not be empty",
+  "title required": "Title is required",
+  "title length": "Please choose shorter title"
 }
