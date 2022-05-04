@@ -27,7 +27,8 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.activeLang = this.transloco.getActiveLang();
+    this.activeLang = localStorage.getItem('lang') || 'en';
+    this.transloco.setActiveLang(this.activeLang);
   }
 
   @HostListener('document:scroll', [])
@@ -38,6 +39,7 @@ export class HeaderComponent implements OnInit {
   changeLang(lang: string) {
     this.transloco.setActiveLang(lang);
     this.activeLang = lang;
+    localStorage.setItem('lang', lang);
   }
 
   onToggleSidenav = () => {
