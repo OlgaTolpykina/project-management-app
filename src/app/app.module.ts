@@ -12,6 +12,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { BoardsEffects } from './redux/effects/effects';
+import { appState } from './redux/app.state';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,19 +23,16 @@ import { BoardsEffects } from './redux/effects/effects';
     SharedModule,
     HttpClientModule,
     CoreModule,
-    StoreModule.forRoot(
-      {},
-      {
-        runtimeChecks: {
-          strictStateImmutability: true,
-          strictActionImmutability: true,
-          strictStateSerializability: true,
-          strictActionSerializability: true,
-          strictActionWithinNgZone: true,
-          strictActionTypeUniqueness: true,
-        },
+    StoreModule.forRoot(appState, {
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+        strictStateSerializability: true,
+        strictActionSerializability: true,
+        strictActionWithinNgZone: true,
+        strictActionTypeUniqueness: true,
       },
-    ),
+    }),
     EffectsModule.forRoot([BoardsEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

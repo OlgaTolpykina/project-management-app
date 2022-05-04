@@ -7,7 +7,6 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/redux/state.model';
 import { selectBoards } from '../../../redux/selectors';
-import { getAllBoards } from '../../../redux/actions/board.actions';
 import { CreateBoardComponent } from '@board/components/create-board/create-board.component';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -17,7 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./board-list.component.scss'],
 })
 export class BoardListComponent implements OnInit {
-  boards$: Observable<Board[]> = this.store.select(selectBoards);
+  boards$: Observable<Board[] | undefined> = this.store.select(selectBoards);
 
   boardsBackgroundImgsUrl: string[] = [];
 
@@ -32,10 +31,8 @@ export class BoardListComponent implements OnInit {
   ngOnInit(): void {
     this.boardsBackgroundImgsUrl = [];
 
-    this.store.dispatch(getAllBoards());
-
     this.boards$.pipe(takeUntil(this.unsubscribe$)).subscribe((value) => {
-      if (value.length) {
+      if (value?.length) {
         this.backgroundImgService
           .getBackgroundImgs(value.length)
           .pipe(takeUntil(this.unsubscribe$))
