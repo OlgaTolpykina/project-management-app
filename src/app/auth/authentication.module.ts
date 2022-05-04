@@ -7,9 +7,16 @@ import { SharedModule } from '@shared/shared.module';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { UserRegisterComponent } from './pages/user-register/user-register.component';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
+import { EditUserPageComponent } from './pages/edit-user-page/edit-user-page.component';
+import { MessagePageComponent } from './components/message-page/message-page.component';
 
 @NgModule({
-  declarations: [LoginPageComponent, UserRegisterComponent],
+  declarations: [
+    LoginPageComponent,
+    UserRegisterComponent,
+    EditUserPageComponent,
+    MessagePageComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
