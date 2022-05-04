@@ -1,28 +1,30 @@
-<div class="tasks-sidebar">
-  <a routerLink="/boards" class="tasks-sidebar_item">All Boards</a>
-</div>
-<div class="tasks-content">
-  <p class="tasks-board">
-    Board title: <span>{{ board$ | async }}</span>
-  </p>
-  <div class="tasks-buttons">
-    <button matRipple class="tasks-buttons_item">
-      <mat-icon>filter_list</mat-icon>
-      <span>Filter</span>
-    </button>
+<ng-container *transloco="let t">
+  <div class="tasks-sidebar">
+    <a routerLink="/boards" class="tasks-sidebar_item">{{ t("allBoards") }}</a>
   </div>
-  <div class="tasks-columns">
-    <div class="tasks-columns_inner">
-      <app-column
-        *ngFor="let column of columns | orderBy: columnOrder"
-        [column]="column"
-      ></app-column>
-      <div class="column-wrapper">
-        <button matRipple class="add-column">
-          <mat-icon>add</mat-icon>
-          <span>Add new column</span>
-        </button>
+  <div class="tasks-content">
+    <p class="tasks-board">
+      {{ t("board-title") }}: <span>{{ board$ | async }}</span>
+    </p>
+    <div class="tasks-buttons">
+      <button matRipple class="tasks-buttons_item">
+        <mat-icon>filter_list</mat-icon>
+        <span>{{ t("filter") }}</span>
+      </button>
+    </div>
+    <div class="tasks-columns">
+      <div class="tasks-columns_inner">
+        <app-column
+          *ngFor="let column of columns | orderBy: columnOrder"
+          [column]="column"
+        ></app-column>
+        <div class="column-wrapper">
+          <button matRipple class="add-column">
+            <mat-icon>add</mat-icon>
+            <span>{{ t("newColumn") }}</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</ng-container>

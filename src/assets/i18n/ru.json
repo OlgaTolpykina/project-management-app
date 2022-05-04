@@ -30,5 +30,9 @@
   "board-title-placeholder": "Введите название доски",
   "create": "Создать",
   "cancel": "Отмена",
-  "delete": "Удалить"
+  "delete": "Удалить",
+  "allBoards": "Доски",
+  "filter": "Фильтр",
+  "newColumn": "Добавить колонку",
+  "newTask": "Добавить задачу"
 }
