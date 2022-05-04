@@ -27,8 +27,4 @@ export class BoardItemComponent {
           this.store.dispatch(deleteBoard({ id: this.board.id }));
       });
   }
-
-  onViewBoardDetails(): void {
-    this.router.navigate(['/boards', 'boardId']);
-  }
 }

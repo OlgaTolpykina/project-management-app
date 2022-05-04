@@ -5,6 +5,7 @@ import { AppState } from '@app/redux/state.model';
 import { Board } from '@shared/types/board.model';
 import { Error } from '@shared/types/error.model';
 import { createNewBoard } from '@app/redux/actions/board.actions';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-board',
@@ -12,19 +13,17 @@ import { createNewBoard } from '@app/redux/actions/board.actions';
   styleUrls: ['./create-board.component.scss'],
 })
 export class CreateBoardComponent {
+  title = new FormControl('', [Validators.required, Validators.maxLength(50)]);
+
   constructor(private boardService: BoardService, private store: Store<AppState>) {}
 
-  onCreateBoard(title: string) {
-    if (!localStorage.getItem('token')) {
-      const token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MTVmYmExMC00NmYwLTQyNjEtYjM5ZC05NjdiM2ExMTFlYTYiLCJsb2dpbiI6IkFseWFseWExNCIsImlhdCI6MTY1MTMxMTk1OX0.R-k_-jutBzjqsSc7P3QR3DYZ6ehkwVlNguh3_E-LfT4';
-      localStorage.setItem('token', token);
+  onCreateBoard() {
+    if (this.title?.valid) {
+      this.boardService.createBoard(this.title.value).subscribe((data: Board | Error) => {
+        if (!(data instanceof Error)) {
+          this.store.dispatch(createNewBoard({ board: data as Board }));
+        }
+      });
     }
-
-    this.boardService.createBoard({ title }).subscribe((data: Board | Error) => {
-      if (!(data instanceof Error)) {
-        this.store.dispatch(createNewBoard({ board: data as Board }));
-      }
-    });
   }
 }

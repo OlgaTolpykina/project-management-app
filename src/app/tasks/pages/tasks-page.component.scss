@@ -1,0 +1,137 @@
+:host {
+  display: flex;
+  padding: 30px 16px 10px;
+
+  height: calc(100vh - 120px);
+}
+
+.tasks-sidebar {
+  padding: 20px 0;
+  width: 200px;
+  min-height: calc(100vh - 200px);
+
+  text-align: center;
+  color: var(--primary);
+  font-size: 16px;
+  line-height: 30px;
+
+  background-color: var(--primary-transparent-full);
+  border-radius: 5px;
+
+  cursor: pointer;
+  transition: all 0.8s;
+
+  &_item {
+    display: block;
+    text-decoration: none;
+  }
+
+  &_item:hover {
+    width: 100%;
+    height: 30px;
+    margin: 0;
+    background-color: var(--amber-light);
+  }
+
+  &_item:active {
+    color: var(--amber);
+  }
+}
+
+.tasks-content {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  flex-grow: 1;
+}
+
+.tasks-board {
+  height: 30px;
+  padding: 5px 15px;
+  line-height: 20px;
+
+  background-color: var(--primary-transparent-full);
+  border-radius: 5px;
+
+  color: var(--primary);
+  font-weight: 400;
+
+  span {
+    font-weight: 700;
+  }
+}
+
+.tasks-columns {
+  flex: 1;
+  position: relative;
+
+  &_inner {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    user-select: none;
+    white-space: nowrap;
+  }
+}
+
+.tasks-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  height: 50px;
+  padding: 5px;
+  &_item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    border: none;
+    border-radius: 3px;
+    font-size: 16px;
+    color: var(--primary);
+
+    transition: all 0.5s;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 2px 2px 2px var(--primary-transparent);
+    }
+  }
+}
+
+.column-wrapper {
+  box-sizing: border-box;
+  display: inline-block;
+  height: 100%;
+  margin: 0 4px;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 200px;
+}
+
+.add-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+
+  border: none;
+  border-radius: 3px;
+
+  color: var(--primary);
+  font-size: 16px;
+
+  transition: all 0.5s;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 2px 2px 2px var(--primary-transparent);
+  }
+}

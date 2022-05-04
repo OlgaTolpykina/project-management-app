@@ -25,6 +25,10 @@ const routes: Routes = [
     canActivate: [AuthorizeGuard],
     loadChildren: () => import('./board/board.module').then((m) => m.BoardModule),
   },
+  {
+    path: 'b/:id',
+    loadChildren: () => import('./tasks/tasks.module').then((m) => m.TasksModule),
+  },
   { path: '**', component: NotFoundComponent },
 ];
 

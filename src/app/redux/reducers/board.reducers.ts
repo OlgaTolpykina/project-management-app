@@ -4,9 +4,14 @@ import {
   getAllBoards,
   getAllBoardsFailed,
   getAllBoardsSuccessfully,
+  getSelectedBoard,
+  getSelectedBoardFailed,
+  getSelectedBoardSuccessfully,
+  setSelectedBoard,
+  setSelectedBoardId,
   deleteBoard,
 } from '../actions/board.actions';
-import { initialBoardsState } from '../state.model';
+import { initialBoardsState, initialSelectedBoardState } from '../state.model';
 
 export const boardsReducer = createReducer(
   initialBoardsState,
@@ -31,4 +36,26 @@ export const boardsReducer = createReducer(
     if (!state.boards) state.boards = [];
     return { ...state, boards: [...state.boards.filter((board) => board.id !== id)] };
   }),
+);
+
+export const selectedBoardReducer = createReducer(
+  initialSelectedBoardState,
+  on(setSelectedBoardId, (state, { selectedBoardId }) => ({
+    ...state,
+    selectedBoardId: selectedBoardId,
+  })),
+  on(setSelectedBoard, (state, { selectedBoard }) => ({
+    ...state,
+    selectedBoard: selectedBoard,
+  })),
+  on(getSelectedBoard, (state) => {
+    return { ...state };
+  }),
+  on(getSelectedBoardSuccessfully, (state, { selectedBoard }) => {
+    return { ...state, selectedBoard: selectedBoard };
+  }),
+  on(getSelectedBoardFailed, (state, { error }) => ({
+    ...state,
+    error,
+  })),
 );

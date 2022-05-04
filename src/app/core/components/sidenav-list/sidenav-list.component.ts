@@ -27,12 +27,14 @@ export class SidenavListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.activeLang = this.transloco.getActiveLang();
+    this.activeLang = localStorage.getItem('lang') || 'en';
+    this.transloco.setActiveLang(this.activeLang);
   }
 
   changeLang(lang: string) {
     this.transloco.setActiveLang(lang);
     this.activeLang = lang;
+    localStorage.setItem('lang', lang);
   }
 
   public onSidenavClose = () => {

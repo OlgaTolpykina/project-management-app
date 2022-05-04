@@ -3,7 +3,9 @@
   <mat-dialog-content class="modal-content">
     <mat-form-field appearance="fill">
       <mat-label>{{ t("board-title") }}</mat-label>
-      <input matInput value="" #boardTitle />
+      <input matInput value="" [formControl]="title" required />
+      <mat-error *ngIf="title.hasError('required')">{{ t("title required") }}</mat-error>
+      <mat-error *ngIf="title.hasError('maxlength')">{{ t("title length") }}</mat-error>
       <mat-placeholder>{{ t("board-title-placeholder") }}</mat-placeholder>
     </mat-form-field>
   </mat-dialog-content>
@@ -12,8 +14,8 @@
     <button
       mat-button
       [mat-dialog-close]="true"
-      (click)="onCreateBoard(boardTitle.value)"
-      [disabled]="!boardTitle.value"
+      (click)="onCreateBoard()"
+      [disabled]="title.invalid"
     >
       {{ t("create") }}
     </button>

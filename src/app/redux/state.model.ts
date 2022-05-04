@@ -2,6 +2,7 @@ import { Board } from '@shared/types/board.model';
 
 export interface AppState {
   boards: BoardsState;
+  selectedBoard: SelectedBoardState;
 }
 
 interface BoardsState {
@@ -10,4 +11,14 @@ interface BoardsState {
 
 export const initialBoardsState: BoardsState = {
   boards: undefined,
+};
+
+export interface SelectedBoardState {
+  selectedBoard: Board | undefined;
+  selectedBoardId: string;
+}
+
+export const initialSelectedBoardState: SelectedBoardState = {
+  selectedBoard: undefined,
+  selectedBoardId: '',
 };

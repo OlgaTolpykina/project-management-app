@@ -22,8 +22,8 @@ export class BoardService {
     return this.http.post<Board | Error>(this.url, body);
   }
 
-  getBoardById(boardId: string): Observable<Board | Error> {
-    return this.http.get<Board | Error>(`${this.url}/${boardId}`);
+  getBoardById(boardId: string): Observable<Board> {
+    return this.http.get<Board>(`${this.url}/${boardId}`);
   }
 
   deleteBoardById(boardId: string): Observable<any | Error> {

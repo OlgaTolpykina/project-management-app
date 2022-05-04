@@ -6,6 +6,8 @@ import { Board } from '@shared/types/board.model';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/redux/state.model';
+import { Router } from '@angular/router';
+import { setSelectedBoard } from '@app/redux/actions/board.actions';
 import { selectBoards } from '../../../redux/selectors';
 import { CreateBoardComponent } from '@board/components/create-board/create-board.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,6 +27,7 @@ export class BoardListComponent implements OnInit {
   constructor(
     private backgroundImgService: BackgroundImgService,
     private store: Store<AppState>,
+    private router: Router,
     private dialog: MatDialog,
   ) {}
 
@@ -43,6 +46,12 @@ export class BoardListComponent implements OnInit {
           });
       }
     });
+  }
+
+  openBoard(board: Board) {
+    const selectedBoardId = board.id!;
+    this.store.dispatch(setSelectedBoard({ selectedBoard: board }));
+    this.router.navigateByUrl('/b/' + selectedBoardId);
   }
 
   openDialog(): void {

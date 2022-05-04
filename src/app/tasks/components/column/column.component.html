@@ -1,0 +1,43 @@
+<ng-container *transloco="let t">
+  <div class="column">
+    <div class="column-header">
+      <div class="column-header_title">
+        <mat-form-field *ngIf="isEditEnable">
+          <input matInput placeholder="Enter name" [(ngModel)]="name" />
+        </mat-form-field>
+        <span *ngIf="!isEditEnable" (click)="onEdit()">{{ name }}</span>
+      </div>
+      <div class="column-header_buttons">
+        <button
+          class="column-header_icon"
+          mat-icon-button
+          color="primary"
+          *ngIf="!isEditEnable"
+          (click)="onEdit()"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button class="column-header_icon" mat-icon-button color="primary" *ngIf="!isEditEnable">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button *ngIf="isEditEnable" mat-icon-button color="primary" (click)="onEdit()">
+          <mat-icon>done</mat-icon>
+        </button>
+        <button *ngIf="isEditEnable" mat-icon-button color="primary" (click)="onEdit()">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </div>
+    </div>
+    <ng-container *ngFor="let task of tasks | orderBy: taskOrder">
+      <app-task
+        *ngIf="task.columnId === column!.id"
+        class="mat-elevation-z4"
+        [task]="task"
+      ></app-task>
+    </ng-container>
+    <button matRipple class="add-task">
+      <mat-icon>add</mat-icon>
+      <span>{{ t("newTask") }}</span>
+    </button>
+  </div>
+</ng-container>
