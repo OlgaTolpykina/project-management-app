@@ -6,6 +6,7 @@ import {
   getAllColumns,
   getAllColumnsFailed,
   getAllColumnsSuccessfully,
+  updateColumns,
 } from '../actions/column.actions';
 
 export const columnsReducer = createReducer(
@@ -27,8 +28,14 @@ export const columnsReducer = createReducer(
     ...state,
     error,
   })),
+  on(updateColumns, (state, { columns }) => {
+    return {
+      ...state,
+      columns,
+    };
+  }),
   on(deleteColumn, (state, { id }) => {
-    if (!state.columns) state.columns = [];
-    return { ...state, boards: [...state.columns.filter((column) => column.id !== id)] };
+    // if (!state.columns) state.columns = [];
+    return { ...state, columns: [...state.columns.filter((column) => column.id !== id)] };
   }),
 );

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { createNewColumn, getAllColumns } from '@app/redux/actions/column.actions';
 import { selectSelectedBoardId } from '@app/redux/selectors/board.selectors';
@@ -7,16 +7,14 @@ import { AppState } from '@app/redux/state.model';
 import { Store } from '@ngrx/store';
 import { ColumnService } from '@shared/services/column.service';
 import { Column } from '@shared/types/column.model';
-import { map, Observable, Subject, switchMap, take, takeUntil } from 'rxjs';
+import { map, Observable, switchMap, take } from 'rxjs';
 
 @Component({
   selector: 'app-create-column',
   templateUrl: './create-column.component.html',
   styleUrls: ['./create-column.component.scss'],
 })
-export class CreateColumnComponent implements OnDestroy {
-  unsubscribe$ = new Subject<void>();
-
+export class CreateColumnComponent {
   selectedBoardId$: Observable<string> = this.store.select(selectSelectedBoardId);
 
   allColumns$: Observable<Column[] | undefined> = this.store.select(selectColumns);
@@ -44,14 +42,14 @@ export class CreateColumnComponent implements OnDestroy {
                 if (columns) columns = this.checkColumnsOrder(columns, id);
                 this.newColumn.title = this.title.value;
                 this.newColumn.order = columns?.length ? columns!.length + 1 : 1;
-                return this.columnService
-                  .createColumn(selectedBoardId, this.newColumn)
-                  .pipe(map((column) => this.store.dispatch(createNewColumn({ column: column }))));
+                return this.columnService.createColumn(selectedBoardId, this.newColumn).pipe(
+                  map((column) => this.store.dispatch(createNewColumn({ column: column }))),
+                  take(1),
+                );
               }),
             );
           }),
         )
-        .pipe(takeUntil(this.unsubscribe$))
         .subscribe();
     }
   }
@@ -63,7 +61,6 @@ export class CreateColumnComponent implements OnDestroy {
     checkedColumns.map((column, index) => {
       if (column.order !== index + 1) {
         isUpdated = true;
-        console.log(column.order, index);
         const updatedColumn = {
           title: column.title,
           order: index + 1,
@@ -73,10 +70,5 @@ export class CreateColumnComponent implements OnDestroy {
     });
     if (isUpdated) this.store.dispatch(getAllColumns());
     return checkedColumns;
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 }

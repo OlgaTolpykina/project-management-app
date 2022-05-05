@@ -7,6 +7,7 @@ import { Task } from '@shared/types/task.model';
 import { ColumnService } from '@shared/services/column.service';
 import { map, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { selectSelectedBoardId } from '@app/redux/selectors/board.selectors';
+import { UpdateOrderService } from '@app/tasks/services/updateOrder/update-order.service';
 
 @Component({
   selector: 'app-column',
@@ -56,7 +57,11 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   taskOrder = 0;
 
-  constructor(private store: Store<AppState>, private columnService: ColumnService) {}
+  constructor(
+    private store: Store<AppState>,
+    private columnService: ColumnService,
+    private updateOrder: UpdateOrderService,
+  ) {}
 
   ngOnInit(): void {
     if (this.column) {
@@ -79,9 +84,12 @@ export class ColumnComponent implements OnInit, OnDestroy {
         .pipe(
           map((id) => id),
           switchMap((id) => {
-            return this.columnService
-              .deleteColumn(id, this.column!.id!)
-              .pipe(map(() => this.store.dispatch(deleteColumn({ id: this.column!.id! }))));
+            return this.columnService.deleteColumn(id, this.column!.id!).pipe(
+              map(() => this.store.dispatch(deleteColumn({ id: this.column!.id! }))),
+              switchMap(() => {
+                return this.updateOrder.updateOrder();
+              }),
+            );
           }),
         )
         .pipe(takeUntil(this.unsubscribe$))

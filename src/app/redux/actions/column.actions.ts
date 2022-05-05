@@ -6,6 +6,11 @@ export const createNewColumn = createAction(
   props<{ column: Column }>(),
 );
 
+export const updateColumns = createAction(
+  '[COLUMNS] UPDATE COLUMNS',
+  props<{ columns: Column[] }>(),
+);
+
 export const getAllColumns = createAction('[COLUMNS] GET ALL COLUMNS');
 
 export const getAllColumnsSuccessfully = createAction(
