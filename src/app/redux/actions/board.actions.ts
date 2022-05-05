@@ -20,6 +20,8 @@ export const setSelectedBoard = createAction(
   props<{ selectedBoard: Board }>(),
 );
 
+export const clearSelectedBoard = createAction('[SELECTED BOARD] CLEAR SELECTED BOARD');
+
 export const setSelectedBoardId = createAction(
   '[SELECTED BOARD] SET SELECTED BOARD ID',
   props<{ selectedBoardId: string }>(),

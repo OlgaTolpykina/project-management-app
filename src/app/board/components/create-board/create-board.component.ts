@@ -6,6 +6,7 @@ import { Board } from '@shared/types/board.model';
 import { Error } from '@shared/types/error.model';
 import { createNewBoard } from '@app/redux/actions/board.actions';
 import { FormControl, Validators } from '@angular/forms';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-create-board',
@@ -21,6 +22,7 @@ export class CreateBoardComponent {
     if (this.title?.valid) {
       this.boardService
         .createBoard({ title: this.title.value })
+        .pipe(take(1))
         .subscribe((data: Board | Error) => {
           if (!(data instanceof Error)) {
             console.log(data);
