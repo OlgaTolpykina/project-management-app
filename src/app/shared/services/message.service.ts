@@ -11,13 +11,20 @@ export class MessageService {
 
   constructor(public router: Router) {}
 
-  public getMessageForUser(message: string, redirectUrl?: string | null): void {
+  public getMessageForUser(
+    message: string,
+    redirectUrl: string | null = null,
+    timeout: number | null = null,
+  ): void {
     this.messageForUser = message;
     const url = redirectUrl ? redirectUrl : this.router.url;
+    this.redirectUrl = url;
     this.router.navigate(['/message']);
-    setTimeout(() => {
-      this.messageForUser = '';
-      this.router.navigate([url]);
-    }, 3000);
+    if (!(timeout === null)) {
+      setTimeout(() => {
+        this.messageForUser = '';
+        this.router.navigate([url]);
+      }, timeout);
+    }
   }
 }

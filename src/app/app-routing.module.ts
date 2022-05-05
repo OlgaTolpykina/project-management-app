@@ -9,7 +9,7 @@ import { UserMessageComponent } from '@shared/user-message/user-message.componen
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'boards',
+    redirectTo: 'main',
     pathMatch: 'full',
   },
   { path: 'home', component: HomePageComponent, pathMatch: 'full' },
@@ -19,7 +19,7 @@ const routes: Routes = [
     loadChildren: () => import('./auth/authentication.module').then((m) => m.AuthenticationModule),
   },
   {
-    path: 'boards',
+    path: 'main',
     canActivate: [AuthorizeGuard],
     loadChildren: () => import('./board/board.module').then((m) => m.BoardModule),
   },
