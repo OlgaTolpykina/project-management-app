@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { BackgroundImgService } from '@app/board/services/background-img.service';
 
@@ -17,7 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './board-list.component.html',
   styleUrls: ['./board-list.component.scss'],
 })
-export class BoardListComponent implements OnInit {
+export class BoardListComponent implements OnInit, OnDestroy {
   boards$: Observable<Board[] | undefined> = this.store.select(selectBoards);
 
   boardsBackgroundImgsUrl: string[] = [];
@@ -60,5 +60,9 @@ export class BoardListComponent implements OnInit {
       height: '400px',
       width: '300px',
     });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.unsubscribe();
   }
 }

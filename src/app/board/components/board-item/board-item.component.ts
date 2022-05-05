@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 
 import { BoardService } from '@shared/services/board.service';
 import { deleteBoard } from '@app/redux/actions/board.actions';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-board-item',
@@ -22,9 +23,12 @@ export class BoardItemComponent {
   onDelete(e: Event): void {
     e.stopPropagation();
     if (this.board?.id)
-      this.boardService.deleteBoardById(this.board.id).subscribe((data) => {
-        if (!(data instanceof Error) && this.board?.id)
-          this.store.dispatch(deleteBoard({ id: this.board.id }));
-      });
+      this.boardService
+        .deleteBoardById(this.board.id)
+        .pipe(take(1))
+        .subscribe((data) => {
+          if (!(data instanceof Error) && this.board?.id)
+            this.store.dispatch(deleteBoard({ id: this.board.id }));
+        });
   }
 }
