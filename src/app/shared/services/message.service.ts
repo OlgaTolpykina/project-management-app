@@ -1,15 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
-  HttpErrorResponse,
-} from '@angular/common/http';
-import { EMPTY } from 'rxjs';
-import { Error } from '@shared/types/error.model';
+import { HttpRequest } from '@angular/common/http';
+// import { Error } from '@shared/types/error.model';
 
 @Injectable({
   providedIn: 'root',
@@ -31,8 +24,7 @@ export class MessageService {
     timeout: number | null = null,
   ): void {
     this.messageForUser = message;
-    const url = redirectUrl ? redirectUrl : this.router.url;
-    this.redirectUrl = url;
+    const url = redirectUrl && !(redirectUrl === 'message') ? redirectUrl : 'main';
     this.router.navigate(['/message']);
     if (!(timeout === null)) {
       setTimeout(() => {
@@ -56,7 +48,7 @@ export class MessageService {
   public async sendDeleteRequest(): Promise<void> {
     console.log(this.request);
     this.approveDeletion = true;
-    await this.http.request(this.request as HttpRequest<unknown>).subscribe(async (data) => {
+    await this.http.delete((this.request as HttpRequest<unknown>).url).subscribe(async (data) => {
       if (!(data instanceof Error)) {
         this.approveDeletion = false;
         this.router.navigate([this.redirectUrl]);
