@@ -29,6 +29,6 @@ export const columnsReducer = createReducer(
   })),
   on(deleteColumn, (state, { id }) => {
     if (!state.columns) state.columns = [];
-    return { ...state, boards: [...state.columns.filter((board) => board.id !== id)] };
+    return { ...state, boards: [...state.columns.filter((column) => column.id !== id)] };
   }),
 );

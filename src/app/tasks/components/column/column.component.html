@@ -17,7 +17,13 @@
         >
           <mat-icon>edit</mat-icon>
         </button>
-        <button class="column-header_icon" mat-icon-button color="primary" *ngIf="!isEditEnable">
+        <button
+          class="column-header_icon"
+          mat-icon-button
+          color="primary"
+          *ngIf="!isEditEnable"
+          (click)="onDelete($event)"
+        >
           <mat-icon>delete</mat-icon>
         </button>
         <button *ngIf="isEditEnable" mat-icon-button color="primary" (click)="onEdit()">

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { createNewColumn, getAllColumns } from '@app/redux/actions/column.actions';
 import { selectSelectedBoardId } from '@app/redux/selectors/board.selectors';
@@ -14,7 +14,7 @@ import { map, Observable, Subject, switchMap, take, takeUntil } from 'rxjs';
   templateUrl: './create-column.component.html',
   styleUrls: ['./create-column.component.scss'],
 })
-export class CreateColumnComponent {
+export class CreateColumnComponent implements OnDestroy {
   unsubscribe$ = new Subject<void>();
 
   selectedBoardId$: Observable<string> = this.store.select(selectSelectedBoardId);
@@ -73,5 +73,10 @@ export class CreateColumnComponent {
     });
     if (isUpdated) this.store.dispatch(getAllColumns());
     return checkedColumns;
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }
