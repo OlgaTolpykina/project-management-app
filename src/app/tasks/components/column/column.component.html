@@ -29,11 +29,7 @@
       </div>
     </div>
     <ng-container *ngFor="let task of tasks | orderBy">
-      <app-task
-        *ngIf="task.columnId === column!.id"
-        class="mat-elevation-z4"
-        [task]="task"
-      ></app-task>
+      <app-task class="mat-elevation-z4" [task]="task"></app-task>
     </ng-container>
     <button matRipple class="add-task">
       <mat-icon>add</mat-icon>
