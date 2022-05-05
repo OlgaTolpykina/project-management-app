@@ -23,6 +23,7 @@ export class CreateBoardComponent {
         .createBoard({ title: this.title.value })
         .subscribe((data: Board | Error) => {
           if (!(data instanceof Error)) {
+            console.log(data);
             this.store.dispatch(createNewBoard({ board: data as Board }));
           }
         });
