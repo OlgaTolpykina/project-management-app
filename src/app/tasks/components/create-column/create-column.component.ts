@@ -7,7 +7,7 @@ import { AppState } from '@app/redux/state.model';
 import { Store } from '@ngrx/store';
 import { ColumnService } from '@shared/services/column.service';
 import { Column } from '@shared/types/column.model';
-import { map, Observable, switchMap, take } from 'rxjs';
+import { map, Observable, Subject, switchMap, take, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-create-column',
@@ -15,6 +15,8 @@ import { map, Observable, switchMap, take } from 'rxjs';
   styleUrls: ['./create-column.component.scss'],
 })
 export class CreateColumnComponent {
+  unsubscribe$ = new Subject<void>();
+
   selectedBoardId$: Observable<string> = this.store.select(selectSelectedBoardId);
 
   allColumns$: Observable<Column[] | undefined> = this.store.select(selectColumns);
@@ -36,7 +38,7 @@ export class CreateColumnComponent {
           switchMap((id) => {
             const selectedBoardId = id;
             return this.allColumns$.pipe(
-              map((columns) => (console.log('1'), columns)),
+              map((columns) => columns),
               take(1),
               switchMap((columns) => {
                 if (columns) columns = this.checkColumnsOrder(columns, id);
@@ -49,16 +51,15 @@ export class CreateColumnComponent {
             );
           }),
         )
-        .subscribe((value) => console.log('result', value));
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe();
     }
   }
 
   checkColumnsOrder(columns: Column[], boardId: string) {
-    console.log('in checkColumnsOrder');
     let isUpdated = false;
     const checkedColumns = [...columns];
     checkedColumns.sort((a, b) => (a.order > b.order ? 1 : -1));
-    console.log('before update', checkedColumns);
     checkedColumns.map((column, index) => {
       if (column.order !== index + 1) {
         isUpdated = true;
@@ -71,7 +72,6 @@ export class CreateColumnComponent {
       }
     });
     if (isUpdated) this.store.dispatch(getAllColumns());
-    console.log('afterupdate', checkedColumns);
     return checkedColumns;
   }
 }

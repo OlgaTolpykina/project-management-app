@@ -20,12 +20,12 @@ export class TasksPageComponent implements OnInit {
     {
       id: '08cc10f4-1aeb-4cce-9793-9fea8313b592',
       title: 'Done',
-      order: 2,
+      order: 4,
     },
     {
       id: '08cc10f4-1aeb-4cce-9793-9fea8313b593',
       title: 'In review',
-      order: 1,
+      order: 3,
     },
   ];
 

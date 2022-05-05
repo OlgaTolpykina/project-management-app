@@ -15,7 +15,7 @@
     <div class="tasks-columns">
       <div class="tasks-columns_inner">
         <app-column
-          *ngFor="let column of columns | orderBy: columnOrder"
+          *ngFor="let column of (columns$ | async)! | orderBy: columnOrder"
           [column]="column"
         ></app-column>
         <div class="column-wrapper">
