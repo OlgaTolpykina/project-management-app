@@ -4,11 +4,25 @@ import { MaterialModule } from '@shared/material/material.module';
 import { TranslocoRootModule } from '@shared/transloco/transloco-root.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CreateBoardComponent } from '../board/components/create-board/create-board.component';
-import { UserMessageComponent } from './user-message/user-message.component';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [CreateBoardComponent, UserMessageComponent],
-  imports: [CommonModule, MaterialModule, TranslocoRootModule, FlexLayoutModule],
-  exports: [MaterialModule, TranslocoRootModule, FlexLayoutModule, UserMessageComponent],
+  declarations: [CreateBoardComponent],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    TranslocoRootModule,
+    FlexLayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
+  exports: [
+    MaterialModule,
+    TranslocoRootModule,
+    FlexLayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
 })
 export class SharedModule {}

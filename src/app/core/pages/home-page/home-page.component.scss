@@ -13,7 +13,7 @@
 
 .promo {
   width: 100%;
-  min-height: 600px;
+  min-height: calc(100vh - 60px);
   padding-top: 100px;
   padding-left: 100px;
 
@@ -136,7 +136,7 @@ mat-form-field {
   justify-content: center;
   width: 100%;
   min-height: 500px;
-  margin-bottom: 50px;
+  margin: 20px 0;
 
   &-title {
     width: 100%;
