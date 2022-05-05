@@ -19,7 +19,7 @@
           [column]="column"
         ></app-column>
         <div class="column-wrapper">
-          <button matRipple class="add-column">
+          <button matRipple class="add-column" (click)="openDialog()">
             <mat-icon>add</mat-icon>
             <span>{{ t("newColumn") }}</span>
           </button>

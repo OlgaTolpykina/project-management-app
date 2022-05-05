@@ -11,8 +11,9 @@ import { httpInterceptorProviders } from './interceptors';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { BoardsEffects } from './redux/effects/effects';
+import { BoardsEffects } from './redux/effects/boards.effects';
 import { appState } from './redux/app.state';
+import { ColumnsEffects } from './redux/effects/columns.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,7 +34,7 @@ import { appState } from './redux/app.state';
         strictActionTypeUniqueness: true,
       },
     }),
-    EffectsModule.forRoot([BoardsEffects]),
+    EffectsModule.forRoot([BoardsEffects, ColumnsEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
     }),

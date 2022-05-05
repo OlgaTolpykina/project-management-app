@@ -7,9 +7,16 @@ import { SharedModule } from '@shared/shared.module';
 import { ColumnComponent } from './components/column/column.component';
 import { TaskComponent } from './components/task/task.component';
 import { OrderByPipe } from './pipes/order-by.pipe';
+import { CreateColumnComponent } from './components/create-column/create-column.component';
 
 @NgModule({
-  declarations: [TasksPageComponent, ColumnComponent, TaskComponent, OrderByPipe],
+  declarations: [
+    TasksPageComponent,
+    ColumnComponent,
+    TaskComponent,
+    OrderByPipe,
+    CreateColumnComponent,
+  ],
   imports: [CommonModule, TasksRoutingModule, SharedModule],
 })
 export class TasksModule {}

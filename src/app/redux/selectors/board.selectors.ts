@@ -1,5 +1,5 @@
 import { createSelector } from '@ngrx/store';
-import { AppState, SelectedBoardState } from './state.model';
+import { AppState, SelectedBoardState } from '../state.model';
 
 export const selectBoards = (state: AppState) => state.boards.boards;
 
