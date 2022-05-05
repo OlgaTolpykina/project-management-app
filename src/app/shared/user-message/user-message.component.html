@@ -2,7 +2,7 @@
   <div class="box">
     {{ t(messageService.messageForUser) }}
 
-    <div class="buttons-container" *ngIf="0">
+    <div class="buttons-container" *ngIf="messageService.messageForUser === 'delete confirmation'">
       <button type="" class="link button-link delete" routerLink="">
         {{ t("delete") }}
       </button>

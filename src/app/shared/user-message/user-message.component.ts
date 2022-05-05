@@ -12,6 +12,6 @@ export class UserMessageComponent implements OnInit {
   constructor(public messageService: MessageService, private router: Router) {}
 
   ngOnInit(): void {
-    console.log('message comp');
+    console.log(this.messageService.messageForUser);
   }
 }

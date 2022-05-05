@@ -46,9 +46,10 @@ export class HeadersInterceptor implements HttpInterceptor {
           return res;
         },
         (err) => {
+          this.authService.redirectUrl = this.router.url;
           if (err instanceof HttpErrorResponse) {
+            console.log(err.statusText);
             if (err.status == 401) {
-              this.authService.redirectUrl = this.router.url;
               this.authService.handleError(err);
               this.authService.logInOutUser('false');
             } else if (newReq.url.includes('boards')) {

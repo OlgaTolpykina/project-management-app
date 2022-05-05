@@ -158,7 +158,6 @@ export class UserAuthServiceService {
               this.isUserAuthorized.next(true);
               const url: string = this.redirectUrl ? this.redirectUrl : 'main';
               this.getMessageForUser('Welcome in profile', url);
-=
               this.logInOutUser('true');
             }
           });
@@ -179,7 +178,6 @@ export class UserAuthServiceService {
             this.isUserAuthorized.next(true);
             const url: string = this.redirectUrl ? this.redirectUrl : 'main';
             this.getMessageForUser('Welcome in profile', url);
-
           }
         });
     }
