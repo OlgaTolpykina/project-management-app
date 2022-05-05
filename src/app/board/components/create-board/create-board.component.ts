@@ -23,7 +23,7 @@ export class CreateBoardComponent implements OnDestroy {
   onCreateBoard() {
     if (this.title?.valid) {
       this.boardService
-        .createBoard(this.title.value)
+        .createBoard({ title: this.title.value })
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((data: Board | Error) => {
           if (!(data instanceof Error)) {
