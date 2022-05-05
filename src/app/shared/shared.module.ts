@@ -6,9 +6,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CreateBoardComponent } from '../board/components/create-board/create-board.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UserMessageComponent } from './user-message/user-message.component';
 
 @NgModule({
-  declarations: [CreateBoardComponent],
+  declarations: [CreateBoardComponent, UserMessageComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -23,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
+    UserMessageComponent,
   ],
 })
 export class SharedModule {}

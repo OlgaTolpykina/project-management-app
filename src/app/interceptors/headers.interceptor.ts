@@ -7,7 +7,7 @@ import {
   HttpInterceptor,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
@@ -24,8 +24,12 @@ export class HeadersInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let headers = request.headers;
 
-    if (request.method !== 'DELETE')
+    if (request.method !== 'DELETE') {
       headers = request.headers.set('Content-Type', 'application/json');
+    } else if (request.url.includes('boards') && !this.messageService.approveDeletion) {
+      this.messageService.getUserConfirmation(request, this.router.url);
+      return EMPTY;
+    }
 
     //TODO: Maybe receive token from auth service
     const token = localStorage.getItem('token');

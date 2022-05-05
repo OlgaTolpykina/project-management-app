@@ -3,10 +3,19 @@
     {{ t(messageService.messageForUser) }}
 
     <div class="buttons-container" *ngIf="messageService.messageForUser === 'delete confirmation'">
-      <button type="" class="link button-link delete" routerLink="">
+      <button
+        type=""
+        class="link button-link delete"
+        routerLink=""
+        (click)="messageService.sendDeleteRequest()"
+      >
         {{ t("delete") }}
       </button>
-      <button class="link button-link" routerLink="/" routerLinkActive="active">
+      <button
+        class="link button-link"
+        (click)="messageService.router.navigate([messageService.redirectUrl])"
+        routerLinkActive="active"
+      >
         {{ t("cancel") }}
       </button>
     </div>

@@ -19,11 +19,14 @@ export class CreateBoardComponent {
 
   onCreateBoard() {
     if (this.title?.valid) {
-      this.boardService.createBoard(this.title.value).subscribe((data: Board | Error) => {
-        if (!(data instanceof Error)) {
-          this.store.dispatch(createNewBoard({ board: data as Board }));
-        }
-      });
+      this.boardService
+        .createBoard({ title: this.title.value })
+        .subscribe((data: Board | Error) => {
+          if (!(data instanceof Error)) {
+            console.log(data);
+            this.store.dispatch(createNewBoard({ board: data as Board }));
+          }
+        });
     }
   }
 }
