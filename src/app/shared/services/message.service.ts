@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { HttpRequest } from '@angular/common/http';
-// import { Error } from '@shared/types/error.model';
+import { Store } from '@ngrx/store';
+import { getAllBoards } from '../../redux/actions/board.actions';
+import { BoardService } from '@shared/services/board.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +18,12 @@ export class MessageService {
 
   request: HttpRequest<unknown> | null = null;
 
-  constructor(public router: Router, private http: HttpClient) {}
+  constructor(
+    public router: Router,
+    private http: HttpClient,
+    private boardService: BoardService,
+    private store: Store,
+  ) {}
 
   public getMessageForUser(
     message: string,
@@ -48,11 +55,14 @@ export class MessageService {
   public async sendDeleteRequest(): Promise<void> {
     console.log(this.request);
     this.approveDeletion = true;
-    await this.http.delete((this.request as HttpRequest<unknown>).url).subscribe(async (data) => {
-      if (!(data instanceof Error)) {
+    const url = (this.request as HttpRequest<unknown>).url;
+    console.log(url);
+    this.http.delete(url).subscribe(() => {
+      this.boardService.getAllBoards().subscribe(() => {
         this.approveDeletion = false;
+        this.store.dispatch(getAllBoards());
         this.router.navigate([this.redirectUrl]);
-      }
+      });
     });
   }
 }
