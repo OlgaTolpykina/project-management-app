@@ -53,10 +53,8 @@ export class MessageService {
   }
 
   public async sendDeleteRequest(): Promise<void> {
-    console.log(this.request);
     this.approveDeletion = true;
     const url = (this.request as HttpRequest<unknown>).url;
-    console.log(url);
     this.http.delete(url).subscribe(() => {
       this.boardService.getAllBoards().subscribe(() => {
         this.approveDeletion = false;

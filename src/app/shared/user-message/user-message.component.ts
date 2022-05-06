@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MessageService } from '@shared/services/message.service';
@@ -8,10 +8,6 @@ import { MessageService } from '@shared/services/message.service';
   templateUrl: './user-message.component.html',
   styleUrls: ['./user-message.component.scss'],
 })
-export class UserMessageComponent implements OnInit {
+export class UserMessageComponent {
   constructor(public messageService: MessageService, private router: Router) {}
-
-  ngOnInit(): void {
-    console.log(this.messageService.messageForUser);
-  }
 }
