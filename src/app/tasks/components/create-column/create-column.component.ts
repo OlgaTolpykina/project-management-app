@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { createNewColumn, getAllColumns } from '@app/redux/actions/column.actions';
-import { selectSelectedBoardId } from '@app/redux/selectors/board.selectors';
-import { selectColumns } from '@app/redux/selectors/column.selectors';
+import { setSelectedBoardId } from '@app/redux/actions/board.actions';
+import { selectSelectedBoardColumns, selectSelectedBoardId } from '@app/redux/selectors/selectors';
 import { AppState } from '@app/redux/state.model';
 import { Store } from '@ngrx/store';
 import { ColumnService } from '@shared/services/column.service';
@@ -17,7 +16,7 @@ import { map, Observable, switchMap, take } from 'rxjs';
 export class CreateColumnComponent {
   selectedBoardId$: Observable<string> = this.store.select(selectSelectedBoardId);
 
-  allColumns$: Observable<Column[] | undefined> = this.store.select(selectColumns);
+  allColumns$: Observable<Column[] | undefined> = this.store.select(selectSelectedBoardColumns);
 
   newColumn: Column = {
     title: '',
@@ -43,7 +42,7 @@ export class CreateColumnComponent {
                 this.newColumn.title = this.title.value;
                 this.newColumn.order = columns?.length ? columns!.length + 1 : 1;
                 return this.columnService.createColumn(selectedBoardId, this.newColumn).pipe(
-                  map((column) => this.store.dispatch(createNewColumn({ column: column }))),
+                  map(() => this.store.dispatch(setSelectedBoardId({ selectedBoardId }))),
                   take(1),
                 );
               }),
@@ -55,12 +54,10 @@ export class CreateColumnComponent {
   }
 
   checkColumnsOrder(columns: Column[], boardId: string) {
-    let isUpdated = false;
     const checkedColumns = [...columns];
     checkedColumns.sort((a, b) => (a.order > b.order ? 1 : -1));
     checkedColumns.map((column, index) => {
       if (column.order !== index + 1) {
-        isUpdated = true;
         const updatedColumn = {
           title: column.title,
           order: index + 1,
@@ -68,7 +65,6 @@ export class CreateColumnComponent {
         this.columnService.updateColumn(boardId, column.id!, updatedColumn);
       }
     });
-    if (isUpdated) this.store.dispatch(getAllColumns());
     return checkedColumns;
   }
 }

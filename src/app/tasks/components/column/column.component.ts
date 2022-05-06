@@ -1,13 +1,13 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { deleteColumn } from '@app/redux/actions/column.actions';
 import { AppState } from '@app/redux/state.model';
 import { Store } from '@ngrx/store';
 import { Column } from '@shared/types/column.model';
 import { Task } from '@shared/types/task.model';
 import { ColumnService } from '@shared/services/column.service';
 import { map, Observable, Subject, switchMap, takeUntil } from 'rxjs';
-import { selectSelectedBoardId } from '@app/redux/selectors/board.selectors';
+import { selectSelectedBoardId } from '@app/redux/selectors/selectors';
 import { UpdateOrderService } from '@app/tasks/services/updateOrder/update-order.service';
+import { setSelectedBoardId } from '@app/redux/actions/board.actions';
 
 @Component({
   selector: 'app-column',
@@ -55,8 +55,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
     },
   ];
 
-  taskOrder = 0;
-
   constructor(
     private store: Store<AppState>,
     private columnService: ColumnService,
@@ -66,10 +64,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (this.column) {
       this.name = this.column.title;
-
-      this.tasks.forEach((task) => {
-        this.taskOrder = task.order;
-      });
     }
   }
 
@@ -85,7 +79,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
           map((id) => id),
           switchMap((id) => {
             return this.columnService.deleteColumn(id, this.column!.id!).pipe(
-              map(() => this.store.dispatch(deleteColumn({ id: this.column!.id! }))),
+              map(() => this.store.dispatch(setSelectedBoardId({ selectedBoardId: id }))),
               switchMap(() => {
                 return this.updateOrder.updateOrder();
               }),

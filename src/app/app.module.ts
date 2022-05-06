@@ -13,7 +13,6 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { BoardsEffects } from './redux/effects/boards.effects';
 import { appState } from './redux/app.state';
-import { ColumnsEffects } from './redux/effects/columns.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,7 +33,7 @@ import { ColumnsEffects } from './redux/effects/columns.effects';
         strictActionTypeUniqueness: true,
       },
     }),
-    EffectsModule.forRoot([BoardsEffects, ColumnsEffects]),
+    EffectsModule.forRoot([BoardsEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
     }),

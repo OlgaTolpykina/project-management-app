@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { getAllColumns } from '@app/redux/actions/column.actions';
-import { selectSelectedBoardId } from '@app/redux/selectors/board.selectors';
-import { selectColumns } from '@app/redux/selectors/column.selectors';
+import { selectSelectedBoardColumns, selectSelectedBoardId } from '@app/redux/selectors/selectors';
 import { AppState } from '@app/redux/state.model';
 import { Store } from '@ngrx/store';
 import { ColumnService } from '@shared/services/column.service';
@@ -14,22 +12,25 @@ import { map, Observable, switchMap, take } from 'rxjs';
 export class UpdateOrderService {
   boardId$: Observable<string> = this.store.select(selectSelectedBoardId);
 
-  allColumns$: Observable<Column[]> = this.store.select(selectColumns);
+  allColumns$: Observable<Column[] | undefined> = this.store.select(selectSelectedBoardColumns);
 
   constructor(private store: Store<AppState>, private columnService: ColumnService) {}
 
   updateOrder() {
-    let isUpdated = false;
     return this.boardId$.pipe(
       map((boardId) => boardId),
       switchMap((boardId) => {
         return this.allColumns$.pipe(
-          map((columns) => [...columns].sort((a, b) => (a.order > b.order ? 1 : -1))),
           map((columns) => {
-            if (columns) {
+            if (columns?.length) {
+              return [...columns].sort((a, b) => (a.order > b.order ? 1 : -1));
+            }
+            return [];
+          }),
+          map((columns) => {
+            if (columns.length) {
               columns.forEach((column, index) => {
                 if (column.order !== index + 1) {
-                  isUpdated = true;
                   const updatedColumn = {
                     title: column.title,
                     order: index + 1,
@@ -41,7 +42,6 @@ export class UpdateOrderService {
                 }
               });
             }
-            if (isUpdated) this.store.dispatch(getAllColumns());
           }),
         );
       }),

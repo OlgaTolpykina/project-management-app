@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@app/redux/state.model';
 import { Router } from '@angular/router';
 import { setSelectedBoard, setSelectedBoardId } from '@app/redux/actions/board.actions';
-import { selectBoards } from '../../../redux/selectors/board.selectors';
+import { selectBoards } from '../../../redux/selectors/selectors';
 import { CreateBoardComponent } from '@board/components/create-board/create-board.component';
 import { MatDialog } from '@angular/material/dialog';
 

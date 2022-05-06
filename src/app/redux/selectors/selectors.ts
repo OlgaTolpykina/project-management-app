@@ -19,3 +19,8 @@ export const selectSelectedBoardId = createSelector(
   selectSelectedBoardState,
   (state: SelectedBoardState) => state.selectedBoardId,
 );
+
+export const selectSelectedBoardColumns = createSelector(
+  selectSelectedBoardState,
+  (state: SelectedBoardState) => state.selectedBoard?.columns,
+);

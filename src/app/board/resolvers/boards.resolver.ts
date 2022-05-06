@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { map } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { selectBoards } from '../../redux/selectors/board.selectors';
+import { selectBoards } from '../../redux/selectors/selectors';
 import { getAllBoards } from '../../redux/actions/board.actions';
 import { Board } from '@shared/types/board.model';
 import { AppState } from '@app/redux/state.model';
