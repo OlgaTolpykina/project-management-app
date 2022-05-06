@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {
   selectSelectedBoardColumns,
+  selectSelectedBoardId,
   selectSelectedBoardTitle,
 } from '@app/redux/selectors/selectors';
 import { AppState } from '@app/redux/state.model';
@@ -15,6 +16,8 @@ import { CreateColumnComponent } from '../components/create-column/create-column
 })
 export class TasksPageComponent {
   board$ = this.store.select(selectSelectedBoardTitle);
+
+  boardId$ = this.store.select(selectSelectedBoardId);
 
   columns$ = this.store.select(selectSelectedBoardColumns);
 

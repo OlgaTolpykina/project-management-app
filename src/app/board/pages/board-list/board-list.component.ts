@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { BackgroundImgService } from '@app/board/services/background-img.service';
 
@@ -7,17 +7,17 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/redux/state.model';
 import { Router } from '@angular/router';
-import { setSelectedBoard, setSelectedBoardId } from '@app/redux/actions/board.actions';
-import { selectBoards } from '../../../redux/selectors/selectors';
+import { setSelectedBoardId, clearSelectedBoard } from '@app/redux/actions/board.actions';
 import { CreateBoardComponent } from '@board/components/create-board/create-board.component';
 import { MatDialog } from '@angular/material/dialog';
+import { selectBoards } from '@app/redux/selectors/selectors';
 
 @Component({
   selector: 'app-board-list',
   templateUrl: './board-list.component.html',
   styleUrls: ['./board-list.component.scss'],
 })
-export class BoardListComponent implements OnInit {
+export class BoardListComponent implements OnInit, OnDestroy {
   boards$: Observable<Board[] | undefined> = this.store.select(selectBoards);
 
   boardsBackgroundImgsUrl: string[] = [];
@@ -50,7 +50,7 @@ export class BoardListComponent implements OnInit {
 
   openBoard(board: Board) {
     const selectedBoardId = board.id!;
-    this.store.dispatch(setSelectedBoard({ selectedBoard: board }));
+    this.store.dispatch(clearSelectedBoard());
     this.store.dispatch(setSelectedBoardId({ selectedBoardId }));
     this.router.navigateByUrl('/b/' + selectedBoardId);
   }
@@ -60,5 +60,9 @@ export class BoardListComponent implements OnInit {
       height: '400px',
       width: '300px',
     });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.unsubscribe();
   }
 }
