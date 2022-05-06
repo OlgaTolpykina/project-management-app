@@ -6,8 +6,8 @@ import { Task } from '@shared/types/task.model';
 import { ColumnService } from '@shared/services/column.service';
 import { map, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { selectSelectedBoardId } from '@app/redux/selectors/selectors';
-import { UpdateOrderService } from '@app/tasks/services/updateOrder/update-order.service';
 import { setSelectedBoardId } from '@app/redux/actions/board.actions';
+import { UpdateOrderService } from '@app/tasks/services/updateOrder/update-order.service';
 
 @Component({
   selector: 'app-column',
@@ -38,8 +38,28 @@ export class ColumnComponent implements OnInit, OnDestroy {
     if (this.column && this.column.tasks) this.tasks = this.column.tasks;
   }
 
-  onEdit() {
+  onEdit(e: Event) {
+    e.stopPropagation();
     this.isEditEnable = !this.isEditEnable;
+  }
+
+  onUpdate(e: Event) {
+    e.stopPropagation();
+    this.isEditEnable = !this.isEditEnable;
+    this.selectedBoardId$
+      .pipe(
+        map((selectedBoardId) => selectedBoardId),
+        switchMap((selectedBoardId) =>
+          this.columnService
+            .updateColumn(selectedBoardId, this.column!.id!, {
+              title: this.name,
+              order: this.column?.order!,
+            })
+            .pipe(map(() => this.store.dispatch(setSelectedBoardId({ selectedBoardId })))),
+        ),
+      )
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe();
   }
 
   onDelete(e: Event): void {

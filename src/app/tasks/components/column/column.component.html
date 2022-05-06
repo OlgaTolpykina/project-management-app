@@ -5,7 +5,7 @@
         <mat-form-field *ngIf="isEditEnable">
           <input matInput placeholder="Enter name" [(ngModel)]="name" />
         </mat-form-field>
-        <span *ngIf="!isEditEnable" (click)="onEdit()">{{ name }}</span>
+        <span *ngIf="!isEditEnable" (click)="onEdit($event)">{{ name }}</span>
       </div>
       <div class="column-header_buttons">
         <button
@@ -13,7 +13,7 @@
           mat-icon-button
           color="primary"
           *ngIf="!isEditEnable"
-          (click)="onEdit()"
+          (click)="onEdit($event)"
         >
           <mat-icon>edit</mat-icon>
         </button>
@@ -26,10 +26,10 @@
         >
           <mat-icon>delete</mat-icon>
         </button>
-        <button *ngIf="isEditEnable" mat-icon-button color="primary" (click)="onEdit()">
+        <button *ngIf="isEditEnable" mat-icon-button color="primary" (click)="onUpdate($event)">
           <mat-icon>done</mat-icon>
         </button>
-        <button *ngIf="isEditEnable" mat-icon-button color="primary" (click)="onEdit()">
+        <button *ngIf="isEditEnable" mat-icon-button color="primary" (click)="onEdit($event)">
           <mat-icon>cancel</mat-icon>
         </button>
       </div>
