@@ -51,5 +51,11 @@
   "delete user prompt": "Are you really want to delete User Profile?",
   "password should not be empty": "password should not be empty",
   "title required": "Title is required",
-  "title length": "Please choose shorter title"
+  "title length": "Please choose shorter title",
+  "task-title": "Task title",
+  "task-desc": "Task description",
+  "task-user": "Task executor",
+  "desc required": "Description is required",
+  "desc length": "Descrtiption max length 255 symbols",
+  "user required": "User is required"
 }
