@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { setSelectedBoardId } from '@app/redux/actions/board.actions';
-import { selectSelectedBoard } from '@app/redux/selectors';
+import { selectSelectedBoard } from '@app/redux/selectors/selectors';
 import { AppState } from '@app/redux/state.model';
 import { Store } from '@ngrx/store';
 import { Board } from '@shared/types/board.model';

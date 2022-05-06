@@ -1,4 +1,5 @@
 import { Board } from '@shared/types/board.model';
+import { Column } from '@shared/types/column.model';
 
 export interface AppState {
   boards: BoardsState;
@@ -11,6 +12,18 @@ interface BoardsState {
 
 export const initialBoardsState: BoardsState = {
   boards: undefined,
+};
+
+export interface BoardState {
+  id: string;
+  title: string;
+  columns?: Column[];
+}
+
+export const initialBoardState: BoardState = {
+  id: '',
+  title: '',
+  columns: [],
 };
 
 export interface SelectedBoardState {

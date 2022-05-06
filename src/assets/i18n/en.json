@@ -41,6 +41,8 @@
   "boards-title": "Your boards",
   "board-title": "Board title",
   "board-title-placeholder": "Enter title of the board",
+  "column-title": "Column title",
+  "column-title-placeholder": "Enter title of the column",
   "create": "Create",
   "cancel": "Cancel",
   "delete": "Delete",
