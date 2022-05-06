@@ -1,37 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { selectSelectedBoardTitle } from '@app/redux/selectors';
+import { Component } from '@angular/core';
+import {
+  selectSelectedBoardColumns,
+  selectSelectedBoardId,
+  selectSelectedBoardTitle,
+} from '@app/redux/selectors/selectors';
 import { AppState } from '@app/redux/state.model';
 import { Store } from '@ngrx/store';
-import { Column } from '@shared/types/column.model';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateColumnComponent } from '../components/create-column/create-column.component';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks-page.component.html',
   styleUrls: ['./tasks-page.component.scss'],
 })
-export class TasksPageComponent implements OnInit {
+export class TasksPageComponent {
   board$ = this.store.select(selectSelectedBoardTitle);
 
-  columns: Column[] = [
-    {
-      id: '08cc10f4-1aeb-4cce-9793-9fea8313b592',
-      title: 'Done',
-      order: 2,
-    },
-    {
-      id: '08cc10f4-1aeb-4cce-9793-9fea8313b593',
-      title: 'In review',
-      order: 1,
-    },
-  ];
+  boardId$ = this.store.select(selectSelectedBoardId);
 
-  columnOrder = 0;
+  columns$ = this.store.select(selectSelectedBoardColumns);
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>, public dialog: MatDialog) {}
 
-  ngOnInit(): void {
-    this.columns.forEach((column) => {
-      this.columnOrder = column.order;
+  openDialog() {
+    this.dialog.open(CreateColumnComponent, {
+      height: '400px',
+      width: '300px',
     });
   }
 }

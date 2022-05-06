@@ -1,5 +1,5 @@
 import { createSelector } from '@ngrx/store';
-import { AppState, SelectedBoardState } from './state.model';
+import { AppState, SelectedBoardState } from '../state.model';
 
 export const selectBoards = (state: AppState) => state.boards.boards;
 
@@ -18,4 +18,9 @@ export const selectSelectedBoardTitle = createSelector(
 export const selectSelectedBoardId = createSelector(
   selectSelectedBoardState,
   (state: SelectedBoardState) => state.selectedBoardId,
+);
+
+export const selectSelectedBoardColumns = createSelector(
+  selectSelectedBoardState,
+  (state: SelectedBoardState) => state.selectedBoard?.columns,
 );

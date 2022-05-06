@@ -41,6 +41,8 @@
   "title": "Заголовок",
   "board-title": "Название доски",
   "board-title-placeholder": "Введите название доски",
+  "column-title": "Название колонки",
+  "column-title-placeholder": "Введите название колонки",
   "create": "Создать",
   "cancel": "Отмена",
   "delete": "Удалить",

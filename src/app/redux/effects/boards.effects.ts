@@ -12,7 +12,7 @@ import {
   getSelectedBoardFailed,
   getSelectedBoardSuccessfully,
 } from '../actions/board.actions';
-import { selectSelectedBoardId } from '../selectors';
+import { selectSelectedBoardId } from '../selectors/selectors';
 
 @Injectable({ providedIn: 'any' })
 export class BoardsEffects {

@@ -15,10 +15,14 @@ export const getAllBoardsFailed = createAction(
   props<{ error: Error }>(),
 );
 
+export const deleteBoard = createAction('[BOARDS] DELETE BOARD', props<{ id: string }>());
+
 export const setSelectedBoard = createAction(
   '[SELECTED BOARD] SET SELECTED BOARD',
   props<{ selectedBoard: Board }>(),
 );
+
+export const clearSelectedBoard = createAction('[SELECTED BOARD] CLEAR SELECTED BOARD');
 
 export const setSelectedBoardId = createAction(
   '[SELECTED BOARD] SET SELECTED BOARD ID',
@@ -36,4 +40,3 @@ export const getSelectedBoardFailed = createAction(
   '[SELECTED BOARD EFFECT] GET BOARD BY ID FAILED',
   props<{ error: Error }>(),
 );
-export const deleteBoard = createAction('[BOARDS] DELETE BOARD', props<{ id: string }>());

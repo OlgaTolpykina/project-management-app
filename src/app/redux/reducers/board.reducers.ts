@@ -10,6 +10,7 @@ import {
   setSelectedBoard,
   setSelectedBoardId,
   deleteBoard,
+  clearSelectedBoard,
 } from '../actions/board.actions';
 import { initialBoardsState, initialSelectedBoardState } from '../state.model';
 
@@ -58,4 +59,7 @@ export const selectedBoardReducer = createReducer(
     ...state,
     error,
   })),
+  on(clearSelectedBoard, (state) => {
+    return { ...state, selectedBoard: undefined };
+  }),
 );

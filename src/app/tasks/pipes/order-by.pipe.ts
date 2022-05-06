@@ -6,9 +6,7 @@ import { Task } from '@shared/types/task.model';
   name: 'orderBy',
 })
 export class OrderByPipe implements PipeTransform {
-  transform<T extends Column | Task>(elements: T[], sortValue: number): T[] {
-    if (!sortValue) return elements;
-
-    return elements.sort((a, b) => (a.order > b.order ? 1 : -1));
+  transform<T extends Column | Task>(elements: T[]): T[] {
+    return [...elements].sort((a, b) => (a.order > b.order ? 1 : -1));
   }
 }
