@@ -196,7 +196,6 @@ export class UserAuthServiceService {
       .subscribe(async (data) => {
         if (!(data instanceof Error)) {
           this.logInOutUser('false');
-          // localStorage.clear();
           localStorage.removeItem('savedUser');
           localStorage.removeItem('token');
           this.getMessageForUser('delete profile', 'home');
@@ -209,7 +208,6 @@ export class UserAuthServiceService {
     this.isAuthorized = status;
     const userStatus: boolean = status === 'true' ? true : false;
     if (!userStatus) {
-      //localStorage.clear();
       localStorage.removeItem('savedUser');
       localStorage.removeItem('token');
     }
@@ -218,7 +216,8 @@ export class UserAuthServiceService {
 
   getMessageForUser(message: string, redirectUrl?: string | null) {
     this.messageForUser = message;
-    const url = redirectUrl ? redirectUrl : this.router.url;
+    const backingUrl = this.redirectUrl ? this.redirectUrl : 'main';
+    const url = redirectUrl ? redirectUrl : backingUrl;
     this.router.navigate(['auth/message']);
     setTimeout(() => {
       this.router.navigate([url]);

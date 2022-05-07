@@ -28,7 +28,7 @@ export class AuthorizeGuard implements CanActivate {
     if (this.authService.isAuthorized === 'true') {
       return true;
     }
-    if (this.authService.isAuthorized !== 'true') {
+    if (this.authService.isAuthorized !== 'true' && url === '/main') {
       this.authService.redirectUrl = url;
       return this.router.parseUrl('/home');
     }

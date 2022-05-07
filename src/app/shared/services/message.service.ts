@@ -61,8 +61,11 @@ export class MessageService {
       this.boardService.getAllBoards().subscribe(() => {
         this.approveDeletion = false;
         this.store.dispatch(getAllBoards());
-        this.store.dispatch(getSelectedBoard());
         this.updateOrder.updateOrder();
+        if (url.includes('columns')) {
+          this.store.dispatch(getSelectedBoard());
+          this.updateOrder.updateOrder();
+        }
         this.router.navigate([this.redirectUrl]);
       });
     });
