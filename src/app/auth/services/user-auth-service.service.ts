@@ -156,7 +156,10 @@ export class UserAuthServiceService {
               localStorage.setItem('isAuthorized', 'true');
               this.changeUserSource.next(newUser.userName);
               this.isUserAuthorized.next(true);
-              const url: string = this.redirectUrl ? this.redirectUrl : 'main';
+              const url: string =
+                this.redirectUrl || this.redirectUrl !== '/auth/login'
+                  ? (this.redirectUrl as string)
+                  : 'main';
               this.getMessageForUser('Welcome in profile', url);
               this.logInOutUser('true');
             }
@@ -176,7 +179,10 @@ export class UserAuthServiceService {
             await this.logInOutUser('true');
             this.changeUserSource.next(newUser.userName);
             this.isUserAuthorized.next(true);
-            const url: string = this.redirectUrl ? this.redirectUrl : 'main';
+            const url: string =
+              this.redirectUrl || this.redirectUrl !== '/auth/login'
+                ? (this.redirectUrl as string)
+                : 'main';
             this.getMessageForUser('Welcome in profile', url);
           }
         });

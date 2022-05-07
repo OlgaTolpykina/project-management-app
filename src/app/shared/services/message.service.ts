@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { HttpRequest } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import { getAllBoards } from '../../redux/actions/board.actions';
 import { BoardService } from '@shared/services/board.service';
+import { UpdateOrderService } from '@app/tasks/services/updateOrder/update-order.service';
+import { getSelectedBoard, getAllBoards } from '@app/redux/actions/board.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,7 @@ export class MessageService {
     private http: HttpClient,
     private boardService: BoardService,
     private store: Store,
+    private updateOrder: UpdateOrderService,
   ) {}
 
   public getMessageForUser(
@@ -59,6 +61,8 @@ export class MessageService {
       this.boardService.getAllBoards().subscribe(() => {
         this.approveDeletion = false;
         this.store.dispatch(getAllBoards());
+        this.store.dispatch(getSelectedBoard());
+        this.updateOrder.updateOrder();
         this.router.navigate([this.redirectUrl]);
       });
     });
