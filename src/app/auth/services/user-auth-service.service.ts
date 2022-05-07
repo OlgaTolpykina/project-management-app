@@ -157,7 +157,7 @@ export class UserAuthServiceService {
               this.changeUserSource.next(newUser.userName);
               this.isUserAuthorized.next(true);
               const url: string =
-                this.redirectUrl || this.redirectUrl !== '/auth/login'
+                this.redirectUrl && this.redirectUrl !== '/auth/login'
                   ? (this.redirectUrl as string)
                   : 'main';
               this.getMessageForUser('Welcome in profile', url);
@@ -180,7 +180,7 @@ export class UserAuthServiceService {
             this.changeUserSource.next(newUser.userName);
             this.isUserAuthorized.next(true);
             const url: string =
-              this.redirectUrl || this.redirectUrl !== '/auth/login'
+              this.redirectUrl && this.redirectUrl !== '/auth/login'
                 ? (this.redirectUrl as string)
                 : 'main';
             this.getMessageForUser('Welcome in profile', url);
