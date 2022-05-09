@@ -9,6 +9,7 @@ import {
   getAllBoardsFailed,
   getAllBoardsSuccessfully,
   setSelectedBoardId,
+  getSelectedBoard,
   getSelectedBoardFailed,
   getSelectedBoardSuccessfully,
 } from '../actions/board.actions';
@@ -37,6 +38,19 @@ export class BoardsEffects {
   getBoardById: Observable<Action> = createEffect(() =>
     this.actions.pipe(
       ofType(setSelectedBoardId),
+      withLatestFrom(this.store.select(selectSelectedBoardId)),
+      switchMap(([, id]: [Action, string]) =>
+        this.boardService.getBoardById(id).pipe(
+          map((selectedBoard) => getSelectedBoardSuccessfully({ selectedBoard })),
+          catchError((error) => of(getSelectedBoardFailed({ error }))),
+        ),
+      ),
+    ),
+  );
+
+  getSelectedBoard: Observable<Action> = createEffect(() =>
+    this.actions.pipe(
+      ofType(getSelectedBoard),
       withLatestFrom(this.store.select(selectSelectedBoardId)),
       switchMap(([, id]: [Action, string]) =>
         this.boardService.getBoardById(id).pipe(

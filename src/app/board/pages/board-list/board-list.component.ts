@@ -38,7 +38,7 @@ export class BoardListComponent implements OnInit, OnDestroy {
       if (value?.length) {
         this.backgroundImgService
           .getBackgroundImgs(value.length)
-          .pipe(takeUntil(this.unsubscribe$))
+          .pipe()
           .subscribe((res) => {
             res.forEach((imgObj) => {
               this.boardsBackgroundImgsUrl.push(imgObj.urls.small);

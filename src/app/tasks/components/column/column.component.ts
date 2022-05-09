@@ -77,7 +77,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
             );
           }),
         )
-        .pipe(takeUntil(this.unsubscribe$))
+        .pipe()
         .subscribe();
     }
   }
