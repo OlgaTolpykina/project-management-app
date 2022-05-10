@@ -4,18 +4,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from '@shared/not-found/not-found.component';
 import { AuthorizeGuard } from './auth/guards/authorize.guard';
 import { HomePageComponent } from '@core/pages/home-page/home-page.component';
+import { UserMessageComponent } from '@shared/user-message/user-message.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'main',
     pathMatch: 'full',
   },
-  {
-    path: 'home',
-    canActivate: [AuthorizeGuard],
-    component: HomePageComponent,
-  },
+  { path: 'home', component: HomePageComponent, pathMatch: 'full' },
+  { path: 'message', component: UserMessageComponent, pathMatch: 'full' },
   {
     path: 'auth',
     loadChildren: () => import('./auth/authentication.module').then((m) => m.AuthenticationModule),

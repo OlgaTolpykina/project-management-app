@@ -18,12 +18,12 @@ export class ColumnService {
     return `${this.url}/${boardId}`;
   }
 
-  getAllColumns(boardId: string): Observable<Column[] | Error> {
-    return this.http.get<Column[] | Error>(`${this.generateUrl(boardId)}/columns`);
+  getAllColumns(boardId: string): Observable<Column[]> {
+    return this.http.get<Column[]>(`${this.generateUrl(boardId)}/columns`);
   }
 
-  createColumn(boardId: string, body: Column): Observable<Column | Error> {
-    return this.http.post<Column | Error>(`${this.generateUrl(boardId)}/columns`, body);
+  createColumn(boardId: string, body: Column): Observable<Column> {
+    return this.http.post<Column>(`${this.generateUrl(boardId)}/columns`, body);
   }
 
   getColumnById(boardId: string, columnId: string): Observable<Column | Error> {

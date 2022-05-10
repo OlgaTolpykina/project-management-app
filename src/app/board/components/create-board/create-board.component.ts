@@ -25,7 +25,6 @@ export class CreateBoardComponent {
         .pipe(take(1))
         .subscribe((data: Board | Error) => {
           if (!(data instanceof Error)) {
-            console.log(data);
             this.store.dispatch(createNewBoard({ board: data as Board }));
           }
         });

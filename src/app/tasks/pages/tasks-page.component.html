@@ -16,7 +16,7 @@
       <div class="tasks-columns_inner" *ngIf="columns$ | async as columns">
         <app-column *ngFor="let column of columns | orderBy" [column]="column"></app-column>
         <div class="column-wrapper">
-          <button matRipple class="add-column">
+          <button matRipple class="add-column" (click)="openDialog()">
             <mat-icon>add</mat-icon>
             <span>{{ t("newColumn") }}</span>
           </button>

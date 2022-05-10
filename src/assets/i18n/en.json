@@ -41,6 +41,8 @@
   "boards-title": "Your boards",
   "board-title": "Board title",
   "board-title-placeholder": "Enter title of the board",
+  "column-title": "Column title",
+  "column-title-placeholder": "Enter title of the column",
   "create": "Create",
   "cancel": "Cancel",
   "delete": "Delete",
@@ -48,8 +50,9 @@
   "filter": "Filter",
   "newColumn": "Add new column",
   "newTask": "Add new task",
-  "delete user prompt": "Are you really want to delete User Profile?",
+  "delete user prompt": "Do you really want to delete User Profile?",
   "password should not be empty": "password should not be empty",
+  "Unauthorized": "Unauthorized! Authorization missing, or out of date! Please LogIn again!",
   "title required": "Title is required",
   "title length": "Please choose shorter title",
   "task-title": "Task title",
@@ -57,5 +60,7 @@
   "task-user": "Task executor",
   "desc required": "Description is required",
   "desc length": "Descrtiption max length 255 symbols",
-  "user required": "User is required"
+  "user required": "User is required",
+  "delete confirmation": "Do you really want to DELETE element?",
+  "Not Found": "Object not found. Possibly it already deleted!"
 }
