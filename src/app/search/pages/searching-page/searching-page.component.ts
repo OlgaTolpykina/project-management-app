@@ -16,9 +16,11 @@ export class SearchingPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.searchService.getAllTasks();
     this.searchService.selectedTask = null;
+    this.searchService.isTaskRequestNeed = false;
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$.unsubscribe();
+    this.searchService.isTaskRequestNeed = true;
   }
 }

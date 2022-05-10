@@ -26,6 +26,8 @@ export class SearchService {
 
   selectedTask: Task | null = null;
 
+  isTaskRequestNeed: boolean = true;
+
   constructor(
     private boardService: BoardService,
     private columnService: ColumnService,
@@ -59,6 +61,9 @@ export class SearchService {
   }
 
   public async searchSubmit(): Promise<void> {
+    if (this.isTaskRequestNeed) await this.getAllTasks();
+    console.log(this.searchString);
+    console.log(this.searchObject);
     const MINIMAL_REQUEST_LENGTH: number = 2;
     if (this.authService.isAuthorized !== 'true') {
       this.authService.getMessageForUser('signIn first', 'home');
@@ -67,6 +72,7 @@ export class SearchService {
       this.searchString.length > MINIMAL_REQUEST_LENGTH
     ) {
       this.getSearchResult(this.searchString);
+      this.authService.router.navigate(['search']);
     }
   }
 
