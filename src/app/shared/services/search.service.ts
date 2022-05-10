@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from '@app/redux/state.model';
 
+import { setSelectedBoardId, clearSelectedBoard } from '@app/redux/actions/board.actions';
 import { SearchObject } from '@shared/types/search-object.model';
 import { BoardService } from '@shared/services/board.service';
 import { ColumnService } from '@shared/services/column.service';
 import { TaskService } from '@shared/services/task.service';
 import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
+import { Task } from '@shared/types/task.model';
 
 @Injectable({
   providedIn: 'root',
@@ -20,11 +24,14 @@ export class SearchService {
 
   searchString: string = '';
 
+  selectedTask: Task | null = null;
+
   constructor(
     private boardService: BoardService,
     private columnService: ColumnService,
     private taskService: TaskService,
     private authService: UserAuthServiceService,
+    private store: Store<AppState>,
   ) {}
 
   private async getAllBoards(): Promise<void> {
@@ -33,20 +40,20 @@ export class SearchService {
     });
   }
 
-  private async getAllColumns(): Promise<void> {
-    this.searchObject.boards.forEach((board) => {
-      this.columnService.getAllColumns(board.id).subscribe((columns) => {
-        this.searchObject.columns = this.searchObject.columns.concat(columns);
-      });
-    });
-  }
-
-  private async getAllTasks() {
+  public async getAllTasks(): Promise<void> {
     await this.getAllBoards();
-    await this.getAllColumns();
-    this.searchObject.columns.forEach((column) => {
-      this.taskService.getAllTasks(column.id).subscribe((tasks) => {
-        this.searchObject.tasks = this.searchObject.tasks.concat(tasks);
+    this.searchObject.boards!.forEach((board) => {
+      this.columnService.getAllColumns(board.id).subscribe((columns) => {
+        if (columns.length) {
+          this.searchObject.columns = this.searchObject.columns!.concat(columns);
+          columns.forEach((column) => {
+            this.taskService.getAllTasks(board.id, column.id!).subscribe((tasks) => {
+              if (!(tasks instanceof Error) && (tasks as Task[]).length) {
+                this.searchObject.tasks = this.searchObject.tasks!.concat(tasks as Task[]);
+              }
+            });
+          });
+        }
       });
     });
   }
@@ -65,9 +72,19 @@ export class SearchService {
 
   private getSearchResult(searchString: string) {
     this.filteredSearchResult = [];
-    this.filteredSearchResult = this.searchObject.tasks.filter((task) => {
-      const taskString = JSON.stringify(task);
-      return taskString.includes(searchString);
-    });
+    this.filteredSearchResult = this.searchObject.tasks?.length
+      ? this.searchObject.tasks.filter((task) => {
+          const taskString = JSON.stringify(task);
+          return taskString.includes(searchString);
+        })
+      : [];
+  }
+
+  public onSelect(task: Task) {
+    this.selectedTask = task;
+    const selectedBoardId = task.boardId!;
+    this.store.dispatch(clearSelectedBoard());
+    this.store.dispatch(setSelectedBoardId({ selectedBoardId }));
+    this.authService.router.navigateByUrl('/b/' + selectedBoardId);
   }
 }

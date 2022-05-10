@@ -1,1 +1,24 @@
 <p>searching-page works!</p>
+<div class="search-container">
+  <div class="search-result-container" *ngIf="!(searchService.searchString.length < 3)">
+    Try to search something
+  </div>
+  <div class="search-result-container" *ngIf="!searchService.filteredSearchResult.length">
+    <pre>
+ Sorry, nothing matches.
+      
+      Try another search!</pre
+    >
+  </div>
+  <div class="search-result-container" *ngIf="searchService.filteredSearchResult.length">
+    <ul class="tasks-board">
+      <li *ngFor="let task of searchService.filteredSearchResult">
+        <button
+          [class.selected]="task === searchService.selectedTask"
+          type="button"
+          (click)="searchService.onSelect(task)"
+        ></button>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
 
 import { SearchService } from '@shared/services/search.service';
 
@@ -12,7 +13,10 @@ export class SearchingPageComponent implements OnInit, OnDestroy {
 
   constructor(public searchService: SearchService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.searchService.getAllTasks();
+    this.searchService.selectedTask = null;
+  }
 
   ngOnDestroy(): void {
     this.unsubscribe$.unsubscribe();
