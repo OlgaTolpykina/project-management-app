@@ -12,6 +12,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [],
@@ -29,6 +31,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatCardModule,
     MatDialogModule,
     MatFormFieldModule,
+    MatSelectModule,
+    DragDropModule,
   ],
   exports: [
     MatInputModule,
@@ -43,6 +47,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatCardModule,
     MatDialogModule,
     MatFormFieldModule,
+    MatSelectModule,
+    DragDropModule,
   ],
 })
 export class MaterialModule {}
