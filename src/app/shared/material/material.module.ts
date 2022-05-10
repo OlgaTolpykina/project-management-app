@@ -13,6 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [],
@@ -31,6 +32,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatDialogModule,
     MatFormFieldModule,
     DragDropModule,
+    MatTooltipModule,
   ],
   exports: [
     MatInputModule,
@@ -46,6 +48,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatDialogModule,
     MatFormFieldModule,
     DragDropModule,
+    MatTooltipModule,
   ],
 })
 export class MaterialModule {}
