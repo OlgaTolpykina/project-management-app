@@ -14,8 +14,8 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getAllUsers(): Observable<User[] | Error> {
-    return this.http.get<User[] | Error>(this.url);
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.url);
   }
 
   getUserById(userId: string): Observable<User | Error> {

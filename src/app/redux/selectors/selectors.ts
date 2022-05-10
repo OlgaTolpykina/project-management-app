@@ -24,3 +24,5 @@ export const selectSelectedBoardColumns = createSelector(
   selectSelectedBoardState,
   (state: SelectedBoardState) => state.selectedBoard?.columns,
 );
+
+export const selectUsers = (state: AppState) => state.users.users;

@@ -3,6 +3,8 @@ import { AppState } from '@app/redux/state.model';
 import { Store } from '@ngrx/store';
 import { Column } from '@shared/types/column.model';
 import { Task } from '@shared/types/task.model';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateTaskComponent } from '../../components/create-task/create-task.component';
 import { ColumnService } from '@shared/services/column.service';
 import { map, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { selectSelectedBoardId } from '@app/redux/selectors/selectors';
@@ -31,6 +33,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private columnService: ColumnService,
     private updateOrder: UpdateOrderService,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -85,5 +88,13 @@ export class ColumnComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  openTaskDialog(): void {
+    this.dialog.open(CreateTaskComponent, {
+      height: '400px',
+      width: '320px',
+      data: { column: this.column },
+    });
   }
 }
