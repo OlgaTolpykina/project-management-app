@@ -94,6 +94,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.dialog.open(CreateTaskComponent, {
       height: '400px',
       width: '320px',
+      data: { column: this.column },
     });
   }
 }

@@ -24,3 +24,10 @@ export const selectSelectedBoardColumns = createSelector(
   selectSelectedBoardState,
   (state: SelectedBoardState) => state.selectedBoard?.columns,
 );
+
+// export const selectColumnById = createSelector(
+//   selectSelectedBoardColumns,
+//   (state, props) => state?.find()
+// )
+
+export const selectUsers = (state: AppState) => state.users.users;

@@ -1,9 +1,11 @@
 import { Board } from '@shared/types/board.model';
 import { Column } from '@shared/types/column.model';
+import { User } from '@shared/types/user.model';
 
 export interface AppState {
   boards: BoardsState;
   selectedBoard: SelectedBoardState;
+  users: UsersState;
 }
 
 interface BoardsState {
@@ -34,4 +36,12 @@ export interface SelectedBoardState {
 export const initialSelectedBoardState: SelectedBoardState = {
   selectedBoard: undefined,
   selectedBoardId: '',
+};
+
+export interface UsersState {
+  users: User[] | undefined;
+}
+
+export const initialUserState: UsersState = {
+  users: undefined,
 };

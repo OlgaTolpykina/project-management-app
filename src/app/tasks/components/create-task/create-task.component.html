@@ -33,7 +33,9 @@
       <label>{{ t("task-user") }}</label>
       <mat-form-field appearance="fill">
         <mat-select formControlName="userId" required>
-          <mat-option *ngFor="let user of users" [value]="user.id">{{ user.name }}</mat-option>
+          <mat-option *ngFor="let user of users$ | async" [value]="user.id">{{
+            user.name
+          }}</mat-option>
         </mat-select>
         <mat-error *ngIf="user?.hasError('required')">{{ t("user required") }}</mat-error>
       </mat-form-field>

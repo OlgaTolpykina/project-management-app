@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   selectSelectedBoardColumns,
   selectSelectedBoardId,
@@ -8,13 +8,14 @@ import { AppState } from '@app/redux/state.model';
 import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateColumnComponent } from '../components/create-column/create-column.component';
+import { getAllUsers } from '@app/redux/actions/users.actions';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks-page.component.html',
   styleUrls: ['./tasks-page.component.scss'],
 })
-export class TasksPageComponent {
+export class TasksPageComponent implements OnInit {
   board$ = this.store.select(selectSelectedBoardTitle);
 
   boardId$ = this.store.select(selectSelectedBoardId);
@@ -28,5 +29,9 @@ export class TasksPageComponent {
       height: '400px',
       width: '300px',
     });
+  }
+
+  ngOnInit(): void {
+    this.store.dispatch(getAllUsers());
   }
 }

@@ -1,23 +1,33 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, Inject, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { User } from '@shared/types/user.model';
+import { Column } from '@shared/types/column.model';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { selectUsers } from '@app/redux/selectors/selectors';
+import { AppState } from '@app/redux/state.model';
+import { TaskService } from '@shared/services/task.service';
+import { Observable, Subject, takeUntil, map, take } from 'rxjs';
+import { selectSelectedBoardId } from '@app/redux/selectors/selectors';
+import { setSelectedBoardId } from '@app/redux/actions/board.actions';
 
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
   styleUrls: ['./create-task.component.scss'],
 })
-export class CreateTaskComponent {
+export class CreateTaskComponent implements OnInit, OnDestroy {
   @ViewChild('titleinput') input: ElementRef | undefined;
 
-  isEditEnable = true;
+  selectedBoardId$: Observable<string> = this.store.select(selectSelectedBoardId);
 
-  users: User[] = [
-    { id: 'fd2297ed-54ad-47bb-8d50-f26e2be5bd13', login: 'sergey_serzhan', name: 'Sergey Serzhan' },
-    { id: 'fd2297ed-54ad-47bb-8d50-f26e2be5bd13', login: 'andrey_serzhan', name: 'Andrey Serzhan' },
-    { id: 'fd2297ed-54ad-47bb-8d50-f26e2be5bd13', login: 'ivan_ivanov', name: 'Ivan Ivanov' },
-  ];
+  users$ = this.store.select(selectUsers);
+
+  selectedBoardId: string | undefined;
+
+  unsubscribe$ = new Subject<void>();
+
+  isEditEnable = true;
 
   taskForm = this.fb.group({
     title: ['Task title', [Validators.required, Validators.maxLength(50)]],
@@ -37,7 +47,19 @@ export class CreateTaskComponent {
     return this.taskForm.get('userId');
   }
 
-  constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<CreateTaskComponent>) {}
+  constructor(
+    @Inject(MAT_DIALOG_DATA) private data: { column: Column },
+    private fb: FormBuilder,
+    private dialogRef: MatDialogRef<CreateTaskComponent>,
+    private store: Store<AppState>,
+    private taskService: TaskService,
+  ) {}
+
+  ngOnInit(): void {
+    this.selectedBoardId$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((id) => (this.selectedBoardId = id));
+  }
 
   onEdit(): void {
     this.isEditEnable = !this.isEditEnable;
@@ -49,6 +71,35 @@ export class CreateTaskComponent {
   }
 
   onCreateTask(): void {
-    if (this.taskForm.status === 'VALID') this.dialogRef.close();
+    if (this.taskForm.status === 'VALID') {
+      let lastOrder = 1;
+      if (this.data.column.tasks?.length) {
+        lastOrder = this.data.column.tasks[this.data.column.tasks.length - 1].order + 1;
+      }
+
+      if (this.selectedBoardId && this.data.column.id) {
+        this.taskService
+          .createTask(this.selectedBoardId, this.data.column.id, {
+            title: this.title?.value,
+            description: this.desc?.value,
+            userId: this.user?.value,
+            order: lastOrder,
+          })
+          .pipe(
+            map(() => {
+              if (this.selectedBoardId)
+                this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.selectedBoardId }));
+            }),
+            take(1),
+          )
+          .subscribe();
+      }
+
+      this.dialogRef.close();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.unsubscribe();
   }
 }
