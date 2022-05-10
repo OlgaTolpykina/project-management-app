@@ -1,20 +1,19 @@
-<div class="message-container" fxLayout="row" fxLayoutAlign="center top" *transloco="let t">
-  <div class="box">
+<ng-container *transloco="let t">
+  <!-- <div class="message-container" fxLayout="row" fxLayoutAlign="center top"> -->
+  <mat-dialog-content class="modal-content">
     {{ t(messageService.messageForUser) }}
-
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
     <div class="buttons-container" *ngIf="messageService.messageForUser === 'delete confirmation'">
-      <button
-        type=""
-        class="link button-link delete"
-        routerLink=""
-        (click)="messageService.sendDeleteRequest()"
-      >
+      <button mat-button mat-dialog-close color="warn" (click)="messageService.sendDeleteRequest()">
         {{ t("delete") }}
       </button>
       <button
-        class="link button-link"
+        mat-button
+        mat-dialog-close
         (click)="messageService.router.navigate([messageService.redirectUrl])"
         routerLinkActive="active"
+        color="primary"
       >
         {{ t("cancel") }}
       </button>
@@ -31,5 +30,7 @@
         {{ t("Back") }}
       </button>
     </div>
-  </div>
-</div>
+  </mat-dialog-actions>
+  <!-- </div> -->
+  <!-- </div> -->
+</ng-container>

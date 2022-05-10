@@ -6,6 +6,8 @@ import { Store } from '@ngrx/store';
 import { BoardService } from '@shared/services/board.service';
 import { UpdateOrderService } from '@app/tasks/services/updateOrder/update-order.service';
 import { getSelectedBoard, getAllBoards } from '@app/redux/actions/board.actions';
+import { MatDialog } from '@angular/material/dialog';
+import { UserMessageComponent } from '@shared/user-message/user-message.component';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +27,7 @@ export class MessageService {
     private boardService: BoardService,
     private store: Store,
     private updateOrder: UpdateOrderService,
+    private dialog: MatDialog,
   ) {}
 
   public getMessageForUser(
@@ -51,7 +54,14 @@ export class MessageService {
     this.request = request;
     const url = redirectUrl ? redirectUrl : this.router.url;
     this.redirectUrl = url;
-    this.router.navigate(['/message']);
+    this.openDialog();
+  }
+
+  openDialog(): void {
+    this.dialog.open(UserMessageComponent, {
+      height: '300px',
+      width: '300px',
+    });
   }
 
   public async sendDeleteRequest(): Promise<void> {
