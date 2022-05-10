@@ -3,11 +3,15 @@
   flex-direction: column;
   justify-content: space-between;
   height: 300px;
+  align-items: center;
 }
 
 .desc {
   height: 50px;
   width: 310px;
   resize: none;
-  align-self: center;
+}
+
+.mat-dialog-content {
+  overflow: initial;
 }

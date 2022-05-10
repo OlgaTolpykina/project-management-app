@@ -84,6 +84,7 @@ export class CreateTaskComponent implements OnInit, OnDestroy {
             description: this.desc?.value,
             userId: this.user?.value,
             order: lastOrder,
+            done: false,
           })
           .pipe(
             map(() => {
