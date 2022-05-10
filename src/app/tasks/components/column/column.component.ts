@@ -9,7 +9,6 @@ import { ColumnService } from '@shared/services/column.service';
 import { map, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { selectSelectedBoardId } from '@app/redux/selectors/selectors';
 import { setSelectedBoardId } from '@app/redux/actions/board.actions';
-import { UpdateOrderService } from '@app/tasks/services/updateOrder/update-order.service';
 
 @Component({
   selector: 'app-column',
@@ -32,7 +31,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private columnService: ColumnService,
-    private updateOrder: UpdateOrderService,
     private dialog: MatDialog,
   ) {}
 
@@ -72,12 +70,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
         .pipe(
           map((id) => id),
           switchMap((id) => {
-            return this.columnService.deleteColumn(id, this.column!.id!).pipe(
-              map(() => this.store.dispatch(setSelectedBoardId({ selectedBoardId: id }))),
-              switchMap(() => {
-                return this.updateOrder.updateOrder();
-              }),
-            );
+            return this.columnService.deleteColumn(id, this.column!.id!);
           }),
         )
         .pipe()

@@ -3,11 +3,13 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { HttpRequest } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import { BoardService } from '@shared/services/board.service';
 import { UpdateOrderService } from '@app/tasks/services/updateOrder/update-order.service';
-import { getSelectedBoard, getAllBoards } from '@app/redux/actions/board.actions';
+import { getAllBoards, setSelectedBoardId } from '@app/redux/actions/board.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { UserMessageComponent } from '@shared/user-message/user-message.component';
+import { map, Observable, switchMap, take, tap } from 'rxjs';
+import { selectSelectedBoardId } from '@app/redux/selectors/selectors';
+import { AppState } from '@app/redux/state.model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,11 +23,12 @@ export class MessageService {
 
   request: HttpRequest<unknown> | null = null;
 
+  selectedBoardId$: Observable<string> = this.store.select(selectSelectedBoardId);
+
   constructor(
     public router: Router,
     private http: HttpClient,
-    private boardService: BoardService,
-    private store: Store,
+    private store: Store<AppState>,
     private updateOrder: UpdateOrderService,
     private dialog: MatDialog,
   ) {}
@@ -67,17 +70,33 @@ export class MessageService {
   public async sendDeleteRequest(): Promise<void> {
     this.approveDeletion = true;
     const url = (this.request as HttpRequest<unknown>).url;
-    this.http.delete(url).subscribe(() => {
-      this.boardService.getAllBoards().subscribe(() => {
-        this.approveDeletion = false;
-        this.store.dispatch(getAllBoards());
-        this.updateOrder.updateOrder();
-        if (url.includes('columns')) {
-          this.store.dispatch(getSelectedBoard());
-          this.updateOrder.updateOrder();
-        }
-        this.router.navigate([this.redirectUrl]);
-      });
-    });
+
+    if (!url.includes('columns') && !url.includes('tasks')) {
+      this.http
+        .delete(url)
+        .pipe(
+          take(1),
+          tap(() => (this.approveDeletion = false)),
+          map(() => this.store.dispatch(getAllBoards())),
+        )
+        .subscribe();
+    } else if (url.includes('columns')) {
+      this.selectedBoardId$
+        .pipe(
+          take(1),
+          map((boardId) => boardId),
+          switchMap((boardId) => {
+            return this.http.delete(url).pipe(
+              take(1),
+              map(() => this.store.dispatch(setSelectedBoardId({ selectedBoardId: boardId }))),
+              switchMap(() => {
+                this.approveDeletion = false;
+                return this.updateOrder.updateOrder();
+              }),
+            );
+          }),
+        )
+        .subscribe();
+    }
   }
 }
