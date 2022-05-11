@@ -62,5 +62,6 @@
   "desc length": "Descrtiption max length 255 symbols",
   "user required": "User is required",
   "delete confirmation": "Do you really want to DELETE element?",
-  "Not Found": "Object not found. Possibly it already deleted!"
+  "Not Found": "Object not found. Possibly it already deleted!",
+  "update": "Update"
 }
