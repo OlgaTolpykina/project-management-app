@@ -20,5 +20,6 @@ import { CreateColumnComponent } from './components/create-column/create-column.
     CreateColumnComponent,
   ],
   imports: [CommonModule, TasksRoutingModule, SharedModule],
+  exports: [TaskComponent],
 })
 export class TasksModule {}
