@@ -44,18 +44,9 @@ export class SearchService {
 
   public async getAllTasks(): Promise<void> {
     await this.getAllBoards();
-    this.searchObject.boards!.forEach((board) => {
-      this.columnService.getAllColumns(board.id).subscribe((columns) => {
-        if (columns.length) {
-          this.searchObject.columns = this.searchObject.columns!.concat(columns);
-          columns.forEach((column) => {
-            this.taskService.getAllTasks(board.id, column.id!).subscribe((tasks) => {
-              if (!(tasks instanceof Error) && (tasks as Task[]).length) {
-                this.searchObject.tasks = this.searchObject.tasks!.concat(tasks as Task[]);
-              }
-            });
-          });
-        }
+    this.searchObject.boards!.forEach((element) => {
+      this.boardService.getBoardById(element.id).subscribe((board) => {
+        this.searchObject.tasks = this.searchObject.tasks!.concat(board.tasks as Task[]);
       });
     });
   }
