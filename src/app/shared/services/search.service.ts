@@ -9,6 +9,7 @@ import { ColumnService } from '@shared/services/column.service';
 import { TaskService } from '@shared/services/task.service';
 import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
 import { Task } from '@shared/types/task.model';
+import { Board } from '@shared/types/board.model';
 
 @Injectable({
   providedIn: 'root',
@@ -36,23 +37,46 @@ export class SearchService {
     private store: Store<AppState>,
   ) {}
 
-  private async getAllBoards(): Promise<void> {
-    this.boardService.getAllBoards().subscribe((boards) => {
-      this.searchObject.boards = boards;
+  private async getAllBoards() {
+    this.isTaskRequestNeed = false;
+    this.boardService.getAllBoards().subscribe({
+      next: (boards) => {
+        this.searchObject.boards = [];
+        this.searchObject.boards = boards;
+      },
+      error: (err) => console.log('Error: ', err),
+      complete: () => {
+        console.log('boards');
+        this.getAllTasks();
+      },
     });
   }
 
   public async getAllTasks(): Promise<void> {
-    await this.getAllBoards();
+    let i: number = this.searchObject.boards!.length;
     this.searchObject.boards!.forEach((element) => {
-      this.boardService.getBoardById(element.id).subscribe((board) => {
-        this.searchObject.tasks = this.searchObject.tasks!.concat(board.tasks as Task[]);
+      i = i - 1;
+      this.boardService.getBoardById(element.id).subscribe({
+        next: (board) => {
+          (board as Board).columns!.forEach((el) => {
+            this.searchObject.tasks = this.searchObject.tasks!.concat(el.tasks as Task[]);
+            console.log(this.searchObject.tasks);
+          });
+        },
+        error: (err) => console.log('Error: ', err),
+        complete: () => {
+          if (i === 0) {
+            this.getSearchResult(this.searchString);
+          }
+        },
       });
     });
   }
 
   public async searchSubmit(): Promise<void> {
-    if (this.isTaskRequestNeed) await this.getAllTasks();
+    if (this.isTaskRequestNeed) {
+      await this.getAllBoards();
+    }
     console.log(this.searchString);
     console.log(this.searchObject);
     const MINIMAL_REQUEST_LENGTH: number = 2;
@@ -63,18 +87,16 @@ export class SearchService {
       this.searchString.length > MINIMAL_REQUEST_LENGTH
     ) {
       this.getSearchResult(this.searchString);
-      this.authService.router.navigate(['search']);
     }
   }
 
   private getSearchResult(searchString: string) {
     this.filteredSearchResult = [];
-    this.filteredSearchResult = this.searchObject.tasks?.length
-      ? this.searchObject.tasks.filter((task) => {
-          const taskString = JSON.stringify(task);
-          return taskString.includes(searchString);
-        })
-      : [];
+    this.filteredSearchResult = this.searchObject.tasks!.filter((task) => {
+      const taskString = JSON.stringify(task);
+      return taskString.includes(searchString);
+    });
+    this.authService.router.navigate(['search']);
   }
 
   public onSelect(task: Task) {
