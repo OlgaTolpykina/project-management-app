@@ -82,7 +82,7 @@ export class MessageService {
           map(() => this.store.dispatch(getAllBoards())),
         )
         .subscribe();
-    } else if (url.includes('columns')) {
+    } else if (url.includes('columns') || url.includes('tasks')) {
       this.selectedBoardId$
         .pipe(
           take(1),
@@ -96,20 +96,10 @@ export class MessageService {
                   (this.approveDeletion = false)
                 ),
               ),
-              switchMap(() =>
-                this.updateOrder.updateColumnOrder().pipe(
-                  take(1),
-                  map(() =>
-                    this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.boardId })),
-                  ),
-                ),
-              ),
             );
           }),
         )
-        .subscribe(() =>
-          this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.boardId })),
-        );
+        .subscribe();
     }
   }
 }
