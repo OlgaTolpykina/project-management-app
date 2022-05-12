@@ -1,15 +1,22 @@
 <div class="search-container">
   <div class="search-result-container" *ngIf="searchService.searchString.length < 3">
-    <p>Try to search something</p>
+    <p>Search request length must be more than 3 chars</p>
   </div>
-  <div class="search-result-container" *ngIf="searchService.filteredSearchResult.length === 0">
+  <div
+    class="search-result-container"
+    *ngIf="searchService.filteredSearchResult.length === 0 && searchService.searchString.length > 2"
+  >
     <p>Sorry, nothing matches.</p>
     <p>Try another search!</p>
   </div>
-  <ng-container *ngFor="let task of searchService.searchObject.tasks">
-    <app-task class="mat-elevation-z4" [task]="task"></app-task>
-  </ng-container>
-
+  <div class="search-result-container" *ngIf="searchService.searchString.length > 2">
+    <ng-container *ngFor="let task of searchService.filteredSearchResult">
+      <app-task class="mat-elevation-z4" [task]="task">
+        <p>{{ task.description }}</p>
+        <p>{{ task.order }}</p>
+      </app-task>
+    </ng-container>
+  </div>
   <!-- <div class="search-result-container" *ngIf="searchService.filteredSearchResult.length">
     <ul class="tasks-board">
       <li *ngFor="let task of searchService.filteredSearchResult">
