@@ -9,6 +9,7 @@ import { TaskComponent } from './components/task/task.component';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { CreateColumnComponent } from './components/create-column/create-column.component';
+import { UpdateTaskComponent } from './components/update-task/update-task.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { CreateColumnComponent } from './components/create-column/create-column.
     OrderByPipe,
     CreateTaskComponent,
     CreateColumnComponent,
+    UpdateTaskComponent,
   ],
   imports: [CommonModule, TasksRoutingModule, SharedModule],
 })

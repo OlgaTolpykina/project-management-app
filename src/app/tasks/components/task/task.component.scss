@@ -35,6 +35,10 @@
   justify-content: space-between;
   width: 100%;
   margin-right: 35px;
+
+  &-done {
+    text-decoration: line-through;
+  }
 }
 
 .task-user {
