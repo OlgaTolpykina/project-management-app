@@ -25,6 +25,8 @@ export class MessageService {
 
   selectedBoardId$: Observable<string> = this.store.select(selectSelectedBoardId);
 
+  boardId = '';
+
   constructor(
     public router: Router,
     private http: HttpClient,
@@ -40,7 +42,7 @@ export class MessageService {
   ): void {
     this.messageForUser = message;
     const url = redirectUrl && !(redirectUrl === 'message') ? redirectUrl : 'main';
-    this.router.navigate(['/message']);
+    this.openDialog();
     if (!(timeout === null)) {
       setTimeout(() => {
         this.messageForUser = '';
@@ -84,19 +86,30 @@ export class MessageService {
       this.selectedBoardId$
         .pipe(
           take(1),
-          map((boardId) => boardId),
-          switchMap((boardId) => {
+          map((boardId) => (this.boardId = boardId)),
+          switchMap(() => {
             return this.http.delete(url).pipe(
               take(1),
-              map(() => this.store.dispatch(setSelectedBoardId({ selectedBoardId: boardId }))),
-              switchMap(() => {
-                this.approveDeletion = false;
-                return this.updateOrder.updateOrder();
-              }),
+              map(
+                () => (
+                  this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.boardId })),
+                  (this.approveDeletion = false)
+                ),
+              ),
+              switchMap(() =>
+                this.updateOrder.updateColumnOrder().pipe(
+                  take(1),
+                  map(() =>
+                    this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.boardId })),
+                  ),
+                ),
+              ),
             );
           }),
         )
-        .subscribe();
+        .subscribe(() =>
+          this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.boardId })),
+        );
     }
   }
 }

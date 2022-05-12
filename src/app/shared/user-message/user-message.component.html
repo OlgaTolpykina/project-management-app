@@ -1,5 +1,4 @@
 <ng-container *transloco="let t">
-  <!-- <div class="message-container" fxLayout="row" fxLayoutAlign="center top"> -->
   <mat-dialog-content class="modal-content">
     {{ t(messageService.messageForUser) }}
   </mat-dialog-content>
@@ -20,17 +19,9 @@
     </div>
 
     <div class="buttons-container" *ngIf="messageService.messageForUser !== 'delete confirmation'">
-      <button
-        type="button"
-        class="link button-link"
-        routerLink=""
-        routerLinkActive="active"
-        (click)="messageService.router.navigate([messageService.redirectUrl])"
-      >
+      <button type="button" mat-button mat-dialog-close>
         {{ t("Back") }}
       </button>
     </div>
   </mat-dialog-actions>
-  <!-- </div> -->
-  <!-- </div> -->
 </ng-container>
