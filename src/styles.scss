@@ -45,3 +45,13 @@ body {
 .cdk-drag-placeholder {
   opacity: 0;
 }
+
+.custom-modal {
+  .mat-dialog-container {
+    border-top: 50px solid var(--primary);
+  }
+}
+
+.mat-button-focus-overlay {
+  background-color: transparent !important;
+}

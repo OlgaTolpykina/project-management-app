@@ -1,10 +1,10 @@
 <div class="task-title">
-  <span>{{ task!.title }}</span>
+  <span [ngClass]="{ 'task-title-done': task?.done }">{{ task!.title }}</span>
   <div>
-    <button class="task-edit" mat-icon-button color="primary">
+    <button class="task-edit" mat-icon-button color="primary" (click)="onEdit()">
       <mat-icon>edit</mat-icon>
     </button>
-    <button class="task-edit" mat-icon-button color="primary">
+    <button class="task-edit" mat-icon-button color="primary" (click)="onDelete()">
       <mat-icon>delete</mat-icon>
     </button>
   </div>

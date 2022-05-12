@@ -34,6 +34,10 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+
+  &-done {
+    text-decoration: line-through;
+  }
 }
 
 .task-user {

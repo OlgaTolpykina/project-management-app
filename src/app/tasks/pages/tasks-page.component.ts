@@ -20,7 +20,6 @@ import { setSelectedBoardId } from '@app/redux/actions/board.actions';
   templateUrl: './tasks-page.component.html',
   styleUrls: ['./tasks-page.component.scss'],
 })
-
 export class TasksPageComponent implements OnInit, OnDestroy {
   board$ = this.store.select(selectSelectedBoardTitle);
 
@@ -42,7 +41,7 @@ export class TasksPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(getAllUsers());
-    
+
     this.columns$.pipe(takeUntil(this.unsubscribe$)).subscribe((columns) => {
       if (columns) {
         this.columns = [...columns].sort((a, b) => (a.order > b.order ? 1 : -1));
