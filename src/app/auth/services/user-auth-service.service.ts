@@ -22,6 +22,8 @@ export class UserAuthServiceService {
 
   messageForUser: string = '';
 
+  users: User[] = [];
+
   redirectUrl: string | null = null;
 
   loadedUser: User = {
@@ -57,7 +59,14 @@ export class UserAuthServiceService {
       this.userService
         .getAllUsers()
         .pipe(catchError((error) => this.handleError(error)))
-        .subscribe();
+        .subscribe({
+          next: (users) => {
+            if (!(users instanceof Error)) {
+              this.users = users.length ? users : [];
+              console.log(this.users);
+            }
+          },
+        });
     }
     this.userSettings.userName =
       this.isAuthorized === 'true' ? (this.getSavedLocalUser()?.userName as string) : '';

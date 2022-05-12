@@ -33,8 +33,6 @@ export class SearchService {
 
   openPage: boolean = false;
 
-  users: User[] = [];
-
   constructor(
     private boardService: BoardService,
     private columnService: ColumnService,
@@ -82,7 +80,6 @@ export class SearchService {
   public async searchSubmit(): Promise<void> {
     if (this.isTaskRequestNeed || this.searchObject.tasks?.length === 0) {
       await this.getAllBoards();
-      this.getAllUsers();
     }
     console.log(this.searchString);
     console.log(this.searchObject);
@@ -102,7 +99,7 @@ export class SearchService {
   private getSearchResult(searchString: string) {
     this.filteredSearchResult = [];
     this.filteredSearchResult = this.searchObject.tasks!.filter((task) => {
-      task.userName = this.users?.find((user) => user.id === task?.userId)?.name || '';
+      task.userName = this.authService.users.find((user) => user.id === task?.userId)?.name || '';
       const taskString = task.title + task.description + task.userName + task.order.toString();
       console.log(taskString);
       console.log(taskString.includes(searchString));
@@ -117,15 +114,5 @@ export class SearchService {
     this.store.dispatch(clearSelectedBoard());
     this.store.dispatch(setSelectedBoardId({ selectedBoardId }));
     this.authService.router.navigateByUrl('/b/' + selectedBoardId);
-  }
-
-  private getAllUsers() {
-    this.store
-      .select(selectUsers)
-      .pipe()
-      .subscribe((users) => {
-        this.users = users ? users : [];
-        console.log(users);
-      });
   }
 }

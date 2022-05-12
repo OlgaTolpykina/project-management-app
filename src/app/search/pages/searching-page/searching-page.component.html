@@ -11,10 +11,13 @@
   </div>
   <div class="search-result-container" *ngIf="searchService.searchString.length > 2">
     <ng-container *ngFor="let task of searchService.filteredSearchResult">
-      <app-task class="mat-elevation-z4" [task]="task">
-        <p>{{ task.description }}</p>
+      <app-task class="mat-elevation-z4" [task]="task"> </app-task>
+      <div class="task-container">
+        <p>{{ task.title }}</p>
         <p>{{ task.order }}</p>
-      </app-task>
+        <p>{{ task.description }}</p>
+        <p>{{ task.userName }}</p>
+      </div>
     </ng-container>
   </div>
   <!-- <div class="search-result-container" *ngIf="searchService.filteredSearchResult.length">
