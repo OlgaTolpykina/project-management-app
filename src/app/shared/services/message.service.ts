@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { HttpRequest } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import { UpdateOrderService } from '@app/tasks/services/updateOrder/update-order.service';
 import { getAllBoards, setSelectedBoardId } from '@app/redux/actions/board.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { UserMessageComponent } from '@shared/user-message/user-message.component';
@@ -31,7 +30,6 @@ export class MessageService {
     public router: Router,
     private http: HttpClient,
     private store: Store<AppState>,
-    private updateOrder: UpdateOrderService,
     private dialog: MatDialog,
   ) {}
 
