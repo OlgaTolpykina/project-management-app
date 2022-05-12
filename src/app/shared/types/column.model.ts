@@ -4,6 +4,5 @@ export interface Column {
   id?: string;
   title: string;
   order: number;
-  orderId?: number;
   tasks?: Task[];
 }
