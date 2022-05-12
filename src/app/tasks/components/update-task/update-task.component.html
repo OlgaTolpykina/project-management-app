@@ -1,4 +1,10 @@
-<form class="update-form" *transloco="let t" [formGroup]="taskForm">
+<form
+  class="update-form"
+  *transloco="let t"
+  [formGroup]="taskForm"
+  (ngSubmit)="onUpdateTask()"
+  (keydown.enter)="$event.preventDefault()"
+>
   <mat-dialog-content>
     <div class="task-title-wrapper">
       <mat-checkbox class="checkbox" formControlName="done"></mat-checkbox>
@@ -45,7 +51,16 @@
 
   <mat-dialog-actions align="center">
     <button mat-button mat-dialog-close color="warn">{{ t("cancel") }}</button>
-    <button mat-button type="submit" (click)="onUpdateTask()">
+    <button
+      mat-button
+      type="submit"
+      [disabled]="
+        title?.value === data.task?.title &&
+        done?.value === data.task?.done &&
+        desc?.value === data.task?.description &&
+        user?.value === data.task?.userId
+      "
+    >
       {{ t("update") }}
     </button>
   </mat-dialog-actions>

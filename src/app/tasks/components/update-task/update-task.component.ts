@@ -52,7 +52,7 @@ export class UpdateTaskComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: { task: Task; columnId: string | undefined },
+    @Inject(MAT_DIALOG_DATA) public data: { task: Task; columnId: string | undefined },
     private dialogRef: MatDialogRef<UpdateTaskComponent>,
     private fb: FormBuilder,
     private store: Store<AppState>,

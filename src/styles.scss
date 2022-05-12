@@ -51,3 +51,7 @@ body {
     border-top: 50px solid var(--primary);
   }
 }
+
+.mat-button-focus-overlay {
+  background-color: transparent !important;
+}
