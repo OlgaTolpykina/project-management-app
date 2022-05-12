@@ -57,7 +57,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
           this.columnService
             .updateColumn(selectedBoardId, this.column!.id!, {
               title: this.name,
-              order: this.column?.order!,
+              order: +this.column?.order!,
             })
             .pipe(map(() => this.store.dispatch(setSelectedBoardId({ selectedBoardId })))),
         ),

@@ -74,7 +74,9 @@ export class CreateTaskComponent implements OnInit, OnDestroy {
     if (this.taskForm.status === 'VALID') {
       let lastOrder = 1;
       if (this.data.column.tasks?.length) {
-        lastOrder = this.data.column.tasks[this.data.column.tasks.length - 1].order + 1;
+        console.log(typeof this.data.column.tasks[this.data.column.tasks.length - 1].order);
+        lastOrder = +this.data.column.tasks[this.data.column.tasks.length - 1].order + 1;
+        console.log(lastOrder);
       }
 
       if (this.selectedBoardId && this.data.column.id) {
