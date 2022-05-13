@@ -9,6 +9,9 @@ import { AppState } from '@app/redux/state.model';
 import { Observable, takeUntil, Subject, map, take } from 'rxjs';
 import { TaskService } from '@shared/services/task.service';
 import { setSelectedBoardId } from '@app/redux/actions/board.actions';
+import { FileService } from '@shared/services/file.service';
+import { File } from '@shared/types/file.model';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-update-task',
@@ -25,6 +28,8 @@ export class UpdateTaskComponent implements OnInit, OnDestroy {
   selectedBoardId: string | undefined;
 
   unsubscribe$ = new Subject<void>();
+
+  files: File[] = [];
 
   taskForm = this.fb.group({
     title: [this.data.task.title, [Validators.required, Validators.maxLength(50)]],
@@ -57,12 +62,15 @@ export class UpdateTaskComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private store: Store<AppState>,
     private taskService: TaskService,
+    private fileService: FileService,
   ) {}
 
   ngOnInit(): void {
     this.selectedBoardId$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((id) => (this.selectedBoardId = id));
+
+    if (this.data.task.files) this.files = this.data.task.files;
   }
 
   onEdit(): void {
@@ -87,17 +95,40 @@ export class UpdateTaskComponent implements OnInit, OnDestroy {
             boardId: this.selectedBoardId,
             columnId: this.data.columnId,
           })
-          .pipe(
-            map(() => {
-              if (this.selectedBoardId)
-                this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.selectedBoardId }));
-            }),
-            take(1),
-          )
-          .subscribe();
+          .pipe(take(1))
+          .subscribe(() => console.log('end'));
       }
     }
     this.dialogRef.close();
+  }
+
+  onUploadFile(e: Event): void {
+    const formData = new FormData();
+    if (this.data.task.id !== undefined) {
+      formData.append('taskId', this.data.task.id);
+      formData.append('file', ((<HTMLInputElement>e.target).files as FileList)[0]);
+      this.fileService
+        .uploadFile(formData)
+        .pipe(
+          map(() => {
+            if (this.selectedBoardId)
+              this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.selectedBoardId }));
+          }),
+          take(1),
+        )
+        .subscribe();
+    }
+    this.dialogRef.close();
+  }
+
+  onDownloadFile(file: File): void {
+    if (this.data.task.id)
+      this.fileService.downloadFile(this.data.task.id, file.filename).subscribe((res) => {
+        console.log(typeof res);
+        let encodeStr = btoa(res);
+        let blob = new Blob([encodeStr], { type: 'image/jpeg' });
+        saveAs(blob, file.filename);
+      });
   }
 
   ngOnDestroy(): void {

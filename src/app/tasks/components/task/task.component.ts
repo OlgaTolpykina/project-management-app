@@ -52,7 +52,6 @@ export class TaskComponent implements OnInit, OnDestroy {
 
   onEdit(): void {
     this.dialog.open(UpdateTaskComponent, {
-      height: '400px',
       width: '600px',
       data: {
         task: this.task,
