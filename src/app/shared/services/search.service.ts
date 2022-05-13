@@ -3,7 +3,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@app/redux/state.model';
 
 import { setSelectedBoardId, clearSelectedBoard } from '@app/redux/actions/board.actions';
-import { selectUsers } from '@app/redux/selectors/selectors';
 import { SearchObject } from '@shared/types/search-object.model';
 import { BoardService } from '@shared/services/board.service';
 import { ColumnService } from '@shared/services/column.service';
@@ -11,7 +10,6 @@ import { TaskService } from '@shared/services/task.service';
 import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
 import { Task } from '@shared/types/task.model';
 import { Board } from '@shared/types/board.model';
-import { User } from '@shared/types/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -60,7 +58,7 @@ export class SearchService {
     let i: number = this.searchObject.boards!.length;
     this.searchObject.boards!.forEach((element) => {
       i = i - 1;
-      this.boardService.getBoardById(element.id).subscribe({
+      this.boardService.getBoardById(element.id!).subscribe({
         next: (board) => {
           (board as Board).columns!.forEach((el) => {
             this.searchObject.tasks = this.searchObject.tasks!.concat(el.tasks as Task[]);
