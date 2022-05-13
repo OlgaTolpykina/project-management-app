@@ -22,5 +22,6 @@ import { UpdateTaskComponent } from './components/update-task/update-task.compon
     UpdateTaskComponent,
   ],
   imports: [CommonModule, TasksRoutingModule, SharedModule],
+  exports: [TaskComponent],
 })
 export class TasksModule {}

@@ -47,7 +47,6 @@ export class TasksPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(getAllUsers());
-
     this.columns$.pipe(takeUntil(this.unsubscribe$)).subscribe((columns) => {
       if (columns) {
         this.columns = [...columns].sort((a, b) => (a.order > b.order ? 1 : -1));

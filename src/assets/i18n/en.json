@@ -34,6 +34,7 @@
   "Welcome in profile": "Welcome!  You are successfully authorized!",
   "update profile": "Congratulations!  You are successfully update profile!",
   "register profile": "Congratulations!  You are successfully registered!",
+  "signIn first": "Try to signIn first",
   "signUp first": "Try to signUp first",
   "login&password not found": "User with such combination login and password not exist! Try to change or sign Up first!",
   "user exist": "User with such login  already exist!",
@@ -66,5 +67,6 @@
   "Internal Server Error": "Something went wrong. Please check your Internet connection",
   "Unknown Error": "Something went wrong. Please check your Internet connection",
   "Bad Request": "Something went wrong. Please check your Internet connection",
-  "update": "Update"
+  "update": "Update",
+  "Internal Server Error": "Internal Server Error. Reload page"
 }
