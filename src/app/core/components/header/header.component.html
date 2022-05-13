@@ -37,12 +37,7 @@
 <ng-template #authorized>
   <div class="nav-right">
     <mat-form-field *transloco="let t">
-      <input
-        matInput
-        type="text"
-        [(ngModel)]="searchService.searchString"
-        (input)="searchService.searchSubmit()"
-      />
+      <input matInput type="text" />
       <mat-placeholder class="placeholder">{{ t("search") }}</mat-placeholder>
     </mat-form-field>
     <div class="button-wrapper" *transloco="let t" fxHide.sm fxHide.xs>
