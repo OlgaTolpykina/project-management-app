@@ -29,6 +29,12 @@ export class TasksPageComponent implements OnInit, OnDestroy {
 
   columns: Column[] = [];
 
+  columnToUpdate: Column = {
+    id: '',
+    title: '',
+    order: 0,
+  };
+
   boardId = '';
 
   unsubscribe$ = new Subject<void>();
@@ -49,6 +55,8 @@ export class TasksPageComponent implements OnInit, OnDestroy {
     this.boardId$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((boardId) => (this.boardId = boardId));
+
+    this.updateColumnOrders();
   }
 
   openDialog() {
@@ -61,6 +69,28 @@ export class TasksPageComponent implements OnInit, OnDestroy {
   drop(event: CdkDragDrop<Column[]>) {
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 
+    const nextElementOrder =
+      event.currentIndex < this.columns.length - 1
+        ? +this.columns[event.currentIndex + 1].order
+        : +this.columns[event.currentIndex - 1].order + 1;
+    const previousElementOrder =
+      event.currentIndex > 0 ? +this.columns[event.currentIndex - 1].order : 0;
+
+    this.columnToUpdate.id = this.columns[event.currentIndex].id;
+    this.columnToUpdate.title = this.columns[event.currentIndex].title;
+    this.columnToUpdate.order = (nextElementOrder + previousElementOrder) / 2;
+
+    this.columnService
+      .updateColumn(this.boardId, this.columnToUpdate.id!, {
+        title: this.columnToUpdate.title,
+        order: this.columnToUpdate.order,
+      })
+      .subscribe({
+        complete: () => this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.boardId })),
+      });
+  }
+
+  updateColumnOrders() {
     const updatedColumns: Column[] = [];
     this.columns.forEach((column, index) => {
       if (index === 0) {

@@ -1,39 +1,39 @@
-import { Component, ViewChild, ElementRef, Inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, Inject, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Column } from '@shared/types/column.model';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Task } from '@shared/types/task.model';
 import { Store } from '@ngrx/store';
-import { selectUsers } from '@app/redux/selectors/selectors';
+import { selectUsers, selectSelectedBoardId } from '@app/redux/selectors/selectors';
 import { AppState } from '@app/redux/state.model';
+import { Observable, takeUntil, Subject, map, take } from 'rxjs';
 import { TaskService } from '@shared/services/task.service';
-import { Observable, Subject, takeUntil, map, take } from 'rxjs';
-import { selectSelectedBoardId } from '@app/redux/selectors/selectors';
 import { setSelectedBoardId } from '@app/redux/actions/board.actions';
 
 @Component({
-  selector: 'app-create-task',
-  templateUrl: './create-task.component.html',
-  styleUrls: ['./create-task.component.scss'],
+  selector: 'app-update-task',
+  templateUrl: './update-task.component.html',
+  styleUrls: ['./update-task.component.scss'],
 })
-export class CreateTaskComponent implements OnInit, OnDestroy {
+export class UpdateTaskComponent implements OnInit, OnDestroy {
   @ViewChild('titleinput') input: ElementRef | undefined;
 
-  selectedBoardId$: Observable<string> = this.store.select(selectSelectedBoardId);
-
   users$ = this.store.select(selectUsers);
+
+  selectedBoardId$: Observable<string> = this.store.select(selectSelectedBoardId);
 
   selectedBoardId: string | undefined;
 
   unsubscribe$ = new Subject<void>();
 
-  isEditEnable = true;
-
   taskForm = this.fb.group({
-    title: ['Task title', [Validators.required, Validators.maxLength(50)]],
-    desc: ['', [Validators.required, Validators.maxLength(255)]],
-    userId: ['', Validators.required],
+    title: [this.data.task.title, [Validators.required, Validators.maxLength(50)]],
+    desc: [this.data.task.description, [Validators.required, Validators.maxLength(255)]],
+    userId: [this.data.task.userId, Validators.required],
+    done: [this.data.task.done, Validators.required],
   });
+
+  isTitleEditEnable = false;
 
   get title() {
     return this.taskForm.get('title');
@@ -47,10 +47,14 @@ export class CreateTaskComponent implements OnInit, OnDestroy {
     return this.taskForm.get('userId');
   }
 
+  get done() {
+    return this.taskForm.get('done');
+  }
+
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: { column: Column },
+    @Inject(MAT_DIALOG_DATA) public data: { task: Task; columnId: string | undefined },
+    private dialogRef: MatDialogRef<UpdateTaskComponent>,
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<CreateTaskComponent>,
     private store: Store<AppState>,
     private taskService: TaskService,
   ) {}
@@ -62,29 +66,26 @@ export class CreateTaskComponent implements OnInit, OnDestroy {
   }
 
   onEdit(): void {
-    this.isEditEnable = !this.isEditEnable;
-    if (this.isEditEnable) setTimeout(() => this.input?.nativeElement.focus(), 0);
+    this.isTitleEditEnable = !this.isTitleEditEnable;
+    if (this.isTitleEditEnable) setTimeout(() => this.input?.nativeElement.focus(), 0);
     if (!this.input?.nativeElement.value) {
-      this.isEditEnable = true;
+      this.isTitleEditEnable = true;
       return;
     }
   }
 
-  onCreateTask(): void {
+  onUpdateTask(): void {
     if (this.taskForm.status === 'VALID') {
-      let lastOrder = 1;
-      if (this.data.column.tasks?.length) {
-        lastOrder = +this.data.column.tasks[this.data.column.tasks.length - 1].order + 1;
-      }
-
-      if (this.selectedBoardId && this.data.column.id) {
+      if (this.selectedBoardId && this.data.columnId && this.data.task.id) {
         this.taskService
-          .createTask(this.selectedBoardId, this.data.column.id, {
+          .updateTask(this.selectedBoardId, this.data.columnId, this.data.task.id, {
             title: this.title?.value,
             description: this.desc?.value,
             userId: this.user?.value,
-            order: lastOrder,
-            done: false,
+            order: +this.data.task.order,
+            done: this.done?.value,
+            boardId: this.selectedBoardId,
+            columnId: this.data.columnId,
           })
           .pipe(
             map(() => {
@@ -95,9 +96,8 @@ export class CreateTaskComponent implements OnInit, OnDestroy {
           )
           .subscribe();
       }
-
-      this.dialogRef.close();
     }
+    this.dialogRef.close();
   }
 
   ngOnDestroy(): void {
