@@ -49,7 +49,8 @@ export class HeadersInterceptor implements HttpInterceptor {
         headers,
         responseType: 'text',
       });
-    } else if (request.url.includes('file') && request.method === 'GET') {
+    }
+    if (request.url.includes('file') && request.method === 'GET') {
       newReq = request.clone({
         headers,
         responseType: 'blob',

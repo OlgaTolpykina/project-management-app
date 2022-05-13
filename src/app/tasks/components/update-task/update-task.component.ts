@@ -124,9 +124,7 @@ export class UpdateTaskComponent implements OnInit, OnDestroy {
   onDownloadFile(file: File): void {
     if (this.data.task.id)
       this.fileService.downloadFile(this.data.task.id, file.filename).subscribe((res) => {
-        console.log(typeof res);
-        let encodeStr = btoa(res);
-        let blob = new Blob([encodeStr], { type: 'image/jpeg' });
+        let blob = new Blob([res], { type: 'image/jpeg' });
         saveAs(blob, file.filename);
       });
   }
