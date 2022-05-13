@@ -36,12 +36,13 @@ export class BoardListComponent implements OnInit, OnDestroy {
 
     this.boards$.pipe(takeUntil(this.unsubscribe$)).subscribe((value) => {
       if (value?.length) {
+        for (let i = 0; i <= value?.length; i++) this.boardsBackgroundImgsUrl.push('');
         this.backgroundImgService
           .getBackgroundImgs(value.length)
           .pipe()
           .subscribe((res) => {
             res.forEach((imgObj) => {
-              this.boardsBackgroundImgsUrl.push(imgObj.urls.small);
+              this.boardsBackgroundImgsUrl.unshift(imgObj.urls.small);
             });
           });
       }
