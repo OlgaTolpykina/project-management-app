@@ -32,7 +32,7 @@ export class BoardListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.boardsBackgroundImgsUrl = [];
+    this.boardsBackgroundImgsUrl = ['', '', ''];
 
     this.boards$.pipe(takeUntil(this.unsubscribe$)).subscribe((value) => {
       if (value?.length) {
@@ -41,7 +41,7 @@ export class BoardListComponent implements OnInit, OnDestroy {
           .pipe()
           .subscribe((res) => {
             res.forEach((imgObj) => {
-              this.boardsBackgroundImgsUrl.push(imgObj.urls.small);
+              this.boardsBackgroundImgsUrl.unshift(imgObj.urls.small);
             });
           });
       }
