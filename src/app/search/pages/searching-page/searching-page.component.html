@@ -3,22 +3,40 @@
     <a routerLink="/main" class="tasks-sidebar_item">{{ t("allBoards") }}</a>
   </div>
   <div class="search-container">
-    <p class="tasks-board">
-      {{ t("Search results") }}
-    </p>
-    <div class="search-result-container" *ngIf="searchService.searchString.length < 3">
-      <p>{{ t("search request length") }}</p>
+    <div class="tasks-board">
+      <p class="">
+        {{ t("Search results") }}
+      </p>
+      <div class="sort-settings-container">
+        {{ t("Sort by:") }}
+        <button class="sort-button">{{ t("title") }}</button>
+        <button class="sort-button">{{ t("order") }}</button>
+        <button class="sort-button">{{ t("description") }}</button>
+        <button class="sort-button">{{ t("user") }}</button>
+      </div>
+    </div>
+    <div
+      class="search-result-container"
+      *ngIf="searchService.searchString.length < searchService.MINIMAL_REQUEST_LENGTH"
+    >
+      <p>
+        {{ t("search request length") }} {{ searchService.MINIMAL_REQUEST_LENGTH }} {{ t("chars") }}
+      </p>
     </div>
     <div
       class="search-result-container"
       *ngIf="
-        searchService.filteredSearchResult.length === 0 && searchService.searchString.length > 2
+        searchService.filteredSearchResult.length === 0 &&
+        searchService.searchString.length >= searchService.MINIMAL_REQUEST_LENGTH
       "
     >
       <p>{{ t("Sorry, nothing matches.") }}</p>
       <p>{{ t("Try another search!") }}</p>
     </div>
-    <div class="search-result-container" *ngIf="searchService.searchString.length > 2">
+    <div
+      class="search-result-container"
+      *ngIf="searchService.searchString.length >= searchService.MINIMAL_REQUEST_LENGTH"
+    >
       <ng-container *ngFor="let task of searchService.filteredSearchResult">
         <div class="task-container" (click)="searchService.onSelect(task)">
           <p>{{ task.title }}</p>

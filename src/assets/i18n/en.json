@@ -69,7 +69,8 @@
   "update": "Update",
   "Internal Server Error": "Internal Server Error. Reload page",
   "Search results": "Search results",
-  "search request length": "Search request must be more than 3 chars",
+  "search request length": "Search request must be more than ",
+  "chars": "chars",
   "Sorry, nothing matches.": "Sorry, nothing matches.",
   "Try another search!": "Try another search!"
 }

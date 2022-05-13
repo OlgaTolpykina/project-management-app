@@ -5,8 +5,6 @@ import { AppState } from '@app/redux/state.model';
 import { setSelectedBoardId, clearSelectedBoard } from '@app/redux/actions/board.actions';
 import { SearchObject } from '@shared/types/search-object.model';
 import { BoardService } from '@shared/services/board.service';
-import { ColumnService } from '@shared/services/column.service';
-import { TaskService } from '@shared/services/task.service';
 import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
 import { Task } from '@shared/types/task.model';
 import { Board } from '@shared/types/board.model';
@@ -31,10 +29,10 @@ export class SearchService {
 
   openPage: boolean = false;
 
+  MINIMAL_REQUEST_LENGTH: number = 2;
+
   constructor(
     private boardService: BoardService,
-    private columnService: ColumnService,
-    private taskService: TaskService,
     private authService: UserAuthServiceService,
     private store: Store<AppState>,
   ) {}
@@ -82,12 +80,11 @@ export class SearchService {
     }
     console.log(this.searchString);
     console.log(this.searchObject);
-    const MINIMAL_REQUEST_LENGTH: number = 2;
     if (this.authService.isAuthorized !== 'true') {
       this.authService.getMessageForUser('signIn first', 'home');
     } else if (
       this.authService.isAuthorized === 'true' &&
-      this.searchString.length > MINIMAL_REQUEST_LENGTH &&
+      this.searchString.length >= this.MINIMAL_REQUEST_LENGTH &&
       this.openPage
     ) {
       this.getSearchResult(this.searchString);
