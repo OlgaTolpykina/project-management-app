@@ -13,3 +13,12 @@
   color: var(--primary);
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.task-container {
+  width: 100%;
+  min-width: 310px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  cursor: pointer;
+  font-size: 1rem;
+}

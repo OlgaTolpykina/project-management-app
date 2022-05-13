@@ -60,7 +60,7 @@ export class SearchService {
     let i: number = this.searchObject.boards!.length;
     this.searchObject.boards!.forEach((element) => {
       i = i - 1;
-      this.boardService.getBoardById(element.id).subscribe({
+      this.boardService.getBoardById(element.id as string).subscribe({
         next: (board) => {
           (board as Board).columns!.forEach((el) => {
             this.searchObject.tasks = this.searchObject.tasks!.concat(el.tasks as Task[]);
