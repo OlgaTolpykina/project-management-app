@@ -60,13 +60,16 @@
   "task-desc": "Task description",
   "task-user": "Task executor",
   "desc required": "Description is required",
-  "desc length": "Descrtiption max length 255 symbols",
+  "desc length": "Description max length 255 symbols",
   "user required": "User is required",
   "delete confirmation": "Do you really want to DELETE element?",
   "Not Found": "Object not found. Possibly it already deleted!",
-  "Internal Server Error": "Something went wrong. Please check your Internet connection",
   "Unknown Error": "Something went wrong. Please check your Internet connection",
   "Bad Request": "Something went wrong. Please check your Internet connection",
   "update": "Update",
-  "Internal Server Error": "Internal Server Error. Reload page"
+  "Internal Server Error": "Internal Server Error. Reload page",
+  "Search results": "Search results",
+  "search request length": "Search request must be more than 3 chars",
+  "Sorry, nothing matches.": "Sorry, nothing matches.",
+  "Try another search!": "Try another search!"
 }
