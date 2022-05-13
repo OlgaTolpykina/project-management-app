@@ -32,10 +32,11 @@ export class BoardListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.boardsBackgroundImgsUrl = ['', '', ''];
+    this.boardsBackgroundImgsUrl = [];
 
     this.boards$.pipe(takeUntil(this.unsubscribe$)).subscribe((value) => {
       if (value?.length) {
+        for (let i = 0; i <= value?.length; i++) this.boardsBackgroundImgsUrl.push('');
         this.backgroundImgService
           .getBackgroundImgs(value.length)
           .pipe()
