@@ -18,7 +18,7 @@ export class BoardService {
     return this.http.get<Board[]>(this.url);
   }
 
-  createBoard(body: { title: string }): Observable<Board | Error> {
+  createBoard(body: Board): Observable<Board | Error> {
     return this.http.post<Board | Error>(this.url, body);
   }
 

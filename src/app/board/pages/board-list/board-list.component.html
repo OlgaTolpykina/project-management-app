@@ -7,6 +7,7 @@
       *ngFor="let board of boards; index as i"
       [board]="board"
       [backgroundImgUrl]="boardsBackgroundImgsUrl[i]"
+      [matTooltip]="board.description!"
       (click)="openBoard(board)"
     ></app-board-item>
     <mat-card class="create-board" (click)="openDialog()">
