@@ -34,6 +34,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  margin-right: 35px;
 
   &-done {
     text-decoration: line-through;
@@ -43,6 +44,7 @@
 .task-user {
   width: 30px;
   height: 30px;
+  position: absolute;
 
   border-radius: 100%;
   background-color: var(--primary);

@@ -90,7 +90,7 @@ export class UpdateTaskComponent implements OnInit, OnDestroy {
             title: this.title?.value,
             description: this.desc?.value,
             userId: this.user?.value,
-            order: this.data.task.order,
+            order: +this.data.task.order,
             done: this.done?.value,
             boardId: this.selectedBoardId,
             columnId: this.data.columnId,

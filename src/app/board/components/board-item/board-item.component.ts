@@ -1,11 +1,6 @@
 import { Component, Input } from '@angular/core';
-
 import { Board } from '@shared/types/board.model';
-import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-
 import { BoardService } from '@shared/services/board.service';
-import { deleteBoard } from '@app/redux/actions/board.actions';
 import { take } from 'rxjs';
 
 @Component({
@@ -18,17 +13,10 @@ export class BoardItemComponent {
 
   @Input() backgroundImgUrl: string | undefined;
 
-  constructor(private router: Router, private boardService: BoardService, private store: Store) {}
+  constructor(private boardService: BoardService) {}
 
   onDelete(e: Event): void {
     e.stopPropagation();
-    if (this.board?.id)
-      this.boardService
-        .deleteBoardById(this.board.id)
-        .pipe(take(1))
-        .subscribe((data) => {
-          if (!(data instanceof Error) && this.board?.id)
-            this.store.dispatch(deleteBoard({ id: this.board.id }));
-        });
+    if (this.board?.id) this.boardService.deleteBoardById(this.board.id).pipe(take(1)).subscribe();
   }
 }
