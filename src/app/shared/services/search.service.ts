@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/redux/state.model';
+import { Subject, distinctUntilChanged, debounceTime } from 'rxjs';
 
 import { setSelectedBoardId, clearSelectedBoard } from '@app/redux/actions/board.actions';
 import { SearchObject } from '@shared/types/search-object.model';
@@ -8,6 +9,7 @@ import { BoardService } from '@shared/services/board.service';
 import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
 import { Task } from '@shared/types/task.model';
 import { Board } from '@shared/types/board.model';
+import { SortSettings } from '@shared/types/sort-settings.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +19,11 @@ export class SearchService {
     tasks: [],
     boards: [],
     columns: [],
+  };
+
+  sortSettings: SortSettings = {
+    sortBy: 'title',
+    decrease: true,
   };
 
   filteredSearchResult: Task[] = [];
@@ -31,17 +38,27 @@ export class SearchService {
 
   MINIMAL_REQUEST_LENGTH: number = 2;
 
+  searchTextChanged = new Subject<string>();
+
+  searchTextChanged$ = this.searchTextChanged.asObservable();
+
   constructor(
     private boardService: BoardService,
     private authService: UserAuthServiceService,
     private store: Store<AppState>,
-  ) {}
+  ) {
+    this.searchTextChanged
+      .pipe(distinctUntilChanged(), debounceTime(200))
+      .subscribe((searchString) => {
+        this.getSearchResult(searchString);
+      });
+  }
 
   private async getAllBoards() {
+    this.searchObject.boards = [];
     this.isTaskRequestNeed = false;
     this.boardService.getAllBoards().subscribe({
       next: (boards) => {
-        this.searchObject.boards = [];
         this.searchObject.boards = boards;
       },
       error: (err) => console.log('Error: ', err),
@@ -66,6 +83,7 @@ export class SearchService {
         },
         error: (err) => console.log('Error: ', err),
         complete: () => {
+          console.log('tasks');
           if (i === 0) {
             this.openPage = true;
           }
@@ -87,7 +105,7 @@ export class SearchService {
       this.searchString.length >= this.MINIMAL_REQUEST_LENGTH &&
       this.openPage
     ) {
-      this.getSearchResult(this.searchString);
+      this.searchTextChanged.next(this.searchString);
       this.authService.router.navigate(['search']);
     }
   }
@@ -97,11 +115,22 @@ export class SearchService {
     this.filteredSearchResult = this.searchObject.tasks!.filter((task) => {
       task.userName = this.authService.users.find((user) => user.id === task?.userId)?.name || '';
       const taskString = task.title + task.description + task.userName + task.order.toString();
-      console.log(taskString);
-      console.log(taskString.includes(searchString));
       return taskString.toLowerCase().includes(searchString.toLowerCase());
     });
-    console.log(this.filteredSearchResult);
+    this.sortFilteredSearchResult();
+  }
+
+  public sortFilteredSearchResult() {
+    this.filteredSearchResult.sort((a: Task, b: Task) => {
+      if (!this.sortSettings.decrease) {
+        return a[this.sortSettings.sortBy]!.toString() > b[this.sortSettings.sortBy]!.toString()
+          ? 1
+          : -1;
+      } else
+        return a[this.sortSettings.sortBy]!.toString() > b[this.sortSettings.sortBy]!.toString()
+          ? -1
+          : 1;
+    });
   }
 
   public onSelect(task: Task) {

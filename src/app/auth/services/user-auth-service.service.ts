@@ -46,6 +46,8 @@ export class UserAuthServiceService {
 
   userService: UserService;
 
+  changeMessage$ = new Subject<string>();
+
   constructor(beAuthService: BeAuthService, userService: UserService, public router: Router) {
     this.beAuthService = beAuthService;
     this.userService = userService;
@@ -101,8 +103,10 @@ export class UserAuthServiceService {
           newUser.id = this.loadedUser.id as string;
           this.userSettings.id = this.loadedUser.id as string;
           this.saveLocalUser(newUser);
-          this.getMessageForUser('register profile', 'home');
-          await this.authorizeUser(this.userSettings);
+          this.getMessageForUser('register profile');
+          setTimeout(() => {
+            this.authorizeUser(this.userSettings);
+          }, 1000);
         }
       });
   }
@@ -225,6 +229,7 @@ export class UserAuthServiceService {
 
   getMessageForUser(message: string, redirectUrl?: string | null) {
     this.messageForUser = message;
+    this.changeMessage$.next(this.messageForUser);
     const backingUrl = this.redirectUrl ? this.redirectUrl : 'main';
     const url = redirectUrl ? redirectUrl : backingUrl;
     this.router.navigate(['auth/message']);

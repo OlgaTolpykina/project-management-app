@@ -10,10 +10,38 @@
       <div class="sort-settings-container">
         <div class="sort-settings">
           {{ t("Sort by") }}:
-          <button class="sort-button">{{ t("title") }}</button>
-          <button class="sort-button">{{ t("Order") }}</button>
-          <button class="sort-button">{{ t("Description") }}</button>
-          <button class="sort-button">{{ t("User") }}</button>
+          <button
+            class="sort-button"
+            [class.active]="searchService.sortSettings.sortBy === 'title'"
+            (click)="searchService.sortSettings.sortBy = 'title'"
+            (click)="searchService.sortFilteredSearchResult()"
+          >
+            {{ t("title") }}
+          </button>
+          <button
+            class="sort-button"
+            [class.active]="searchService.sortSettings.sortBy === 'order'"
+            (click)="searchService.sortSettings.sortBy = 'order'"
+            (click)="searchService.sortFilteredSearchResult()"
+          >
+            {{ t("Order") }}
+          </button>
+          <button
+            class="sort-button"
+            [class.active]="searchService.sortSettings.sortBy === 'description'"
+            (click)="searchService.sortSettings.sortBy = 'description'"
+            (click)="searchService.sortFilteredSearchResult()"
+          >
+            {{ t("Description") }}
+          </button>
+          <button
+            class="sort-button"
+            [class.active]="searchService.sortSettings.sortBy === 'userName'"
+            (click)="searchService.sortSettings.sortBy = 'userName'"
+            (click)="searchService.sortFilteredSearchResult()"
+          >
+            {{ t("User") }}
+          </button>
         </div>
       </div>
     </div>
