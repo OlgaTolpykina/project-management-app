@@ -72,5 +72,9 @@
   "search request length": "Search request must be more than ",
   "chars": "chars",
   "Sorry, nothing matches.": "Sorry, nothing matches.",
-  "Try another search!": "Try another search!"
+  "Try another search!": "Try another search!",
+  "Order": "Order",
+  "Description": "Description",
+  "User": "User",
+  "Sort by": "Sort by"
 }

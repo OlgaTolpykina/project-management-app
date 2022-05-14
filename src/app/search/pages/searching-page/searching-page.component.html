@@ -8,11 +8,13 @@
         {{ t("Search results") }}
       </p>
       <div class="sort-settings-container">
-        {{ t("Sort by:") }}
-        <button class="sort-button">{{ t("title") }}</button>
-        <button class="sort-button">{{ t("order") }}</button>
-        <button class="sort-button">{{ t("description") }}</button>
-        <button class="sort-button">{{ t("user") }}</button>
+        <div class="sort-settings">
+          {{ t("Sort by") }}:
+          <button class="sort-button">{{ t("title") }}</button>
+          <button class="sort-button">{{ t("Order") }}</button>
+          <button class="sort-button">{{ t("Description") }}</button>
+          <button class="sort-button">{{ t("User") }}</button>
+        </div>
       </div>
     </div>
     <div
@@ -39,10 +41,16 @@
     >
       <ng-container *ngFor="let task of searchService.filteredSearchResult">
         <div class="task-container" (click)="searchService.onSelect(task)">
-          <p>{{ task.title }}</p>
-          <p>{{ task.order }}</p>
-          <p>{{ task.description }}</p>
-          <div class="task-user">
+          <div>
+            <p class="task-header">{{ t("title") }}</p>
+            {{ task.title }}
+          </div>
+          <div>
+            <p class="task-header">{{ t("Description") }}</p>
+            {{ task.description }}
+          </div>
+          <div class="">
+            <p class="task-header">{{ t("User") }}</p>
             <span>{{ task.userName }}</span>
           </div>
         </div>

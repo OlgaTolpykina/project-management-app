@@ -72,5 +72,9 @@
   "search request length": "Поисковый запрос должен быть не менее ",
   "chars": "символов",
   "Sorry, nothing matches.": "Извините. Ничего не найдено.",
-  "Try another search!": "Попробуйте другой поиск!"
+  "Try another search!": "Попробуйте другой поиск!",
+  "Order": "Порядок",
+  "Description": "Описание",
+  "User": "Пользователь",
+  "Sort by": "Сортировать по"
 }
