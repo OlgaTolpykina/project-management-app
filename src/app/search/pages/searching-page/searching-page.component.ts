@@ -8,8 +8,6 @@ import { SearchService } from '@shared/services/search.service';
   styleUrls: ['./searching-page.component.scss'],
 })
 export class SearchingPageComponent implements OnInit, OnDestroy {
-  
-
   constructor(public searchService: SearchService) {}
 
   ngOnInit(): void {
@@ -18,7 +16,7 @@ export class SearchingPageComponent implements OnInit, OnDestroy {
     this.searchService.isTaskRequestNeed = false;
   }
 
-  ngOnDestroy(): void {    
+  ngOnDestroy(): void {
     this.searchService.isTaskRequestNeed = true;
     this.searchService.openPage = false;
   }

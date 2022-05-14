@@ -20,12 +20,10 @@ export class MessagePageComponent implements OnInit, OnDestroy {
   constructor(authService: UserAuthServiceService) {
     this.authService = authService;
     this.subscription = this.authService.changeMessage$
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (message) => {
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((message) => {
         this.messageForUser = message;
-      },
-    );
+      });
   }
 
   ngOnInit(): void {
