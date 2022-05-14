@@ -121,7 +121,7 @@
     >
       <ng-container *ngFor="let task of searchService.filteredSearchResult">
         <div class="task-container" (click)="searchService.onSelect(task)">
-          <div>
+          <div [class.done]="task.done === true">
             <p class="task-header">{{ t("title") }}</p>
             {{ task.title }}
           </div>

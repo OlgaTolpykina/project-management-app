@@ -196,3 +196,8 @@
   color: rgb(199, 7, 247);
   border: 2px solid;
 }
+
+.done {
+  text-decoration: line-through;
+  background-color: var(--amber-light);
+}
