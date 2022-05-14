@@ -61,15 +61,14 @@ export class SearchService {
       next: (boards) => {
         this.searchObject.boards = boards;
       },
-      error: (err) => console.log('Error: ', err),
       complete: () => {
-        console.log('boards');
         this.getAllTasks();
       },
     });
   }
 
   public async getAllTasks(): Promise<void> {
+    this.searchObject.tasks = [];
     let i: number = this.searchObject.boards!.length;
     this.searchObject.boards!.forEach((element) => {
       i = i - 1;
@@ -78,12 +77,9 @@ export class SearchService {
           (board as Board).columns!.forEach((el) => {
             this.searchObject.tasks = this.searchObject.tasks!.concat(el.tasks as Task[]);
             el.tasks?.forEach((task) => (task.boardId = board.id));
-            console.log(this.searchObject.tasks);
           });
         },
-        error: (err) => console.log('Error: ', err),
         complete: () => {
-          console.log('tasks');
           if (i === 0) {
             this.openPage = true;
           }
@@ -96,8 +92,6 @@ export class SearchService {
     if (this.isTaskRequestNeed || this.searchObject.tasks?.length === 0) {
       await this.getAllBoards();
     }
-    console.log(this.searchString);
-    console.log(this.searchObject);
     if (this.authService.isAuthorized !== 'true') {
       this.authService.getMessageForUser('signIn first', 'home');
     } else if (
@@ -117,12 +111,17 @@ export class SearchService {
       const taskString = task.title + task.description + task.userName + task.order.toString();
       return taskString.toLowerCase().includes(searchString.toLowerCase());
     });
-    this.sortFilteredSearchResult();
+    this.sortFilteredSearchResult(this.sortSettings.sortBy);
   }
 
-  public sortFilteredSearchResult() {
+  public sortFilteredSearchResult(sortBy: keyof Task) {
+    this.sortSettings.decrease =
+      sortBy === this.sortSettings.sortBy
+        ? !this.sortSettings.decrease
+        : this.sortSettings.decrease;
+    this.sortSettings.sortBy = sortBy;
     this.filteredSearchResult.sort((a: Task, b: Task) => {
-      if (!this.sortSettings.decrease) {
+      if (this.sortSettings.decrease) {
         return a[this.sortSettings.sortBy]!.toString() > b[this.sortSettings.sortBy]!.toString()
           ? 1
           : -1;
@@ -136,8 +135,6 @@ export class SearchService {
   public onSelect(task: Task) {
     this.selectedTask = task;
     const selectedBoardId = task.boardId!;
-    console.log(task);
-    console.log(selectedBoardId);
     this.store.dispatch(clearSelectedBoard());
     this.store.dispatch(setSelectedBoardId({ selectedBoardId }));
     this.authService.router.navigateByUrl('/b/' + selectedBoardId);

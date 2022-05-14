@@ -65,7 +65,6 @@ export class UserAuthServiceService {
           next: (users) => {
             if (!(users instanceof Error)) {
               this.users = users.length ? users : [];
-              console.log(this.users);
             }
           },
         });

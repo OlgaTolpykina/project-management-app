@@ -1,6 +1,6 @@
 <ng-container *transloco="let t">
   <div class="tasks-sidebar">
-    <a routerLink="/main" class="tasks-sidebar_item">{{ t("allBoards") }}</a>
+    <a routerLink="/main" class="tasks-sidebar item">{{ t("allBoards") }}</a>
   </div>
   <div class="search-container">
     <div class="tasks-board">
@@ -12,34 +12,86 @@
           {{ t("Sort by") }}:
           <button
             class="sort-button"
-            [class.active]="searchService.sortSettings.sortBy === 'title'"
-            (click)="searchService.sortSettings.sortBy = 'title'"
-            (click)="searchService.sortFilteredSearchResult()"
+            [class.active]="searchService.sortSettings.sortBy.toString() === 'title'"
+            (click)="searchService.sortFilteredSearchResult('title')"
           >
+            <mat-icon
+              *ngIf="
+                !searchService.sortSettings.decrease &&
+                searchService.sortSettings.sortBy.toString() === 'title'
+              "
+              >arrow_drop_up</mat-icon
+            >
+            <mat-icon
+              *ngIf="
+                searchService.sortSettings.decrease &&
+                searchService.sortSettings.sortBy.toString() === 'title'
+              "
+              >arrow_drop_down</mat-icon
+            >
             {{ t("title") }}
           </button>
           <button
             class="sort-button"
-            [class.active]="searchService.sortSettings.sortBy === 'order'"
-            (click)="searchService.sortSettings.sortBy = 'order'"
-            (click)="searchService.sortFilteredSearchResult()"
+            [class.active]="searchService.sortSettings.sortBy.toString() === 'order'"
+            (click)="searchService.sortFilteredSearchResult('order')"
           >
+            <mat-icon
+              *ngIf="
+                !searchService.sortSettings.decrease &&
+                searchService.sortSettings.sortBy.toString() === 'order'
+              "
+              >arrow_drop_up</mat-icon
+            >
+            <mat-icon
+              *ngIf="
+                searchService.sortSettings.decrease &&
+                searchService.sortSettings.sortBy.toString() === 'order'
+              "
+              >arrow_drop_down</mat-icon
+            >
             {{ t("Order") }}
           </button>
           <button
             class="sort-button"
-            [class.active]="searchService.sortSettings.sortBy === 'description'"
-            (click)="searchService.sortSettings.sortBy = 'description'"
-            (click)="searchService.sortFilteredSearchResult()"
+            [class.active]="searchService.sortSettings.sortBy.toString() === 'description'"
+            (click)="searchService.sortFilteredSearchResult('description')"
           >
+            <mat-icon
+              *ngIf="
+                !searchService.sortSettings.decrease &&
+                searchService.sortSettings.sortBy.toString() === 'description'
+              "
+              >arrow_drop_up</mat-icon
+            >
+            <mat-icon
+              *ngIf="
+                searchService.sortSettings.decrease &&
+                searchService.sortSettings.sortBy.toString() === 'description'
+              "
+              >arrow_drop_down</mat-icon
+            >
             {{ t("Description") }}
           </button>
           <button
             class="sort-button"
-            [class.active]="searchService.sortSettings.sortBy === 'userName'"
-            (click)="searchService.sortSettings.sortBy = 'userName'"
-            (click)="searchService.sortFilteredSearchResult()"
+            [class.active]="searchService.sortSettings.sortBy.toString() === 'userName'"
+            (click)="searchService.sortFilteredSearchResult('userName')"
           >
+            <mat-icon
+              *ngIf="
+                !searchService.sortSettings.decrease &&
+                searchService.sortSettings.sortBy.toString() === 'userName'
+              "
+              >arrow_drop_up</mat-icon
+            >
+            <mat-icon
+              *ngIf="
+                searchService.sortSettings.decrease &&
+                searchService.sortSettings.sortBy.toString() === 'userName'
+              "
+              >arrow_drop_down</mat-icon
+            >
             {{ t("User") }}
           </button>
         </div>

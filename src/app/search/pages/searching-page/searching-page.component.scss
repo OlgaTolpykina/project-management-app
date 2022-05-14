@@ -190,3 +190,9 @@
     border: 2px solid;
   }
 }
+
+.active {
+  background-color: var(--amber-light);
+  color: rgb(199, 7, 247);
+  border: 2px solid;
+}
