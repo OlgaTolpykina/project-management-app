@@ -22,14 +22,7 @@
         (cdkDropListDropped)="drop($event)"
       >
         <div cdkDropListGroup>
-          <app-column
-            cdkDropList
-            *ngFor="let column of columns"
-            [cdkDropListData]="column"
-            (cdkDropListDropped)="onTaskDrop($event)"
-            [column]="column"
-            cdkDrag
-          ></app-column>
+          <app-column *ngFor="let column of columns" [column]="column" cdkDrag></app-column>
         </div>
         <div class="column-wrapper">
           <button matRipple class="add-column" (click)="openDialog()">

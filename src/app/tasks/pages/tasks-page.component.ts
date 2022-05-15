@@ -9,12 +9,11 @@ import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateColumnComponent } from '../components/create-column/create-column.component';
 import { getAllUsers } from '@app/redux/actions/users.actions';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { concatMap, from, Subject, takeUntil } from 'rxjs';
 import { ColumnService } from '@shared/services/column.service';
 import { Column } from '@shared/types/column.model';
 import { setSelectedBoardId } from '@app/redux/actions/board.actions';
-import { TaskService } from '@shared/services/task.service';
 
 @Component({
   selector: 'app-tasks',
@@ -44,7 +43,6 @@ export class TasksPageComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     public dialog: MatDialog,
     private columnService: ColumnService,
-    private taskService: TaskService,
   ) {}
 
   ngOnInit(): void {
@@ -137,56 +135,6 @@ export class TasksPageComponent implements OnInit, OnDestroy {
             this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.boardId })),
         });
     }
-  }
-
-  onTaskDrop(event: CdkDragDrop<Column>) {
-    const previousData = [...event.previousContainer.data.tasks!];
-    const data = [...event.container.data.tasks!];
-    if (event.previousContainer !== event.container) {
-      transferArrayItem(previousData, data, event.previousIndex, event.currentIndex);
-      console.log(event.previousContainer === event.container);
-    }
-
-    // console.log(event.container.data.tasks);
-    // const data = [...event.container.data.tasks!];
-    // const previousData = [...event.previousContainer.data.tasks!];
-
-    // if (event.previousContainer === event.container) {
-    //   moveItemInArray(data, event.previousIndex, event.currentIndex);
-    //   console.log(data);
-    //   if (event.currentIndex !== event.previousIndex) {
-    //     const nextElementOrder =
-    //       event.currentIndex < data.length - 1
-    //         ? +data[event.currentIndex + 1].order
-    //         : +data[event.currentIndex - 1].order + 1;
-    //     const previousElementOrder =
-    //       event.currentIndex > 0 ? +data[event.currentIndex - 1].order : 0;
-
-    //     if (this.boardId && event.container.data.id && data[event.currentIndex].id) {
-    //       this.taskService
-    //         .updateTask(this.boardId, event.container.data.id, data[event.currentIndex].id!, {
-    //           title: data[event.currentIndex].title,
-    //           description: data[event.currentIndex].description,
-    //           userId: data[event.currentIndex].userId,
-    //           order: (nextElementOrder + previousElementOrder) / 2,
-    //           done: data[event.currentIndex].done,
-    //           boardId: this.boardId,
-    //           columnId: data[event.currentIndex].columnId,
-    //         })
-    //         .pipe(
-    //           map(() => {
-    //             if (this.boardId)
-    //               this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.boardId }));
-    //           }),
-    //           take(1),
-    //         )
-    //         .subscribe();
-    //     }
-    //   } else if (event.previousContainer !== event.container) {
-    //     transferArrayItem(previousData, data, event.previousIndex, event.currentIndex);
-    //     console.log(event.previousContainer === event.container);
-    //   }
-    // }
   }
 
   ngOnDestroy(): void {
