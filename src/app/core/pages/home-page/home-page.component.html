@@ -1,26 +1,43 @@
-<section class="promo" *transloco="let t">
-  <h1 class="welcome-title">
-    {{ t("welcome-title") }}
-    <br />
-    <span>Project Management Application</span>
-  </h1>
-  <h1 class="welcome-title_tablet">Welcome</h1>
-  <p class="welcome-subtitle">{{ t("welcome-subtitle") }}</p>
-  <div class="welcome-signup">
-    <mat-form-field class="welcome-signup_email">
-      <input matInput type="email" placeholder="Email" />
-    </mat-form-field>
-    <a matRipple routerLink="/auth/signUp" class="link button mat-elevation-z4">{{
-      t("free-signUp")
-    }}</a>
-  </div>
-</section>
-<section class="team" id="team" *transloco="let t">
-  <h1 class="team-title">About our team</h1>
-  <div class="team-wrapper">
-    <app-carousel></app-carousel>
-  </div>
-</section>
-<button matRipple class="go-top" [class.go-top-visible]="scrolled" (click)="onScrollToTop()">
-  TOP
-</button>
+<ng-container *transloco="let t">
+  <section class="promo" *ngIf="!(authService.isAuthorized === 'true'); else authorized">
+    <h1 class="welcome-title">
+      {{ t("welcome-title") }}
+      <br />
+      <span>Project Management Application</span>
+    </h1>
+    <h1 class="welcome-title_tablet">Welcome</h1>
+    <p class="welcome-subtitle">{{ t("welcome-subtitle") }}</p>
+    <div class="welcome-signup">
+      <mat-form-field class="welcome-signup_email">
+        <input matInput type="email" placeholder="Email" />
+      </mat-form-field>
+      <a matRipple routerLink="/auth/signUp" class="link button mat-elevation-z4">{{
+        t("free-signUp")
+      }}</a>
+    </div>
+  </section>
+  <section class="team" id="team" *transloco="let t">
+    <h1 class="team-title">About our team</h1>
+    <div class="team-wrapper">
+      <app-carousel></app-carousel>
+    </div>
+  </section>
+  <button matRipple class="go-top" [class.go-top-visible]="scrolled" (click)="onScrollToTop()">
+    TOP
+  </button>
+</ng-container>
+
+<ng-template #authorized>
+  <section class="promo" *transloco="let t">
+    <h1 class="welcome-title">
+      <span>Project Management Application - </span>
+    </h1>
+    <h1 class="welcome-title_tablet">PMAPP</h1>
+    <p class="welcome-subtitle">{{ t("starting-subtitle") }}</p>
+    <div class="welcome-signup">
+      <a matRipple routerLink="/main" class="link button mat-elevation-z4">{{
+        t("boards-title")
+      }}</a>
+    </div>
+  </section>
+</ng-template>
