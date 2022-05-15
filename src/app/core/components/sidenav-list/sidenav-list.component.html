@@ -33,10 +33,6 @@
 
 <ng-template #authorized>
   <ng-container *transloco="let t">
-    <a mat-list-item routerLink="/boards" (click)="openDialog()">
-      <mat-icon class="nav-icon">dashboard</mat-icon>
-      <span class="nav-caption">{{ t("newBoard") }}</span>
-    </a>
     <a
       mat-list-item
       routerLink="/auth/editUser"
@@ -53,6 +49,10 @@
     <a mat-list-item routerLink="/main" (click)="onScrollToAnchor('team')">
       <mat-icon class="nav-icon">group_work</mat-icon>
       <span class="nav-caption">{{ t("allBoards") }}</span>
+    </a>
+    <a mat-list-item routerLink="/main" (click)="openDialog()">
+      <mat-icon class="nav-icon">dashboard</mat-icon>
+      <span class="nav-caption">{{ t("newBoard") }}</span>
     </a>
     <a
       mat-list-item
