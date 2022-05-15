@@ -54,7 +54,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
         this.columns = [...columns];
       }
     });
-    this.updateTasksOrders();
   }
 
   onEdit(e: Event) {
@@ -166,6 +165,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   updateTasksOrders() {
+    console.log('updatedTasks');
     const updatedTasks: Task[] = [];
     if (this.column && this.column.id && this.column.tasks) {
       this.tasks.forEach((task, index) => {

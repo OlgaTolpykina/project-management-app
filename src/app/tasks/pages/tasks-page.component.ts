@@ -55,8 +55,6 @@ export class TasksPageComponent implements OnInit, OnDestroy {
     this.boardId$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((boardId) => (this.boardId = boardId));
-
-    this.updateColumnOrders();
   }
 
   openDialog() {
@@ -94,6 +92,7 @@ export class TasksPageComponent implements OnInit, OnDestroy {
   }
 
   updateColumnOrders() {
+    console.log('updatedColumns');
     const updatedColumns: Column[] = [];
     this.columns.forEach((column, index) => {
       if (+column.order !== index + 1) {
