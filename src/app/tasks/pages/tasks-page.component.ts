@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateColumnComponent } from '../components/create-column/create-column.component';
 import { getAllUsers } from '@app/redux/actions/users.actions';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { concatMap, from, map, Subject, take, takeUntil } from 'rxjs';
+import { concatMap, from, Subject, takeUntil } from 'rxjs';
 import { ColumnService } from '@shared/services/column.service';
 import { Column } from '@shared/types/column.model';
 import { setSelectedBoardId } from '@app/redux/actions/board.actions';
@@ -146,7 +146,7 @@ export class TasksPageComponent implements OnInit, OnDestroy {
       transferArrayItem(previousData, data, event.previousIndex, event.currentIndex);
       console.log(event.previousContainer === event.container);
     }
-    
+
     // console.log(event.container.data.tasks);
     // const data = [...event.container.data.tasks!];
     // const previousData = [...event.previousContainer.data.tasks!];
