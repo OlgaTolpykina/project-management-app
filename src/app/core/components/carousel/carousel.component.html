@@ -1,7 +1,8 @@
 <div class="carousel">
   <ng-container *ngFor="let slide of slides; let i = index">
     <div class="slide" *ngIf="i === currentSlide" @carouselAnimation>
-      <img [src]="slide.src" width="150" height="150" [alt]="slide.alt" />
+      <img class="slide-img" [src]="slide.src" width="145" height="165" [alt]="slide.alt" />
+      <p class="slide-title">{{ slide.name }}</p>
       <p class="slide-description">{{ slide.description }}</p>
     </div>
   </ng-container>

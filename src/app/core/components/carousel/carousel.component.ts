@@ -16,19 +16,24 @@ import { fadeIn, fadeOut } from '@shared/animations/animations';
 export class CarouselComponent implements OnInit {
   slides = [
     {
-      src: '../../../../assets/img/avatar-female.png',
+      src: '../../../../assets/img/OT-photo.JPG',
       alt: 'Teammate photo',
-      description: 'AAAAAA',
+      name: 'Ольга Толпыкина - teamlead, frontend',
+      description:
+        'С Front-end разработкой я познакомилась полгода назад и благодаря RSSchool поняла, что это то, что мне действительно интересно. Обучение очень интенсивное, но не просто изучаешь сухую теорию, а получаешь реальные навыки. Я не планирую останавливаться, а буду лишь продолжать развиваться в данной сфере.',
     },
     {
-      src: '../../../../assets/img/avatar-male1.png',
+      src: '../../../../assets/img/AK-photo.png',
       alt: 'Teammate photo',
-      description: 'ББББББ',
+      name: 'Алексадр Короткевич - frontend',
+      description:
+        'Я изучаю Front-end-разработку в течение года. До этого не был связан с программированием, но сейчас четко решил не останавливаться и реализовать свое желание сменить сферу. Уверен, что все получится.',
     },
     {
       src: '../../../../assets/img/avatar-male2.png',
       alt: 'Teammate photo',
-      description: 'ВВВВВВ',
+      name: 'Сергей Сержан - fullstack',
+      description: '',
     },
   ];
 
