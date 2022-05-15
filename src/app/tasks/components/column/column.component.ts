@@ -6,9 +6,11 @@ import { Task } from '@shared/types/task.model';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskComponent } from '../../components/create-task/create-task.component';
 import { ColumnService } from '@shared/services/column.service';
-import { map, Observable, Subject, switchMap, take, takeUntil } from 'rxjs';
+import { concatMap, from, map, Observable, Subject, switchMap, take, takeUntil } from 'rxjs';
 import { selectSelectedBoardId } from '@app/redux/selectors/selectors';
 import { setSelectedBoardId } from '@app/redux/actions/board.actions';
+import { TaskService } from '@shared/services/task.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-column',
@@ -28,15 +30,23 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   tasks: Task[] = [];
 
+  boardId = '';
+
   constructor(
     private store: Store<AppState>,
     private columnService: ColumnService,
     private dialog: MatDialog,
+    private taskService: TaskService,
   ) {}
 
   ngOnInit(): void {
     if (this.column) this.name = this.column.title;
-    if (this.column && this.column.tasks) this.tasks = this.column.tasks;
+    if (this.column && this.column.tasks) this.tasks = [...this.column.tasks];
+    this.selectedBoardId$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((boardId) => (this.boardId = boardId));
+
+    this.updateTasksOrders();
   }
 
   onEdit(e: Event) {
@@ -78,16 +88,115 @@ export class ColumnComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-  }
-
   openTaskDialog(): void {
     this.dialog.open(CreateTaskComponent, {
       height: '400px',
       width: '320px',
       data: { column: this.column },
     });
+  }
+
+  drop(event: CdkDragDrop<Task[]>) {
+    moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    if (event.currentIndex !== event.previousIndex) {
+      const nextElementOrder =
+        event.currentIndex < this.tasks.length - 1
+          ? +this.tasks[event.currentIndex + 1].order
+          : +this.tasks[event.currentIndex - 1].order + 1;
+      const previousElementOrder =
+        event.currentIndex > 0 ? +this.tasks[event.currentIndex - 1].order : 0;
+
+      if (this.boardId && this.column!.id && this.tasks[event.currentIndex].id) {
+        this.taskService
+          .updateTask(this.boardId, this.column!.id, this.tasks[event.currentIndex].id!, {
+            title: this.tasks[event.currentIndex].title,
+            description: this.tasks[event.currentIndex].description,
+            userId: this.tasks[event.currentIndex].userId,
+            order: (nextElementOrder + previousElementOrder) / 2,
+            done: this.tasks[event.currentIndex].done,
+            boardId: this.boardId,
+            columnId: this.tasks[event.currentIndex].columnId,
+          })
+          .pipe(
+            map(() => {
+              if (this.boardId)
+                this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.boardId }));
+            }),
+            take(1),
+          )
+          .subscribe();
+      }
+    }
+  }
+
+  updateTasksOrders() {
+    const updatedTasks: Task[] = [];
+    if (this.column && this.column.id && this.column.tasks) {
+      this.tasks.forEach((task, index) => {
+        if (+task.order !== index + 1) {
+          if (index === 0) {
+            task = {
+              id: task.id,
+              title: task.title,
+              description: task.description,
+              userId: task.userId,
+              order: 0,
+              done: task.done,
+              boardId: this.boardId,
+              columnId: this.column!.id,
+            };
+            updatedTasks.push(task);
+          } else {
+            task = {
+              id: task.id,
+              title: task.title,
+              description: task.description,
+              userId: task.userId,
+              order: index + 1,
+              done: task.done,
+              boardId: this.boardId,
+              columnId: this.column!.id,
+            };
+            updatedTasks.push(task);
+          }
+        }
+      });
+    }
+
+    if (updatedTasks.length) {
+      updatedTasks.push({
+        id: this.column!.tasks![0].id,
+        title: this.column!.tasks![0].title,
+        description: this.column!.tasks![0].description,
+        userId: this.column!.tasks![0].userId,
+        order: 1,
+        done: this.column!.tasks![0].done,
+        boardId: this.boardId,
+        columnId: this.column!.id,
+      });
+      from(updatedTasks)
+        .pipe(
+          concatMap((task) =>
+            this.taskService.updateTask(this.boardId, this.column?.id!, task.id!, {
+              title: task.title,
+              description: task.description,
+              userId: task.userId,
+              order: task.order,
+              done: task.done,
+              boardId: this.boardId,
+              columnId: this.column!.id,
+            }),
+          ),
+        )
+        .subscribe({
+          complete: () =>
+            this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.boardId })),
+        });
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }
