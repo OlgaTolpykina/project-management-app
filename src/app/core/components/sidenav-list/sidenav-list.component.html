@@ -46,6 +46,14 @@
       <mat-icon class="nav-icon">assignment_ind</mat-icon>
       <span class="nav-caption">{{ t("editProfile") }}</span>
     </a>
+    <a mat-list-item routerLink="/home" (click)="onScrollToAnchor('team')">
+      <mat-icon class="nav-icon">group_work</mat-icon>
+      <span class="nav-caption">{{ t("team") }}</span>
+    </a>
+    <a mat-list-item routerLink="/main" (click)="onScrollToAnchor('team')">
+      <mat-icon class="nav-icon">group_work</mat-icon>
+      <span class="nav-caption">{{ t("allBoards") }}</span>
+    </a>
     <a
       mat-list-item
       (click)="authService.logInOutUser('false')"

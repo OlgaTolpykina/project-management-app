@@ -1,6 +1,6 @@
 <header [class.nav-scroll]="scrolled" class="nav">
   <mat-toolbar>
-    <a routerLink="/home" class="logo">PMApp</a>
+    <a routerLink="/" class="logo">PMApp</a>
     <mat-button-toggle-group name="language" aria-label="Text Language" fxHide.sm fxHide.xs>
       <mat-button-toggle
         value="en"
@@ -41,6 +41,12 @@
       <mat-placeholder class="placeholder">{{ t("search") }}</mat-placeholder>
     </mat-form-field>
     <div class="button-wrapper" *transloco="let t" fxHide.sm fxHide.xs>
+      <a matRipple routerLink="/home" class="link button-link" (click)="onScrollToAnchor('team')">{{
+        t("team")
+      }}</a>
+      <a matRipple routerLink="/main" class="link button-link" (click)="onScrollToAnchor('team')">{{
+        t("allBoards")
+      }}</a>
       <a matRipple routerLink="/main" class="link button-link" (click)="openDialog()">{{
         t("newBoard")
       }}</a>
