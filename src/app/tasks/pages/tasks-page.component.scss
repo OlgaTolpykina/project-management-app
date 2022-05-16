@@ -135,3 +135,38 @@
     box-shadow: 2px 2px 2px var(--primary-transparent);
   }
 }
+
+.tasks-filters {
+  height: 100px;
+  background-color: var(--primary-transparent-full);
+  margin-bottom: 10px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  font-weight: 400;
+  line-height: 20px;
+  gap: 20px;
+  padding: 5px 15px;
+}
+
+.filter-exec {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.filter-input {
+  border: 1px solid #000;
+  border-radius: 3px;
+  outline: none;
+  background-color: var(--white);
+  height: 15px;
+}
+
+@media (max-width: 550px) {
+  .tasks-filters {
+    flex-direction: column;
+  }
+}

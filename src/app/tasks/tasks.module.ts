@@ -10,6 +10,8 @@ import { OrderByPipe } from './pipes/order-by.pipe';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { CreateColumnComponent } from './components/create-column/create-column.component';
 import { UpdateTaskComponent } from './components/update-task/update-task.component';
+import { FilterExecPipe } from './pipes/filter-exec.pipe';
+import { FilterDonePipe } from './pipes/filter-done.pipe';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { UpdateTaskComponent } from './components/update-task/update-task.compon
     CreateTaskComponent,
     CreateColumnComponent,
     UpdateTaskComponent,
+    FilterExecPipe,
+    FilterDonePipe,
   ],
   imports: [CommonModule, TasksRoutingModule, SharedModule],
 })

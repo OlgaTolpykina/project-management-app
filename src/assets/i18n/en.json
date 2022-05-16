@@ -66,5 +66,7 @@
   "Internal Server Error": "Something went wrong. Please check your Internet connection",
   "Unknown Error": "Something went wrong. Please check your Internet connection",
   "Bad Request": "Something went wrong. Please check your Internet connection",
-  "update": "Update"
+  "update": "Update",
+  "filter-exec": "by executor",
+  "filter-done": "only done"
 }

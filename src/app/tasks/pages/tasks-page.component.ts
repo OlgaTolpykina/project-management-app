@@ -14,6 +14,7 @@ import { concatMap, from, Subject, takeUntil } from 'rxjs';
 import { ColumnService } from '@shared/services/column.service';
 import { Column } from '@shared/types/column.model';
 import { setSelectedBoardId } from '@app/redux/actions/board.actions';
+import { FilterService } from '../services/filter.service';
 
 @Component({
   selector: 'app-tasks',
@@ -29,6 +30,8 @@ export class TasksPageComponent implements OnInit, OnDestroy {
 
   columns: Column[] = [];
 
+  isFilterBlockShown = false;
+
   columnToUpdate: Column = {
     id: '',
     title: '',
@@ -43,6 +46,7 @@ export class TasksPageComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     public dialog: MatDialog,
     private columnService: ColumnService,
+    private filterService: FilterService,
   ) {}
 
   ngOnInit(): void {
@@ -128,6 +132,18 @@ export class TasksPageComponent implements OnInit, OnDestroy {
       .subscribe({
         complete: () => this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.boardId })),
       });
+  }
+
+  toggleFilter(): void {
+    this.isFilterBlockShown = !this.isFilterBlockShown;
+  }
+
+  onExecKeyword(keyword: string): void {
+    this.filterService.setKeyword(keyword);
+  }
+
+  onDoneChange(flag: boolean): void {
+    this.filterService.setDone(flag);
   }
 
   ngOnDestroy(): void {

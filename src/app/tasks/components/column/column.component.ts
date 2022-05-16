@@ -9,6 +9,7 @@ import { ColumnService } from '@shared/services/column.service';
 import { map, Observable, Subject, switchMap, take, takeUntil } from 'rxjs';
 import { selectSelectedBoardId } from '@app/redux/selectors/selectors';
 import { setSelectedBoardId } from '@app/redux/actions/board.actions';
+import { FilterService } from '@app/tasks/services/filter.service';
 
 @Component({
   selector: 'app-column',
@@ -28,15 +29,32 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   tasks: Task[] = [];
 
+  execKeyword: string | undefined;
+
+  doneFlag: boolean | undefined;
+
   constructor(
     private store: Store<AppState>,
     private columnService: ColumnService,
     private dialog: MatDialog,
+    private filterService: FilterService,
   ) {}
 
   ngOnInit(): void {
     if (this.column) this.name = this.column.title;
     if (this.column && this.column.tasks) this.tasks = this.column.tasks;
+
+    this.filterService
+      .getFilterKeyword()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((keyword) => {
+        this.execKeyword = keyword;
+      });
+
+    this.filterService
+      .getFilterDone()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((flag) => (this.doneFlag = flag));
   }
 
   onEdit(e: Event) {

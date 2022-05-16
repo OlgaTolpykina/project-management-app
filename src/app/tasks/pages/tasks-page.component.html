@@ -7,10 +7,26 @@
       {{ t("board-title") }}: <span>{{ board$ | async }}</span>
     </p>
     <div class="tasks-buttons">
-      <button matRipple class="tasks-buttons_item">
+      <button matRipple class="tasks-buttons_item" (click)="toggleFilter()">
         <mat-icon>filter_list</mat-icon>
         <span>{{ t("filter") }}</span>
       </button>
+    </div>
+    <div class="tasks-filters" *ngIf="isFilterBlockShown">
+      <div class="filter-done">
+        <span>{{ t("filter-done") }}</span>
+        <input type="checkbox" #doneCheck (change)="onDoneChange(doneCheck.checked)" />
+      </div>
+      <div class="filter-exec">
+        <span class="filter-desc">{{ t("filter-exec") }}</span>
+        <input
+          matInput
+          type="text"
+          class="filter-input"
+          #execInput
+          (input)="onExecKeyword(execInput.value)"
+        />
+      </div>
     </div>
     <div class="tasks-columns">
       <div
