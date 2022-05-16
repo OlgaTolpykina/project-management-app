@@ -1,5 +1,7 @@
 <div class="task-title">
-  <span [ngClass]="{ 'task-title-done': task?.done }">{{ task!.title }}</span>
+  <span [ngClass]="{ 'task-title-done': task?.done }" class="task-title-txt" (click)="onEdit()">{{
+    task!.title
+  }}</span>
   <div>
     <button class="task-edit" mat-icon-button color="primary" (click)="onEdit()">
       <mat-icon>edit</mat-icon>

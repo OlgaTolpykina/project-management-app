@@ -51,6 +51,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   }
 
   onEdit(): void {
+    console.log('edit');
     this.dialog.open(UpdateTaskComponent, {
       width: '600px',
       data: {
@@ -62,6 +63,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   }
 
   onDelete(): void {
+    console.log('delete');
     if (this.task && this.selectedBoardId && this.columnId && this.task.id) {
       this.taskService
         .deleteTask(this.selectedBoardId, this.columnId, this.task.id)

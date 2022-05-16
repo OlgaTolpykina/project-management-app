@@ -37,6 +37,10 @@
   &-done {
     text-decoration: line-through;
   }
+
+  &-txt {
+    flex-basis: 67%;
+  }
 }
 
 .task-user {
