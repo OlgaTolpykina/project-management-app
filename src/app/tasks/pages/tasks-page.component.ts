@@ -92,7 +92,6 @@ export class TasksPageComponent implements OnInit, OnDestroy {
   }
 
   updateColumnOrders() {
-    console.log('updatedColumns');
     const updatedColumns: Column[] = [];
     this.columns.forEach((column, index) => {
       if (+column.order !== index + 1) {

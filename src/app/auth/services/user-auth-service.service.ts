@@ -231,6 +231,7 @@ export class UserAuthServiceService {
 
   getMessageForUser(message: string, redirectUrl?: string | null) {
     this.messageForUser = message;
+    console.log(this.messageForUser);
     const backingUrl = this.redirectUrl ? this.redirectUrl : 'main';
     const url = redirectUrl ? redirectUrl : backingUrl;
     this.openDialog();
