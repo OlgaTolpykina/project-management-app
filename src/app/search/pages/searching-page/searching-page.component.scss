@@ -16,24 +16,24 @@
 
   background-color: var(--primary-transparent-full);
   border-radius: 5px;
-
-  cursor: pointer;
   transition: all 0.8s;
 
-  &_item {
+  .item {
     display: block;
+    height: 30px;
     text-decoration: none;
     transition: all 0.8s;
+    cursor: pointer;
   }
 
-  &_item:hover {
+  .item:hover {
     width: 100%;
     height: 30px;
     margin: 0;
     background-color: var(--amber-light);
   }
 
-  &_item:active {
+  .item:active {
     color: var(--amber);
   }
 }

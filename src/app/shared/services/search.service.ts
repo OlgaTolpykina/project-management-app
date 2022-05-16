@@ -89,6 +89,13 @@ export class SearchService {
   }
 
   public async searchSubmit(): Promise<void> {
+    this.authService.redirectUrl =
+      this.authService.router.url === '/search'
+        ? this.authService.redirectUrl
+        : this.authService.router.url;
+    if (this.searchString === '') {
+      this.authService.router.navigate([this.authService.redirectUrl || 'main']);
+    }
     if (this.isTaskRequestNeed || this.searchObject.tasks?.length === 0) {
       await this.getAllBoards();
     }
@@ -100,14 +107,15 @@ export class SearchService {
       this.openPage
     ) {
       this.searchTextChanged.next(this.searchString);
-      this.authService.router.navigate(['search']);
+      if (this.searchString !== '') this.authService.router.navigate(['search']);
     }
   }
 
   private getSearchResult(searchString: string) {
     this.filteredSearchResult = [];
     this.filteredSearchResult = this.searchObject.tasks!.filter((task) => {
-      task.userName = this.authService.users.find((user) => user.id === task?.userId)?.name || '';
+      task.userName =
+        this.authService.users.find((user) => user.id === task?.userId)?.name || '------';
       const taskString = task.title + task.description + task.userName + task.order.toString();
       return taskString.toLowerCase().includes(searchString.toLowerCase());
     });

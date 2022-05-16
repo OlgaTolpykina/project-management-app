@@ -1,6 +1,15 @@
 <ng-container *transloco="let t">
   <div class="tasks-sidebar">
-    <a routerLink="/main" class="tasks-sidebar item">{{ t("allBoards") }}</a>
+    <button
+      class="sort-button"
+      (click)="searchService.searchString = ''"
+      (click)="searchService.searchSubmit()"
+    >
+      {{ t("Back") }}
+    </button>
+    <button routerLink="/main" class="sort-button" (click)="searchService.searchString = ''">
+      {{ t("allBoards") }}
+    </button>
   </div>
   <div class="search-container">
     <div class="tasks-board">

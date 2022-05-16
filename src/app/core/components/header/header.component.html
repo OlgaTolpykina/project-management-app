@@ -45,6 +45,9 @@
       />
       <mat-placeholder class="placeholder">{{ t("search") }}</mat-placeholder>
     </mat-form-field>
+    <mat-icon (click)="searchService.searchString = ''" (click)="searchService.searchSubmit()"
+      >close</mat-icon
+    >
     <div class="button-wrapper" *transloco="let t" fxHide.sm fxHide.xs>
       <a matRipple routerLink="/main" class="link button-link" (click)="openDialog()">{{
         t("newBoard")
