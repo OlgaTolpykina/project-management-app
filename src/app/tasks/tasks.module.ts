@@ -26,5 +26,6 @@ import { FilterDonePipe } from './pipes/filter-done.pipe';
     FilterDonePipe,
   ],
   imports: [CommonModule, TasksRoutingModule, SharedModule],
+  exports: [TaskComponent],
 })
 export class TasksModule {}

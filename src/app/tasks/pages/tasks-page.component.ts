@@ -51,17 +51,14 @@ export class TasksPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(getAllUsers());
-
     this.columns$.pipe(takeUntil(this.unsubscribe$)).subscribe((columns) => {
       if (columns) {
-        this.columns = [...columns].sort((a, b) => (a.order > b.order ? 1 : -1));
+        this.columns = [...columns];
       }
     });
     this.boardId$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((boardId) => (this.boardId = boardId));
-
-    this.updateColumnOrders();
   }
 
   openDialog() {
@@ -74,64 +71,73 @@ export class TasksPageComponent implements OnInit, OnDestroy {
   drop(event: CdkDragDrop<Column[]>) {
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 
-    const nextElementOrder =
-      event.currentIndex < this.columns.length - 1
-        ? +this.columns[event.currentIndex + 1].order
-        : +this.columns[event.currentIndex - 1].order + 1;
-    const previousElementOrder =
-      event.currentIndex > 0 ? +this.columns[event.currentIndex - 1].order : 0;
+    if (event.currentIndex !== event.previousIndex) {
+      const nextElementOrder =
+        event.currentIndex < this.columns.length - 1
+          ? +this.columns[event.currentIndex + 1].order
+          : +this.columns[event.currentIndex - 1].order + 1;
+      const previousElementOrder =
+        event.currentIndex > 0 ? +this.columns[event.currentIndex - 1].order : 0;
 
-    this.columnToUpdate.id = this.columns[event.currentIndex].id;
-    this.columnToUpdate.title = this.columns[event.currentIndex].title;
-    this.columnToUpdate.order = (nextElementOrder + previousElementOrder) / 2;
+      this.columnToUpdate.id = this.columns[event.currentIndex].id;
+      this.columnToUpdate.title = this.columns[event.currentIndex].title;
+      this.columnToUpdate.order = (nextElementOrder + previousElementOrder) / 2;
 
-    this.columnService
-      .updateColumn(this.boardId, this.columnToUpdate.id!, {
-        title: this.columnToUpdate.title,
-        order: this.columnToUpdate.order,
-      })
-      .subscribe({
-        complete: () => this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.boardId })),
-      });
+      this.columnService
+        .updateColumn(this.boardId, this.columnToUpdate.id!, {
+          title: this.columnToUpdate.title,
+          order: this.columnToUpdate.order,
+        })
+        .subscribe({
+          complete: () =>
+            this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.boardId })),
+        });
+    }
   }
 
   updateColumnOrders() {
+    console.log('updatedColumns');
     const updatedColumns: Column[] = [];
     this.columns.forEach((column, index) => {
-      if (index === 0) {
-        column = {
-          id: column.id,
-          title: column.title,
-          order: 0,
-        };
-        updatedColumns.push(column);
-      } else {
-        column = {
-          id: column.id,
-          title: column.title,
-          order: index + 1,
-        };
-        updatedColumns.push(column);
+      if (+column.order !== index + 1) {
+        if (index === 0) {
+          column = {
+            id: column.id,
+            title: column.title,
+            order: 0,
+          };
+          updatedColumns.push(column);
+        } else {
+          column = {
+            id: column.id,
+            title: column.title,
+            order: index + 1,
+          };
+          updatedColumns.push(column);
+        }
       }
     });
-    updatedColumns.push({
-      id: this.columns[0].id,
-      title: this.columns[0].title,
-      order: 1,
-    });
 
-    from(updatedColumns)
-      .pipe(
-        concatMap((column) =>
-          this.columnService.updateColumn(this.boardId, column.id!, {
-            title: column.title,
-            order: column.order,
-          }),
-        ),
-      )
-      .subscribe({
-        complete: () => this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.boardId })),
+    if (updatedColumns.length) {
+      updatedColumns.push({
+        id: this.columns[0].id,
+        title: this.columns[0].title,
+        order: 1,
       });
+      from(updatedColumns)
+        .pipe(
+          concatMap((column) =>
+            this.columnService.updateColumn(this.boardId, column.id!, {
+              title: column.title,
+              order: column.order,
+            }),
+          ),
+        )
+        .subscribe({
+          complete: () =>
+            this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.boardId })),
+        });
+    }
   }
 
   toggleFilter(): void {
