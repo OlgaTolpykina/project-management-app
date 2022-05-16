@@ -1,6 +1,5 @@
 :host {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
   width: 95%;
@@ -33,8 +32,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  margin-right: 35px;
+  width: 85%;
 
   &-done {
     text-decoration: line-through;
@@ -44,7 +42,6 @@
 .task-user {
   width: 30px;
   height: 30px;
-  position: absolute;
 
   border-radius: 100%;
   background-color: var(--primary);
