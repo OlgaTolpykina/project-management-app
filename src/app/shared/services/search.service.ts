@@ -89,6 +89,7 @@ export class SearchService {
   }
 
   public async searchSubmit(): Promise<void> {
+    console.log('92');
     this.authService.redirectUrl =
       this.authService.router.url === '/search'
         ? this.authService.redirectUrl

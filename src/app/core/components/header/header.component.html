@@ -42,6 +42,7 @@
         type="text"
         [(ngModel)]="searchService.searchString"
         (input)="searchService.searchSubmit()"
+        (click)="searchService.searchSubmit()"
       />
       <mat-placeholder class="placeholder">{{ t("search") }}</mat-placeholder>
     </mat-form-field>

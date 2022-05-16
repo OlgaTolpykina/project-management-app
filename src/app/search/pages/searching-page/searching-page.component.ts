@@ -11,7 +11,7 @@ export class SearchingPageComponent implements OnInit, OnDestroy {
   constructor(public searchService: SearchService) {}
 
   ngOnInit(): void {
-    this.searchService.getAllTasks();
+    this.searchService.searchSubmit();
     this.searchService.selectedTask = null;
     this.searchService.isTaskRequestNeed = false;
   }
