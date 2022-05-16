@@ -1,78 +1,11 @@
-.message-container {
-  height: 100%;
+.modal-content {
   display: flex;
-  justify-content: center;
-}
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 160px;
 
-.box {
-  position: relative;
-  top: 45px;
-  height: fit-content;
-  opacity: 1;
-  float: left;
-  padding: 60px 10px 40px 10px;
-  width: 95%;
-  background-color: #bbb2c1;
-  border-radius: 10px;
-  transform: scale(1);
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  z-index: 5;
-  max-width: 320px;
-  font-size: 2rem;
-  font-weight: 600;
-  line-height: 200%;
   text-align: center;
+  font-size: 25px;
+  line-height: 36px;
   color: var(--primary);
-  a {
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}
-
-.buttons-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5%;
-  margin: inherit;
-  margin-top: 40px;
-  padding: inherit;
-  height: 62px;
-}
-
-link {
-  text-decoration: none;
-}
-
-.button-link {
-  height: 35px;
-  margin: 5px;
-
-  font-size: 16px;
-  line-height: 30px;
-  text-align: center;
-  color: var(--white);
-
-  background-color: var(--primary);
-  border-radius: 5px;
-
-  transition: box-shadow 0.5s;
-  cursor: pointer;
-
-  &:hover {
-    background-color: var(--amber-light);
-    border-radius: 5px;
-    color: var(--primary);
-  }
-
-  &:active {
-    color: var(--amber-light);
-  }
-}
-
-.delete {
-  width: 100%;
-  background-color: red;
 }

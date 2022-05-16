@@ -54,7 +54,7 @@
             >visibility_off</mat-icon
           >
           <mat-error
-            *ngIf="(registryFormGroup.controls['passwordFormControl'].errors?.['passwordStrength'] || 
+            *ngIf="(registryFormGroup.controls['passwordFormControl'].errors?.['passwordStrength'] ||
             registryFormGroup.controls['passwordFormControl'].errors?.['minlength'])"
           >
             {{ t("password strength message") }}
@@ -106,7 +106,7 @@
       type=""
       class="link button-link delete"
       (click)="authService.messageForUser = 'delete user prompt'"
-      routerLink="/auth/message"
+      (click)="openDialog()"
     >
       {{ t("Delete Profile") }}
     </button>
