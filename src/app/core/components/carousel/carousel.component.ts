@@ -18,22 +18,20 @@ export class CarouselComponent implements OnInit {
     {
       src: '../../../../assets/img/OT-photo.JPG',
       alt: 'Teammate photo',
-      name: 'Ольга Толпыкина - teamlead, frontend',
-      description:
-        'С Front-end разработкой я познакомилась полгода назад и благодаря RSSchool поняла, что это то, что мне действительно интересно. Обучение очень интенсивное, но не просто изучаешь сухую теорию, а получаешь реальные навыки. Я не планирую останавливаться, а буду лишь продолжать развиваться в данной сфере.',
+      name: 'OT-name',
+      description: 'OT-description',
     },
     {
       src: '../../../../assets/img/AK-photo.png',
       alt: 'Teammate photo',
-      name: 'Алексадр Короткевич - frontend',
-      description:
-        'Я изучаю Front-end-разработку в течение года. До этого не был связан с программированием, но сейчас четко решил не останавливаться и реализовать свое желание сменить сферу. Уверен, что все получится.',
+      name: 'AK-name',
+      description: 'AK-description',
     },
     {
       src: '../../../../assets/img/avatar-male2.png',
       alt: 'Teammate photo',
-      name: 'Сергей Сержан - fullstack',
-      description: '',
+      name: 'SS-name',
+      description: 'SS-description',
     },
   ];
 
