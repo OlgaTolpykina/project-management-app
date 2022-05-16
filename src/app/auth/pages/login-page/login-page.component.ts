@@ -46,7 +46,8 @@ export class LoginPageComponent implements OnInit {
 
   public showPassword: boolean = false;
 
-  public togglePasswordVisibility(): void {
+  public togglePasswordVisibility(e: Event): void {
+    e.stopPropagation();
     this.showPassword = !this.showPassword;
   }
 

@@ -47,14 +47,14 @@
             [placeholder]="'Password' | transloco"
             name="userPassword"
           />
-          <mat-icon matSuffix *ngIf="!showPassword" (click)="togglePasswordVisibility()"
+          <mat-icon matSuffix *ngIf="showPassword" (click)="togglePasswordVisibility($event)"
             >visibility</mat-icon
           >
-          <mat-icon matSuffix *ngIf="showPassword" (click)="togglePasswordVisibility()"
+          <mat-icon matSuffix *ngIf="!showPassword" (click)="togglePasswordVisibility($event)"
             >visibility_off</mat-icon
           >
           <mat-error
-            *ngIf="(registryFormGroup.controls['passwordFormControl'].errors?.['passwordStrength'] || 
+            *ngIf="(registryFormGroup.controls['passwordFormControl'].errors?.['passwordStrength'] ||
           registryFormGroup.controls['passwordFormControl'].errors?.['minlength'])"
             >{{ t("password strength message") }}
           </mat-error>
@@ -72,14 +72,14 @@
           />
           <mat-icon
             matSuffix
-            *ngIf="!showConfirmPassword"
-            (click)="toggleConfirmPasswordVisibility()"
+            *ngIf="showConfirmPassword"
+            (click)="toggleConfirmPasswordVisibility($event)"
             >visibility</mat-icon
           >
           <mat-icon
             matSuffix
-            *ngIf="showConfirmPassword"
-            (click)="toggleConfirmPasswordVisibility()"
+            *ngIf="!showConfirmPassword"
+            (click)="toggleConfirmPasswordVisibility($event)"
             >visibility_off</mat-icon
           >
           <mat-error
@@ -95,8 +95,12 @@
         </mat-form-field>
       </mat-card-content>
       <div class="buttons-container" *transloco="let t">
-        <a class="" routerLink="/auth/login" routerLinkActive="active">{{ t("login") }}</a>
-        <button type="submit" class="link button-link">{{ t("signUp") }}</button>
+        <a matRipple routerLink="/auth/login" routerLinkActive="active" class="link button-link">{{
+          t("login")
+        }}</a>
+        <button type="submit" mat-button class="link button-link register">
+          {{ t("signUp") }}
+        </button>
       </div>
     </form>
   </mat-card>

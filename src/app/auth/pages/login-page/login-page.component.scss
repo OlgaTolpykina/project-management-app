@@ -12,7 +12,7 @@
   float: left;
   padding: 60px 30px 40px 30px;
   width: 95%;
-  background-color: #bbb2c1;
+  background-color: var(--background-gradient);
   border-radius: 10px;
   transform: scale(1);
   -webkit-transform: scale(1);
@@ -87,11 +87,11 @@
   line-height: 30px;
   margin: 0;
   margin-top: 10px;
-  text-align: left;
+  text-align: center;
 }
 
 .login-wrapper .mat-card {
-  padding: 40px 70px 50px;
+  padding: 30px 40px;
 }
 
 .mat-form-field {
@@ -120,19 +120,10 @@
   margin-top: 40px;
   padding: inherit;
   height: 62px;
-  a {
-    text-decoration-line: none;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 }
 
-link {
+.link {
   text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
 }
 
 .button-link {
@@ -142,9 +133,8 @@ link {
   font-size: 16px;
   line-height: 30px;
   text-align: center;
-  color: var(--white);
+  color: var(--primary);
 
-  background-color: var(--primary);
   border-radius: 5px;
 
   transition: all 0.8s;
@@ -159,4 +149,9 @@ link {
   &:active {
     color: var(--amber-light);
   }
+}
+
+.register {
+  color: var(--white);
+  background-color: var(--primary);
 }

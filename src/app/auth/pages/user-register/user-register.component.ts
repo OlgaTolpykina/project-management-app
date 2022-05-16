@@ -39,13 +39,15 @@ export class UserRegisterComponent implements OnInit {
 
   public showPassword: boolean = false;
 
-  public togglePasswordVisibility(): void {
+  public togglePasswordVisibility(e: Event): void {
+    e.stopPropagation();
     this.showPassword = !this.showPassword;
   }
 
   public showConfirmPassword: boolean = false;
 
-  public toggleConfirmPasswordVisibility(): void {
+  public toggleConfirmPasswordVisibility(e: Event): void {
+    e.stopPropagation();
     this.showConfirmPassword = !this.showConfirmPassword;
   }
 
