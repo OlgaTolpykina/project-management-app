@@ -136,3 +136,13 @@
     box-shadow: 2px 2px 2px var(--primary-transparent);
   }
 }
+
+@media (max-width: 1000px) {
+  .tasks-sidebar {
+    display: none;
+  }
+
+  :host {
+    padding: 30px 0 10px;
+  }
+}
