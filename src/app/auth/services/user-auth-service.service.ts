@@ -107,7 +107,7 @@ export class UserAuthServiceService {
           newUser.id = this.loadedUser.id as string;
           this.userSettings.id = this.loadedUser.id as string;
           this.saveLocalUser(newUser);
-          this.getMessageForUser('register profile', 'home');
+          // this.getMessageForUser('register profile', 'home');
           await this.authorizeUser(this.userSettings);
         }
       });
@@ -231,15 +231,13 @@ export class UserAuthServiceService {
 
   getMessageForUser(message: string, redirectUrl?: string | null) {
     this.messageForUser = message;
-    console.log(this.messageForUser);
     const backingUrl = this.redirectUrl ? this.redirectUrl : 'main';
     const url = redirectUrl ? redirectUrl : backingUrl;
     this.openDialog();
     this.router.navigate([url]);
     setTimeout(() => {
       this.dialog.closeAll();
-      // this.router.navigate([url]);
-    }, 3000);
+    }, 2000);
   }
 
   openDialog(): void {
