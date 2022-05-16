@@ -64,6 +64,8 @@
   "user required": "User is required",
   "delete confirmation": "Do you really want to DELETE element?",
   "Not Found": "Object not found. Possibly it already deleted!",
+  "update": "Update",
+  "task-file": "Files",
   "Internal Server Error": "Something went wrong. Please check your Internet connection",
   "Unknown Error": "Something went wrong. Please check your Internet connection",
   "Bad Request": "Something went wrong. Please check your Internet connection",
