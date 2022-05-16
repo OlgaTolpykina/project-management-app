@@ -10,4 +10,5 @@ export interface Task {
   boardId?: string;
   columnId?: string;
   files?: File[];
+  userName?: string;
 }

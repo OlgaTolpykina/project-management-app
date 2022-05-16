@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+import { Column } from '@shared/types/column.model';
 import {
   createNewBoard,
   getAllBoards,
@@ -53,7 +54,22 @@ export const selectedBoardReducer = createReducer(
     return { ...state };
   }),
   on(getSelectedBoardSuccessfully, (state, { selectedBoard }) => {
-    return { ...state, selectedBoard: selectedBoard };
+    let updatedColumns: Column[] = [];
+    if (selectedBoard.columns) {
+      selectedBoard.columns.forEach((column) => {
+        if (column.tasks?.length) {
+          column = {
+            ...column,
+            tasks: [...column.tasks].sort((a, b) => (a.order > b.order ? 1 : -1)),
+          };
+          updatedColumns.push(column);
+        } else {
+          updatedColumns.push(column);
+        }
+      });
+      updatedColumns = [...updatedColumns].sort((a, b) => (a.order > b.order ? 1 : -1));
+    }
+    return { ...state, selectedBoard: { ...selectedBoard, columns: updatedColumns } };
   }),
   on(getSelectedBoardFailed, (state, { error }) => ({
     ...state,
