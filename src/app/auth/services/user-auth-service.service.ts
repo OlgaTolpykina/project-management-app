@@ -226,9 +226,10 @@ export class UserAuthServiceService {
     const backingUrl = this.redirectUrl ? this.redirectUrl : 'main';
     const url = redirectUrl ? redirectUrl : backingUrl;
     this.openDialog();
+    this.router.navigate([url]);
     setTimeout(() => {
       this.dialog.closeAll();
-      this.router.navigate([url]);
+      // this.router.navigate([url]);
     }, 3000);
   }
 
