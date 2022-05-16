@@ -96,7 +96,10 @@ export class UpdateTaskComponent implements OnInit, OnDestroy {
             columnId: this.data.columnId,
           })
           .pipe(take(1))
-          .subscribe(() => console.log('end'));
+          .subscribe(() => {
+            if (this.selectedBoardId)
+              this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.selectedBoardId }));
+          });
       }
     }
     this.dialogRef.close();
