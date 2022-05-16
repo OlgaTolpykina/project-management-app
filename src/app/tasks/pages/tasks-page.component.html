@@ -1,0 +1,36 @@
+<ng-container *transloco="let t">
+  <div class="tasks-sidebar">
+    <a routerLink="/main" class="tasks-sidebar_item">{{ t("allBoards") }}</a>
+  </div>
+  <div class="tasks-content">
+    <p class="tasks-board">
+      {{ t("board-title") }}: <span>{{ board$ | async }}</span>
+    </p>
+    <div class="tasks-buttons">
+      <button matRipple class="tasks-buttons_item">
+        <mat-icon>filter_list</mat-icon>
+        <span>{{ t("filter") }}</span>
+      </button>
+    </div>
+    <div class="tasks-columns">
+      <div
+        cdkDropList
+        [cdkDropListData]="columns"
+        cdkDropListOrientation="horizontal"
+        class="tasks-columns_inner"
+        *ngIf="columns"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div cdkDropListGroup>
+          <app-column *ngFor="let column of columns" [column]="column" cdkDrag></app-column>
+        </div>
+        <div class="column-wrapper">
+          <button matRipple class="add-column" (click)="openDialog()">
+            <mat-icon>add</mat-icon>
+            <span>{{ t("newColumn") }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

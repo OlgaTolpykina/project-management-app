@@ -18,6 +18,38 @@
   width: 100%;
 }
 
+.create-board {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  height: 100px;
+
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  color: var(--primary);
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.create-board-title {
+  font-size: 20px;
+  line-height: 100px;
+}
+
+.mat-card-title:not(:first-child) {
+  margin-top: 0;
+}
+
+// .create-board-title::before {
+//   content: url("../../../../assets/svg/plus.svg");
+//   vertical-align: -50%;
+//   padding-right: 10px;
+// }
+
 @media (max-width: 1000px) {
   .boards-container {
     grid-template-columns: repeat(3, 1fr);

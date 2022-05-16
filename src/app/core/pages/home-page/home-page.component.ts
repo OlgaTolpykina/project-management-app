@@ -20,8 +20,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     let subscription = this.scroll.anchorScroll$.subscribe((id) => {
-      if (id) {
-        const element = <HTMLElement>document.getElementById(id);
+      const element = id ? <HTMLElement>document.getElementById(id) : null;
+      if (element) {
         element.scrollIntoView({
           behavior: 'smooth',
           block: 'start',

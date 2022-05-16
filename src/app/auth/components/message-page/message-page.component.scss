@@ -62,7 +62,13 @@ link {
   cursor: pointer;
 
   &:hover {
-    box-shadow: 2px 2px 2px var(--primary-transparent);
+    background-color: var(--amber-light);
+    border-radius: 5px;
+    color: var(--primary);
+  }
+
+  &:active {
+    color: var(--amber-light);
   }
 }
 

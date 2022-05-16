@@ -1,0 +1,58 @@
+<ng-container *transloco="let t">
+  <div class="column">
+    <div class="column-header">
+      <div class="column-header_title">
+        <mat-form-field *ngIf="isEditEnable">
+          <input matInput placeholder="Enter name" [(ngModel)]="name" />
+        </mat-form-field>
+        <span *ngIf="!isEditEnable" (click)="onEdit($event)">{{ name }}</span>
+      </div>
+      <div class="column-header_buttons">
+        <button
+          class="column-header_icon"
+          mat-icon-button
+          color="primary"
+          *ngIf="!isEditEnable"
+          (click)="onEdit($event)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          class="column-header_icon"
+          mat-icon-button
+          color="primary"
+          *ngIf="!isEditEnable"
+          (click)="onDelete($event)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button *ngIf="isEditEnable" mat-icon-button color="primary" (click)="onUpdate($event)">
+          <mat-icon>done</mat-icon>
+        </button>
+        <button *ngIf="isEditEnable" mat-icon-button color="primary" (click)="onEdit($event)">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div
+      class="tasks-container"
+      cdkDropList
+      [cdkDropListData]="tasks"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <app-task
+        class="mat-elevation-z4"
+        *ngFor="let task of tasks"
+        [task]="task"
+        [columnId]="column?.id"
+        cdkDrag
+      ></app-task>
+    </div>
+    <div>
+      <button matRipple class="add-task" (click)="openTaskDialog()">
+        <mat-icon>add</mat-icon>
+        <span>{{ t("newTask") }}</span>
+      </button>
+    </div>
+  </div>
+</ng-container>

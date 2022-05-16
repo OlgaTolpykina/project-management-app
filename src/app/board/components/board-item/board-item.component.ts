@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-
 import { Board } from '@shared/types/board.model';
-import { Router } from '@angular/router';
+import { BoardService } from '@shared/services/board.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-board-item',
@@ -13,14 +13,10 @@ export class BoardItemComponent {
 
   @Input() backgroundImgUrl: string | undefined;
 
-  constructor(private router: Router) {}
+  constructor(private boardService: BoardService) {}
 
   onDelete(e: Event): void {
     e.stopPropagation();
-    this.router.navigate(['/home']);
-  }
-
-  onViewBoardDetails(): void {
-    this.router.navigate(['/boards', 'boardId']);
+    if (this.board?.id) this.boardService.deleteBoardById(this.board.id).pipe(take(1)).subscribe();
   }
 }

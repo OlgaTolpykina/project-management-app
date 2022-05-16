@@ -1,0 +1,53 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 95%;
+  margin: 0 auto;
+  margin-bottom: 5px;
+  padding: 5px;
+
+  background-color: var(--white);
+  border-radius: 3px;
+
+  color: var(--primary);
+  font-size: 16px;
+
+  cursor: pointer;
+
+  &:hover .task-edit mat-icon {
+    visibility: visible;
+  }
+}
+
+.task-edit {
+  width: 30px;
+  mat-icon {
+    font-size: 20px;
+    visibility: hidden;
+  }
+}
+
+.task-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 85%;
+
+  &-done {
+    text-decoration: line-through;
+  }
+}
+
+.task-user {
+  width: 30px;
+  height: 30px;
+
+  border-radius: 100%;
+  background-color: var(--primary);
+
+  color: var(--white);
+  font-size: 16px;
+  line-height: 30px;
+  text-align: center;
+}

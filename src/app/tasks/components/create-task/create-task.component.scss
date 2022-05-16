@@ -1,0 +1,21 @@
+.flex-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 300px;
+  align-items: center;
+}
+
+.desc {
+  height: 50px;
+  width: 310px;
+  resize: none;
+}
+
+.mat-dialog-content {
+  overflow: initial;
+}
+
+.mat-form-field {
+  width: 100%;
+}

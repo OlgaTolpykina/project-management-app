@@ -1,16 +1,36 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor,
+  HttpErrorResponse,
+} from '@angular/common/http';
+import { Observable, EMPTY } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
+import { MessageService } from '@shared/services/message.service';
 
 @Injectable()
 export class HeadersInterceptor implements HttpInterceptor {
+  constructor(
+    private authService: UserAuthServiceService,
+    private router: Router,
+    private messageService: MessageService,
+  ) {}
+
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let headers = request.headers;
 
-    if (request.method !== 'DELETE')
+    if (request.method !== 'DELETE' && !request.url.includes('file')) {
       headers = request.headers.set('Content-Type', 'application/json');
+    } else if (request.url.includes('boards') && !this.messageService.approveDeletion) {
+      this.messageService.getUserConfirmation(request, this.router.url);
+      return EMPTY;
+    }
 
-    //TODO: Maybe receive token from auth service
     const token = localStorage.getItem('token');
 
     if (request.url.includes('unsplash'))
@@ -20,9 +40,40 @@ export class HeadersInterceptor implements HttpInterceptor {
       );
     else if (token) headers = headers.set('Authorization', `Bearer ${token}`);
 
-    const newReq = request.clone({
+    let newReq = request.clone({
       headers,
     });
-    return next.handle(newReq);
+
+    if (request.url.includes('file')) {
+      newReq = request.clone({
+        headers,
+        responseType: 'text',
+      });
+    }
+    if (request.url.includes('file') && request.method === 'GET') {
+      newReq = request.clone({
+        headers,
+        responseType: 'blob',
+      });
+    }
+
+    return next.handle(newReq).pipe(
+      tap(
+        (res) => {
+          return res;
+        },
+        (err) => {
+          this.authService.redirectUrl = this.router.url;
+          if (err instanceof HttpErrorResponse) {
+            if (err.status == 401) {
+              this.authService.handleError(err);
+              this.authService.logInOutUser('false');
+            } else if (newReq.url.includes('boards')) {
+              this.messageService.getMessageForUser(err.statusText, this.router.url);
+            }
+          }
+        },
+      ),
+    );
   }
 }

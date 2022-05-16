@@ -13,6 +13,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [],
@@ -31,6 +36,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatDialogModule,
     MatProgressBarModule,
     MatSnackBarModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    DragDropModule,
+    MatTooltipModule,
+    MatCheckboxModule,
   ],
   exports: [
     MatInputModule,
@@ -46,6 +56,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatDialogModule,
     MatProgressBarModule,
     MatSnackBarModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    DragDropModule,
+    MatTooltipModule,
+    MatCheckboxModule,
   ],
 })
 export class MaterialModule {}

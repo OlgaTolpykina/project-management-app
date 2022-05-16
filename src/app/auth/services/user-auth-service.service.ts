@@ -22,6 +22,8 @@ export class UserAuthServiceService {
 
   messageForUser: string = '';
 
+  users: User[] = [];
+
   redirectUrl: string | null = null;
 
   loadedUser: User = {
@@ -53,6 +55,18 @@ export class UserAuthServiceService {
     this.isAuthorized = localStorage.getItem('isAuthorized')
       ? (localStorage.getItem('isAuthorized') as string)
       : 'false';
+    if (this.isAuthorized === 'true') {
+      this.userService
+        .getAllUsers()
+        .pipe(catchError((error) => this.handleError(error)))
+        .subscribe({
+          next: (users) => {
+            if (!(users instanceof Error)) {
+              this.users = users.length ? users : [];
+            }
+          },
+        });
+    }
     this.userSettings.userName =
       this.isAuthorized === 'true' ? (this.getSavedLocalUser()?.userName as string) : '';
     this.userSettings.userAuthToken =
@@ -150,7 +164,11 @@ export class UserAuthServiceService {
               localStorage.setItem('isAuthorized', 'true');
               this.changeUserSource.next(newUser.userName);
               this.isUserAuthorized.next(true);
-              this.getMessageForUser('Welcome in profile', 'boards');
+              const url: string =
+                this.redirectUrl && !this.redirectUrl.includes('auth')
+                  ? (this.redirectUrl as string)
+                  : 'main';
+              this.getMessageForUser('Welcome in profile', url);
               this.logInOutUser('true');
             }
           });
@@ -169,7 +187,11 @@ export class UserAuthServiceService {
             await this.logInOutUser('true');
             this.changeUserSource.next(newUser.userName);
             this.isUserAuthorized.next(true);
-            this.getMessageForUser('Welcome in profile', 'boards');
+            const url: string =
+              this.redirectUrl && !this.redirectUrl.includes('auth')
+                ? (this.redirectUrl as string)
+                : 'main';
+            this.getMessageForUser('Welcome in profile', url);
           }
         });
     }
@@ -178,11 +200,10 @@ export class UserAuthServiceService {
   deleteUser() {
     this.userService
       .deleteUser(this.getSavedLocalUser()?.id as string)
-      .pipe(catchError(this.handleError))
+      .pipe(catchError((error) => this.handleError(error)))
       .subscribe(async (data) => {
         if (!(data instanceof Error)) {
           this.logInOutUser('false');
-          // localStorage.clear();
           localStorage.removeItem('savedUser');
           localStorage.removeItem('token');
           this.getMessageForUser('delete profile', 'home');
@@ -195,7 +216,6 @@ export class UserAuthServiceService {
     this.isAuthorized = status;
     const userStatus: boolean = status === 'true' ? true : false;
     if (!userStatus) {
-      //localStorage.clear();
       localStorage.removeItem('savedUser');
       localStorage.removeItem('token');
     }
@@ -204,18 +224,19 @@ export class UserAuthServiceService {
 
   getMessageForUser(message: string, redirectUrl?: string | null) {
     this.messageForUser = message;
-    const url = redirectUrl ? redirectUrl : this.router.url;
+    const backingUrl = this.redirectUrl ? this.redirectUrl : 'main';
+    const url = redirectUrl ? redirectUrl : backingUrl;
     this.router.navigate(['auth/message']);
     setTimeout(() => {
       this.router.navigate([url]);
     }, 3000);
   }
 
-  private handleError(error: HttpErrorResponse) {
+  handleError(error: HttpErrorResponse) {
     if (error.error.statusCode === 0) {
-      console.error('An error occurred:', error.error);
+      console.log('An error occurred:', error.error);
     } else {
-      console.error(
+      console.log(
         `Backend returned code ${error.error.statusCode}, body was: `,
         error.error.message,
       );
@@ -228,6 +249,9 @@ export class UserAuthServiceService {
           break;
         case 403:
           this.getMessageForUser('login&password not found');
+          break;
+        case 401:
+          this.getMessageForUser('Unauthorized', 'auth/login');
           break;
         default:
           this.getMessageForUser(error.error?.message as string);

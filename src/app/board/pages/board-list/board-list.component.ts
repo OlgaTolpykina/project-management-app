@@ -1,62 +1,71 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { BackgroundImgService } from '@app/board/services/background-img.service';
 
 import { Board } from '@shared/types/board.model';
-import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/redux/state.model';
 import { ProgressBarService } from '@core/services/loading/progress-bar.service';
+import { Router } from '@angular/router';
+import { setSelectedBoardId, clearSelectedBoard } from '@app/redux/actions/board.actions';
+import { CreateBoardComponent } from '@board/components/create-board/create-board.component';
+import { MatDialog } from '@angular/material/dialog';
+import { selectBoards } from '@app/redux/selectors/selectors';
 
 @Component({
   selector: 'app-board-list',
   templateUrl: './board-list.component.html',
   styleUrls: ['./board-list.component.scss'],
 })
-export class BoardListComponent implements OnInit {
-  boards: Board[] = [
-    {
-      id: '9a111e19-24ec-43e1-b8c4-13776842b8d5',
-      title: 'Homework tasks',
-    },
-    {
-      id: '9a111e19-24ec-43e1-b8c4-13776842b8d9',
-      title: 'Main job tasks',
-    },
-  ];
-
-  boards$: Observable<Board[]> = this.store.pipe(
-    map((data) => {
-      return [...data.boards.boards, ...this.boards];
-    }),
-  );
+export class BoardListComponent implements OnInit, OnDestroy {
+  boards$: Observable<Board[] | undefined> = this.store.select(selectBoards);
 
   boardsBackgroundImgsUrl: string[] = [];
 
   unsubscribe$ = new Subject<void>();
 
   constructor(
-    private http: HttpClient,
     private backgroundImgService: BackgroundImgService,
     private store: Store<AppState>,
     public progressBar: ProgressBarService,
+    private router: Router,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
     this.boardsBackgroundImgsUrl = [];
 
     this.boards$.pipe(takeUntil(this.unsubscribe$)).subscribe((value) => {
-      if (value.length) {
+      if (value?.length) {
+        for (let i = 0; i <= value?.length; i++) this.boardsBackgroundImgsUrl.push('');
         this.backgroundImgService
           .getBackgroundImgs(value.length)
-          .pipe(takeUntil(this.unsubscribe$))
+          .pipe()
           .subscribe((res) => {
             res.forEach((imgObj) => {
-              this.boardsBackgroundImgsUrl.push(imgObj.urls.small);
+              this.boardsBackgroundImgsUrl.unshift(imgObj.urls.small);
             });
           });
       }
     });
+  }
+
+  openBoard(board: Board) {
+    const selectedBoardId = board.id!;
+    this.store.dispatch(clearSelectedBoard());
+    this.store.dispatch(setSelectedBoardId({ selectedBoardId }));
+    this.router.navigateByUrl('/b/' + selectedBoardId);
+  }
+
+  openDialog(): void {
+    this.dialog.open(CreateBoardComponent, {
+      height: '400px',
+      width: '300px',
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.unsubscribe();
   }
 }

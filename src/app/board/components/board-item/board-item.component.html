@@ -1,8 +1,7 @@
 <mat-card
   class="board"
-  (click)="onViewBoardDetails()"
   *ngIf="board"
-  [ngStyle]="{ 'background-image': 'url(' + backgroundImgUrl + ')' }"
+  [ngStyle]="{ 'background-image': backgroundImgUrl ? 'url(' + backgroundImgUrl + ')' : '' }"
 >
   <mat-card-title class="board-title">{{ board.title }}</mat-card-title>
   <mat-card-actions align="end" *transloco="let t">
