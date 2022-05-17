@@ -4,6 +4,7 @@ import { ScrollService } from '@core/services/scroll/scroll.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
 import { CreateBoardComponent } from '@board/components/create-board/create-board.component';
+import { ProgressBarService } from '@core/services/loading/progress-bar.service';
 
 @Component({
   selector: 'app-header',
@@ -26,6 +27,7 @@ export class HeaderComponent implements OnInit {
     private scroll: ScrollService,
     public dialog: MatDialog,
     public authService: UserAuthServiceService,
+    public progressBar: ProgressBarService,
   ) {}
 
   ngOnInit(): void {

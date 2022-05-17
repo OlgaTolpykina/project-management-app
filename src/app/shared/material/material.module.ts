@@ -12,6 +12,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -41,6 +42,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     DragDropModule,
     MatTooltipModule,
     MatCheckboxModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     MatInputModule,
@@ -61,6 +63,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     DragDropModule,
     MatTooltipModule,
     MatCheckboxModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class MaterialModule {}

@@ -18,6 +18,8 @@ export class ProgressBarService {
   }
 
   public hide() {
-    this.isLoading$$.next(false);
+    setTimeout(() => {
+      this.isLoading$$.next(false);
+    }, 1500);
   }
 }
