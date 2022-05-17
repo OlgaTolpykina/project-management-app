@@ -14,6 +14,7 @@ import { concatMap, from, Subject, takeUntil } from 'rxjs';
 import { ColumnService } from '@shared/services/column.service';
 import { Column } from '@shared/types/column.model';
 import { setSelectedBoardId } from '@app/redux/actions/board.actions';
+import { RouteService } from '@core/services/route.service';
 
 @Component({
   selector: 'app-tasks',
@@ -43,6 +44,7 @@ export class TasksPageComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     public dialog: MatDialog,
     private columnService: ColumnService,
+    private route: RouteService,
   ) {}
 
   ngOnInit(): void {
@@ -55,6 +57,7 @@ export class TasksPageComponent implements OnInit, OnDestroy {
     this.boardId$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((boardId) => (this.boardId = boardId));
+    this.route.getRoute();
   }
 
   openDialog() {
