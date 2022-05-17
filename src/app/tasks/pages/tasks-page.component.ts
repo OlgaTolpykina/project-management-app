@@ -3,6 +3,7 @@ import {
   selectSelectedBoardColumns,
   selectSelectedBoardId,
   selectSelectedBoardTitle,
+  selectUsers,
 } from '@app/redux/selectors/selectors';
 import { AppState } from '@app/redux/state.model';
 import { Store } from '@ngrx/store';
@@ -15,6 +16,7 @@ import { ColumnService } from '@shared/services/column.service';
 import { Column } from '@shared/types/column.model';
 import { setSelectedBoardId } from '@app/redux/actions/board.actions';
 import { RouteService } from '@core/services/route.service';
+import { FilterService } from '../services/filter.service';
 
 @Component({
   selector: 'app-tasks',
@@ -28,7 +30,11 @@ export class TasksPageComponent implements OnInit, OnDestroy {
 
   columns$ = this.store.select(selectSelectedBoardColumns);
 
+  users$ = this.store.select(selectUsers);
+
   columns: Column[] = [];
+
+  isFilterBlockShown = false;
 
   columnToUpdate: Column = {
     id: '',
@@ -45,6 +51,7 @@ export class TasksPageComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private columnService: ColumnService,
     private route: RouteService,
+    private filterService: FilterService,
   ) {}
 
   ngOnInit(): void {
@@ -136,6 +143,18 @@ export class TasksPageComponent implements OnInit, OnDestroy {
             this.store.dispatch(setSelectedBoardId({ selectedBoardId: this.boardId })),
         });
     }
+  }
+
+  toggleFilter(): void {
+    this.isFilterBlockShown = !this.isFilterBlockShown;
+  }
+
+  onUserSelect(userId: string): void {
+    this.filterService.setUser(userId);
+  }
+
+  onDoneChange(flag: boolean): void {
+    this.filterService.setDone(flag);
   }
 
   ngOnDestroy(): void {

@@ -9,6 +9,7 @@ import { ColumnService } from '@shared/services/column.service';
 import { concatMap, from, map, Observable, Subject, switchMap, take, takeUntil } from 'rxjs';
 import { selectSelectedBoardColumns, selectSelectedBoardId } from '@app/redux/selectors/selectors';
 import { setSelectedBoardId } from '@app/redux/actions/board.actions';
+import { FilterService } from '@app/tasks/services/filter.service';
 import { TaskService } from '@shared/services/task.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
@@ -30,6 +31,10 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   tasks: Task[] = [];
 
+  userId: string | undefined;
+
+  doneFlag: boolean | undefined;
+
   boardId = '';
 
   columns$ = this.store.select(selectSelectedBoardColumns);
@@ -40,11 +45,13 @@ export class ColumnComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private columnService: ColumnService,
     private dialog: MatDialog,
+    private filterService: FilterService,
     private taskService: TaskService,
   ) {}
 
   ngOnInit(): void {
     if (this.column) this.name = this.column.title;
+
     if (this.column && this.column.tasks) this.tasks = [...this.column.tasks];
     this.selectedBoardId$
       .pipe(takeUntil(this.unsubscribe$))
@@ -54,6 +61,18 @@ export class ColumnComponent implements OnInit, OnDestroy {
         this.columns = [...columns];
       }
     });
+
+    this.filterService
+      .getUserId()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((userId) => {
+        this.userId = userId;
+      });
+
+    this.filterService
+      .getFilterDone()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((flag) => (this.doneFlag = flag));
   }
 
   onEdit(e: Event) {

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ScrollService } from '@core/services/scroll.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
+import { SearchService } from '@shared/services/search.service';
 import { CreateBoardComponent } from '@board/components/create-board/create-board.component';
 import { RouteService } from '@core/services/route.service';
 
@@ -30,6 +31,7 @@ export class HeaderComponent implements OnInit {
     public dialog: MatDialog,
     public authService: UserAuthServiceService,
     private route: RouteService,
+    public searchService: SearchService,
   ) {}
 
   ngOnInit(): void {
