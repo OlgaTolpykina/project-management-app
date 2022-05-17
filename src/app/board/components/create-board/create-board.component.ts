@@ -14,8 +14,6 @@ import { take } from 'rxjs';
   styleUrls: ['./create-board.component.scss'],
 })
 export class CreateBoardComponent implements OnInit {
-  // title = new FormControl('', [Validators.required, Validators.maxLength(50)]);
-
   formGroup: FormGroup | null = null;
 
   constructor(

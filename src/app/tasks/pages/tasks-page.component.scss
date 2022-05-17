@@ -137,6 +137,12 @@
   }
 }
 
+@media (max-width: 1000px) {
+  .tasks-sidebar {
+    display: none;
+  }
+}
+
 .tasks-filters {
   height: 100px;
   background-color: var(--primary-transparent-full);

@@ -16,19 +16,22 @@ import { fadeIn, fadeOut } from '@shared/animations/animations';
 export class CarouselComponent implements OnInit {
   slides = [
     {
-      src: '../../../../assets/img/avatar-female.png',
+      src: '../../../../assets/img/OT-photo.JPG',
       alt: 'Teammate photo',
-      description: 'AAAAAA',
+      name: 'OT-name',
+      description: 'OT-description',
     },
     {
-      src: '../../../../assets/img/avatar-male1.png',
+      src: '../../../../assets/img/AK-photo.png',
       alt: 'Teammate photo',
-      description: 'ББББББ',
+      name: 'AK-name',
+      description: 'AK-description',
     },
     {
-      src: '../../../../assets/img/avatar-male2.png',
+      src: '../../../../assets/img/SS-photo.jpg',
       alt: 'Teammate photo',
-      description: 'ВВВВВВ',
+      name: 'SS-name',
+      description: 'SS-description',
     },
   ];
 

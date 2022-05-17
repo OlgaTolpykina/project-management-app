@@ -1,4 +1,6 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
+import { RouteService } from '@core/services/route.service';
 import { ScrollService } from '@core/services/scroll.service';
 import { Subscription } from 'rxjs';
 
@@ -16,7 +18,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   isEnabled = true;
 
-  constructor(private scroll: ScrollService) {}
+  constructor(
+    private scroll: ScrollService,
+    public authService: UserAuthServiceService,
+    private route: RouteService,
+  ) {}
 
   ngOnInit(): void {
     let subscription = this.scroll.anchorScroll$.subscribe((id) => {
@@ -29,6 +35,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
         });
       }
     });
+    this.route.getRoute();
     this.subscriptions.add(subscription);
   }
 

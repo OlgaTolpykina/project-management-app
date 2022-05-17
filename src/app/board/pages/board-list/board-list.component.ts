@@ -11,6 +11,7 @@ import { setSelectedBoardId, clearSelectedBoard } from '@app/redux/actions/board
 import { CreateBoardComponent } from '@board/components/create-board/create-board.component';
 import { MatDialog } from '@angular/material/dialog';
 import { selectBoards } from '@app/redux/selectors/selectors';
+import { RouteService } from '@core/services/route.service';
 
 @Component({
   selector: 'app-board-list',
@@ -29,6 +30,7 @@ export class BoardListComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private router: Router,
     private dialog: MatDialog,
+    private route: RouteService,
   ) {}
 
   ngOnInit(): void {
@@ -47,6 +49,8 @@ export class BoardListComponent implements OnInit, OnDestroy {
           });
       }
     });
+
+    this.route.getRoute();
   }
 
   openBoard(board: Board) {

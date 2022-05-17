@@ -1,8 +1,9 @@
-<div class="carousel">
+<div class="carousel" *transloco="let t">
   <ng-container *ngFor="let slide of slides; let i = index">
     <div class="slide" *ngIf="i === currentSlide" @carouselAnimation>
-      <img [src]="slide.src" width="150" height="150" [alt]="slide.alt" />
-      <p class="slide-description">{{ slide.description }}</p>
+      <img class="slide-img" [src]="slide.src" width="145" height="165" [alt]="slide.alt" />
+      <p class="slide-title">{{ t(slide.name) }}</p>
+      <p class="slide-description">{{ t(slide.description) }}</p>
     </div>
   </ng-container>
 

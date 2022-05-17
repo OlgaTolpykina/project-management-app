@@ -15,6 +15,7 @@ import { concatMap, from, Subject, takeUntil } from 'rxjs';
 import { ColumnService } from '@shared/services/column.service';
 import { Column } from '@shared/types/column.model';
 import { setSelectedBoardId } from '@app/redux/actions/board.actions';
+import { RouteService } from '@core/services/route.service';
 import { FilterService } from '../services/filter.service';
 
 @Component({
@@ -49,6 +50,7 @@ export class TasksPageComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     public dialog: MatDialog,
     private columnService: ColumnService,
+    private route: RouteService,
     private filterService: FilterService,
   ) {}
 
@@ -62,6 +64,7 @@ export class TasksPageComponent implements OnInit, OnDestroy {
     this.boardId$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((boardId) => (this.boardId = boardId));
+    this.route.getRoute();
   }
 
   openDialog() {
@@ -99,7 +102,6 @@ export class TasksPageComponent implements OnInit, OnDestroy {
   }
 
   updateColumnOrders() {
-    console.log('updatedColumns');
     const updatedColumns: Column[] = [];
     this.columns.forEach((column, index) => {
       if (+column.order !== index + 1) {

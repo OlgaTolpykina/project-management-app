@@ -1,6 +1,6 @@
 <header [class.nav-scroll]="scrolled" class="nav">
   <mat-toolbar>
-    <a routerLink="/home" class="logo">PMApp</a>
+    <a routerLink="/" class="logo">PMApp</a>
     <mat-button-toggle-group name="language" aria-label="Text Language" fxHide.sm fxHide.xs>
       <mat-button-toggle
         value="en"
@@ -49,6 +49,22 @@
       >close</mat-icon
     >
     <div class="button-wrapper" *transloco="let t" fxHide.sm fxHide.xs>
+      <a
+        matRipple
+        routerLink="/home"
+        [class.active]="currentUrl === '/home'"
+        class="link button-link"
+        (click)="onScrollToAnchor('team')"
+        >{{ t("team") }}</a
+      >
+      <a
+        matRipple
+        routerLink="/main"
+        [class.active]="currentUrl === '/main'"
+        class="link button-link"
+        (click)="onScrollToAnchor('team')"
+        >{{ t("allBoards") }}</a
+      >
       <a matRipple routerLink="/main" class="link button-link" (click)="openDialog()">{{
         t("newBoard")
       }}</a>
@@ -56,6 +72,7 @@
         matRipple
         routerLink="/auth/editUser"
         class="link button-link"
+        [class.active]="currentUrl === '/auth/editUser'"
         (click)="authService.redirectUrl = authService.router.url"
         >{{ t("editProfile") }}</a
       >

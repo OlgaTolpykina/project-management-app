@@ -1,3 +1,8 @@
+:host {
+  display: block;
+  padding-top: 30px;
+}
+
 .login-wrapper {
   height: 100%;
   display: flex;
@@ -6,13 +11,12 @@
 
 .box {
   position: relative;
-  top: 45px;
   height: fit-content;
   opacity: 1;
   float: left;
   padding: 60px 30px 40px 30px;
   width: 95%;
-  background-color: #bbb2c1;
+  background-color: var(--background-gradient);
   border-radius: 10px;
   transform: scale(1);
   -webkit-transform: scale(1);
@@ -84,11 +88,12 @@
   font-weight: 700;
   line-height: 30px;
   margin: 0;
-  text-align: left;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 .login-wrapper .mat-card {
-  padding: 40px 70px 50px;
+  padding: 30px 40px;
 }
 
 .mat-form-field {
@@ -110,29 +115,27 @@
 }
 
 .buttons-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5%;
-  margin: inherit;
-  margin-top: 40px;
-  padding: inherit;
-  height: 62px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 15px;
 }
 
-link {
+.link {
   text-decoration: none;
 }
 
 .button-link {
   height: 35px;
+  width: 105px;
   margin: 5px;
+  padding: 0 5px;
 
   font-size: 16px;
   line-height: 30px;
   text-align: center;
-  color: var(--white);
+  color: var(--primary);
 
-  background-color: var(--primary);
   border-radius: 5px;
 
   cursor: pointer;
@@ -148,9 +151,29 @@ link {
   &:active {
     color: var(--amber-light);
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    &:hover {
+      background-color: var(--primary);
+      color: var(--disabled);
+    }
+  }
+}
+
+.register {
+  color: var(--white);
+  background-color: var(--primary);
 }
 
 .delete {
   width: 100%;
-  background-color: red;
+  text-align: center;
+  button {
+    background-color: var(--red-transparent);
+    transition: all 0.8s;
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
 }

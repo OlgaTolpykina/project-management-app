@@ -8,6 +8,8 @@ import { UserService } from '../../shared/services/user.service';
 import { Error } from '@shared/types/error.model';
 import { User } from '@shared/types/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MessagePageComponent } from '@auth/components/message-page/message-page.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +50,12 @@ export class UserAuthServiceService {
 
   changeMessage$ = new Subject<string>();
 
-  constructor(beAuthService: BeAuthService, userService: UserService, public router: Router) {
+  constructor(
+    beAuthService: BeAuthService,
+    userService: UserService,
+    public router: Router,
+    private dialog: MatDialog,
+  ) {
     this.beAuthService = beAuthService;
     this.userService = userService;
   }
@@ -228,10 +235,18 @@ export class UserAuthServiceService {
     this.changeMessage$.next(this.messageForUser);
     const backingUrl = this.redirectUrl ? this.redirectUrl : 'main';
     const url = redirectUrl ? redirectUrl : backingUrl;
-    this.router.navigate(['auth/message']);
+    this.openDialog();
+    this.router.navigate([url]);
     setTimeout(() => {
-      this.router.navigate([url]);
-    }, 3000);
+      this.dialog.closeAll();
+    }, 2000);
+  }
+
+  openDialog(): void {
+    this.dialog.open(MessagePageComponent, {
+      height: '300px',
+      width: '300px',
+    });
   }
 
   handleError(error: HttpErrorResponse) {
