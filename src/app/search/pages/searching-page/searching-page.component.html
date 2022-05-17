@@ -108,14 +108,6 @@
     </div>
     <div
       class="search-result-container"
-      *ngIf="searchService.searchString.length < searchService.MINIMAL_REQUEST_LENGTH"
-    >
-      <p>
-        {{ t("search request length") }} {{ searchService.MINIMAL_REQUEST_LENGTH }} {{ t("chars") }}
-      </p>
-    </div>
-    <div
-      class="search-result-container"
       *ngIf="
         searchService.filteredSearchResult.length === 0 &&
         searchService.searchString.length >= searchService.MINIMAL_REQUEST_LENGTH
