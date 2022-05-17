@@ -36,7 +36,7 @@ export class SearchService {
 
   openPage: boolean = false;
 
-  MINIMAL_REQUEST_LENGTH: number = 2;
+  MINIMAL_REQUEST_LENGTH: number = 1;
 
   searchTextChanged = new Subject<string>();
 
