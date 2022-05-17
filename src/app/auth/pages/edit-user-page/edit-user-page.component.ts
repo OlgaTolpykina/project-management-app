@@ -12,6 +12,7 @@ import { UserAuthServiceService } from '../../services/user-auth-service.service
 import { MyErrorStateMatcher } from '../../services/error-state.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MessagePageComponent } from '@auth/components/message-page/message-page.component';
+import { RouteService } from '@core/services/route.service';
 
 @Component({
   selector: 'app-edit-user-page',
@@ -29,7 +30,11 @@ export class EditUserPageComponent implements OnInit {
 
   authService: UserAuthServiceService;
 
-  constructor(authService: UserAuthServiceService, private dialog: MatDialog) {
+  constructor(
+    authService: UserAuthServiceService,
+    private dialog: MatDialog,
+    private route: RouteService,
+  ) {
     this.authService = authService;
   }
 
@@ -41,6 +46,7 @@ export class EditUserPageComponent implements OnInit {
     this.registryFormGroup.controls['loginFormControl'].setValue(this.userSettings.login);
     this.registryFormGroup.controls['nameFormControl'].setValue(this.userSettings.userName);
     this.registryFormGroup.controls['passwordFormControl'].setValue(this.userSettings.userPassword);
+    this.route.getRoute();
   }
 
   public showPassword: boolean = false;

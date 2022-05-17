@@ -103,6 +103,11 @@
   }
 }
 
+.active {
+  background-color: var(--amber-light);
+  border-radius: 5px;
+}
+
 .mat-button-toggle-group {
   height: 32px;
   align-items: center;

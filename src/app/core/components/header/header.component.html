@@ -41,12 +41,22 @@
       <mat-placeholder class="placeholder">{{ t("search") }}</mat-placeholder>
     </mat-form-field>
     <div class="button-wrapper" *transloco="let t" fxHide.sm fxHide.xs>
-      <a matRipple routerLink="/home" class="link button-link" (click)="onScrollToAnchor('team')">{{
-        t("team")
-      }}</a>
-      <a matRipple routerLink="/main" class="link button-link" (click)="onScrollToAnchor('team')">{{
-        t("allBoards")
-      }}</a>
+      <a
+        matRipple
+        routerLink="/home"
+        [class.active]="currentUrl === '/home'"
+        class="link button-link"
+        (click)="onScrollToAnchor('team')"
+        >{{ t("team") }}</a
+      >
+      <a
+        matRipple
+        routerLink="/main"
+        [class.active]="currentUrl === '/main'"
+        class="link button-link"
+        (click)="onScrollToAnchor('team')"
+        >{{ t("allBoards") }}</a
+      >
       <a matRipple routerLink="/main" class="link button-link" (click)="openDialog()">{{
         t("newBoard")
       }}</a>
@@ -54,6 +64,7 @@
         matRipple
         routerLink="/auth/editUser"
         class="link button-link"
+        [class.active]="currentUrl === '/auth/editUser'"
         (click)="authService.redirectUrl = authService.router.url"
         >{{ t("editProfile") }}</a
       >
