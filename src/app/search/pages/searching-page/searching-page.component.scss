@@ -117,6 +117,7 @@
   line-height: inherit;
   background-color: var(--primary);
   color: var(--white);
+  text-decoration: inherit;
 }
 
 .task-user {
@@ -199,5 +200,4 @@
 
 .done {
   text-decoration: line-through;
-  background-color: var(--amber-light);
 }

@@ -155,5 +155,6 @@ export class SearchService {
     this.store.dispatch(clearSelectedBoard());
     this.store.dispatch(setSelectedBoardId({ selectedBoardId }));
     this.authService.router.navigateByUrl('/b/' + selectedBoardId);
+    this.searchString = '';
   }
 }
