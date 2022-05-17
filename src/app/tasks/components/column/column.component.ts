@@ -12,6 +12,7 @@ import { setSelectedBoardId } from '@app/redux/actions/board.actions';
 import { FilterService } from '@app/tasks/services/filter.service';
 import { TaskService } from '@shared/services/task.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { SearchService } from '@shared/services/search.service';
 
 @Component({
   selector: 'app-column',
@@ -47,6 +48,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private filterService: FilterService,
     private taskService: TaskService,
+    public searchService: SearchService,
   ) {}
 
   ngOnInit(): void {
@@ -249,8 +251,13 @@ export class ColumnComponent implements OnInit, OnDestroy {
     }
   }
 
+  public releaseSelectedTask() {
+    this.searchService.selectedTask = null;
+  }
+
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+    this.searchService.selectedTask = null;
   }
 }

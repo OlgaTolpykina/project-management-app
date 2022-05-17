@@ -89,3 +89,8 @@
     box-shadow: 2px 2px 2px var(--primary-transparent);
   }
 }
+
+.selected {
+  border: 1px solid #f803c3;
+  box-shadow: 2px 2px 2px #f803c3;
+}

@@ -46,6 +46,8 @@
         [task]="task"
         [columnId]="column?.id"
         cdkDrag
+        [class.selected]="task.id === searchService.selectedTask?.id"
+        (click)="releaseSelectedTask()"
       ></app-task>
     </div>
     <div>
