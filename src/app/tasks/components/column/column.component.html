@@ -42,7 +42,7 @@
     >
       <app-task
         class="mat-elevation-z4"
-        *ngFor="let task of tasks"
+        *ngFor="let task of tasks | filterExec: userId | filterDone: doneFlag"
         [task]="task"
         [columnId]="column?.id"
         cdkDrag

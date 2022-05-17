@@ -67,6 +67,9 @@
   "task-file": "Files",
   "Unknown Error": "Something went wrong. Please check your Internet connection",
   "Bad Request": "Something went wrong. Please check your Internet connection",
+  "filter-exec": "by executor",
+  "filter-done": "only done",
+  "all-users": "All users"
   "update": "Update",
   "Internal Server Error": "Internal Server Error. Reload page",
   "Search results": "Search results",
