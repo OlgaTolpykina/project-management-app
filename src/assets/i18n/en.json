@@ -70,5 +70,6 @@
   "Bad Request": "Something went wrong. Please check your Internet connection",
   "filter-exec": "by executor",
   "filter-done": "only done",
-  "Internal Server Error": "Internal Server Error. Reload page"
+  "Internal Server Error": "Internal Server Error. Reload page",
+  "all-users": "All users"
 }

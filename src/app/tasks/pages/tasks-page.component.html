@@ -24,6 +24,7 @@
           #userSelect
           (selectionChange)="onUserSelect(userSelect.value)"
         >
+          <mat-option value="">{{ t("all-users") }}</mat-option>
           <mat-option *ngFor="let user of users$ | async" [value]="user.id">{{
             user.name
           }}</mat-option>
