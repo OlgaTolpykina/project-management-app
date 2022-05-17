@@ -24,6 +24,11 @@ const routes: Routes = [
     loadChildren: () => import('./board/board.module').then((m) => m.BoardModule),
   },
   {
+    path: 'search',
+    canActivate: [AuthorizeGuard],
+    loadChildren: () => import('./search/search.module').then((m) => m.SearchModule),
+  },
+  {
     path: 'b/:id',
     loadChildren: () => import('./tasks/tasks.module').then((m) => m.TasksModule),
   },
