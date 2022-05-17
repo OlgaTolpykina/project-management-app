@@ -131,16 +131,18 @@
       <ng-container *ngFor="let task of searchService.filteredSearchResult">
         <div class="task-container" (click)="searchService.onSelect(task)">
           <div [class.done]="task.done === true">
-            <p class="task-header">{{ t("title") }}</p>
-            {{ task.title }}
+            <span class="task-header">{{ t("title") }}</span>
+            <p>{{ task.title }}</p>
           </div>
           <div>
-            <p class="task-header">{{ t("Description") }}</p>
-            {{ task.description }}
+            <span class="task-header">{{ t("Description") }}</span>
+            <p>{{ task.description }}</p>
           </div>
           <div class="">
-            <p class="task-header">{{ t("User") }}</p>
-            <span>{{ task.userName }}</span>
+            <span class="task-header">{{ t("User") }}</span>
+            <p>
+              <span>{{ task.userName }}</span>
+            </p>
           </div>
         </div>
       </ng-container>
