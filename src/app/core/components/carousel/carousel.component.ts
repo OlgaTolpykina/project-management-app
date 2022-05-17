@@ -28,7 +28,7 @@ export class CarouselComponent implements OnInit {
       description: 'AK-description',
     },
     {
-      src: '../../../../assets/img/avatar-male2.png',
+      src: '../../../../assets/img/SS-photo.jpg',
       alt: 'Teammate photo',
       name: 'SS-name',
       description: 'SS-description',
