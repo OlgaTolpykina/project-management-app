@@ -13,7 +13,7 @@ export class BeAuthService {
   constructor(private http: HttpClient) {}
 
   signIn(body: User): Observable<{ token: string } | Error> {
-    return this.http.post<{ token: string } | Error>(`${environment.BASE_URL}/signIn`, body);
+    return this.http.post<{ token: string } | Error>(`${environment.BASE_URL}/signin`, body);
   }
 
   signup(body: User): Observable<User | Error> {
