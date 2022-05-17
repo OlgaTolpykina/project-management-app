@@ -46,6 +46,8 @@ export class UserAuthServiceService {
 
   userService: UserService;
 
+  changeMessage$ = new Subject<string>();
+
   constructor(beAuthService: BeAuthService, userService: UserService, public router: Router) {
     this.beAuthService = beAuthService;
     this.userService = userService;
@@ -100,8 +102,7 @@ export class UserAuthServiceService {
           newUser.id = this.loadedUser.id as string;
           this.userSettings.id = this.loadedUser.id as string;
           this.saveLocalUser(newUser);
-          this.getMessageForUser('register profile', 'home');
-          await this.authorizeUser(this.userSettings);
+          this.authorizeUser(this.userSettings);
         }
       });
   }
@@ -153,7 +154,7 @@ export class UserAuthServiceService {
       if (newUser.login === localSavedUser.login) {
         newUser = localSavedUser;
         this.beAuthService
-          .signin({ login: newUser.login, password: newUser.userPassword })
+          .signIn({ login: newUser.login, password: newUser.userPassword })
           .pipe(catchError((error) => this.handleError(error)))
           .subscribe((data: { token: string } | Error) => {
             if (!(data instanceof Error)) {
@@ -175,7 +176,7 @@ export class UserAuthServiceService {
       }
     } else {
       this.beAuthService
-        .signin({ login: newUser.login, password: newUser.userPassword })
+        .signIn({ login: newUser.login, password: newUser.userPassword })
         .pipe(catchError((error) => this.handleError(error)))
         .subscribe(async (data: { token: string } | Error) => {
           if (!(data instanceof Error)) {
@@ -224,6 +225,7 @@ export class UserAuthServiceService {
 
   getMessageForUser(message: string, redirectUrl?: string | null) {
     this.messageForUser = message;
+    this.changeMessage$.next(this.messageForUser);
     const backingUrl = this.redirectUrl ? this.redirectUrl : 'main';
     const url = redirectUrl ? redirectUrl : backingUrl;
     this.router.navigate(['auth/message']);

@@ -37,9 +37,17 @@
 <ng-template #authorized>
   <div class="nav-right">
     <mat-form-field *transloco="let t">
-      <input matInput type="text" />
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="searchService.searchString"
+        (input)="searchService.searchSubmit()"
+      />
       <mat-placeholder class="placeholder">{{ t("search") }}</mat-placeholder>
     </mat-form-field>
+    <mat-icon (click)="searchService.searchString = ''" (click)="searchService.searchSubmit()"
+      >close</mat-icon
+    >
     <div class="button-wrapper" *transloco="let t" fxHide.sm fxHide.xs>
       <a matRipple routerLink="/main" class="link button-link" (click)="openDialog()">{{
         t("newBoard")
