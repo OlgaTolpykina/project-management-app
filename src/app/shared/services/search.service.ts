@@ -42,6 +42,10 @@ export class SearchService {
 
   searchTextChanged$ = this.searchTextChanged.asObservable();
 
+  allTasksReady = new Subject<boolean>();
+
+  allTasksReady$ = this.allTasksReady.asObservable();
+
   constructor(
     private boardService: BoardService,
     private authService: UserAuthServiceService,
@@ -52,6 +56,10 @@ export class SearchService {
       .subscribe((searchString) => {
         this.getSearchResult(searchString);
       });
+
+    this.allTasksReady.pipe().subscribe((openPage) => {
+      if (openPage) this.searchSubmit();
+    });
   }
 
   private async getAllBoards() {
@@ -82,6 +90,7 @@ export class SearchService {
         complete: () => {
           if (i === 0) {
             this.openPage = true;
+            this.allTasksReady.next(this.openPage);
           }
         },
       });
