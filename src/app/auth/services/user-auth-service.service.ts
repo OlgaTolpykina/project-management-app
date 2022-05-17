@@ -102,10 +102,7 @@ export class UserAuthServiceService {
           newUser.id = this.loadedUser.id as string;
           this.userSettings.id = this.loadedUser.id as string;
           this.saveLocalUser(newUser);
-          this.getMessageForUser('register profile');
-          setTimeout(() => {
-            this.authorizeUser(this.userSettings);
-          }, 1000);
+          this.authorizeUser(this.userSettings);
         }
       });
   }
@@ -157,7 +154,7 @@ export class UserAuthServiceService {
       if (newUser.login === localSavedUser.login) {
         newUser = localSavedUser;
         this.beAuthService
-          .signin({ login: newUser.login, password: newUser.userPassword })
+          .signIn({ login: newUser.login, password: newUser.userPassword })
           .pipe(catchError((error) => this.handleError(error)))
           .subscribe((data: { token: string } | Error) => {
             if (!(data instanceof Error)) {
@@ -179,7 +176,7 @@ export class UserAuthServiceService {
       }
     } else {
       this.beAuthService
-        .signin({ login: newUser.login, password: newUser.userPassword })
+        .signIn({ login: newUser.login, password: newUser.userPassword })
         .pipe(catchError((error) => this.handleError(error)))
         .subscribe(async (data: { token: string } | Error) => {
           if (!(data instanceof Error)) {
