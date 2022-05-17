@@ -31,7 +31,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   tasks: Task[] = [];
 
-  execKeyword: string | undefined;
+  userId: string | undefined;
 
   doneFlag: boolean | undefined;
 
@@ -63,10 +63,10 @@ export class ColumnComponent implements OnInit, OnDestroy {
     });
 
     this.filterService
-      .getFilterKeyword()
+      .getUserId()
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((keyword) => {
-        this.execKeyword = keyword;
+      .subscribe((userId) => {
+        this.userId = userId;
       });
 
     this.filterService

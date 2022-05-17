@@ -3,6 +3,7 @@ import {
   selectSelectedBoardColumns,
   selectSelectedBoardId,
   selectSelectedBoardTitle,
+  selectUsers,
 } from '@app/redux/selectors/selectors';
 import { AppState } from '@app/redux/state.model';
 import { Store } from '@ngrx/store';
@@ -27,6 +28,8 @@ export class TasksPageComponent implements OnInit, OnDestroy {
   boardId$ = this.store.select(selectSelectedBoardId);
 
   columns$ = this.store.select(selectSelectedBoardColumns);
+
+  users$ = this.store.select(selectUsers);
 
   columns: Column[] = [];
 
@@ -144,8 +147,8 @@ export class TasksPageComponent implements OnInit, OnDestroy {
     this.isFilterBlockShown = !this.isFilterBlockShown;
   }
 
-  onExecKeyword(keyword: string): void {
-    this.filterService.setKeyword(keyword);
+  onUserSelect(userId: string): void {
+    this.filterService.setUser(userId);
   }
 
   onDoneChange(flag: boolean): void {

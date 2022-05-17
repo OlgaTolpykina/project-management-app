@@ -5,16 +5,16 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class FilterService {
-  filterExecKeyword$ = new Subject<string>();
+  filterUser$ = new Subject<string>();
 
   filterDone$ = new Subject<boolean>();
 
-  setKeyword(keyword: string): void {
-    this.filterExecKeyword$.next(keyword);
+  setUser(userId: string): void {
+    this.filterUser$.next(userId);
   }
 
-  getFilterKeyword(): Subject<string> {
-    return this.filterExecKeyword$;
+  getUserId(): Subject<string> {
+    return this.filterUser$;
   }
 
   setDone(flag: boolean): void {

@@ -158,12 +158,13 @@
   align-items: center;
 }
 
-.filter-input {
+.user-select {
   border: 1px solid #000;
   border-radius: 3px;
   outline: none;
   background-color: var(--white);
-  height: 15px;
+  height: 20px;
+  min-width: 100px;
 }
 
 @media (max-width: 550px) {
