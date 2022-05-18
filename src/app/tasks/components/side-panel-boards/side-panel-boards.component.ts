@@ -7,7 +7,11 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/redux/state.model';
 import { Router } from '@angular/router';
-import { setSelectedBoardId, clearSelectedBoard } from '@app/redux/actions/board.actions';
+import {
+  setSelectedBoardId,
+  clearSelectedBoard,
+  getAllBoards,
+} from '@app/redux/actions/board.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { selectBoards } from '@app/redux/selectors/selectors';
 import { RouteService } from '@core/services/route.service';
@@ -36,6 +40,7 @@ export class SidePanelBoardsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.boardsBackgroundImgsUrl = [];
+    this.store.dispatch(getAllBoards());
 
     this.boards$.pipe(takeUntil(this.unsubscribe$)).subscribe((value) => {
       if (value?.length) {
