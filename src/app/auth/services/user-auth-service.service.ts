@@ -251,12 +251,8 @@ export class UserAuthServiceService {
 
   handleError(error: HttpErrorResponse) {
     if (error.error.statusCode === 0) {
-      console.log('An error occurred:', error.error);
+      this.getMessageForUser('Unknown Error');
     } else {
-      console.log(
-        `Backend returned code ${error.error.statusCode}, body was: `,
-        error.error.message,
-      );
       switch (error.error.statusCode) {
         case 404:
           this.getMessageForUser('signUp first');
@@ -271,7 +267,7 @@ export class UserAuthServiceService {
           this.getMessageForUser('Unauthorized', 'auth/login');
           break;
         default:
-          this.getMessageForUser(error.error?.message as string);
+          this.getMessageForUser('Unknown Error');
           break;
       }
     }
