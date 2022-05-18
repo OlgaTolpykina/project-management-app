@@ -11,6 +11,7 @@ import { setSelectedBoardId, clearSelectedBoard } from '@app/redux/actions/board
 import { MatDialog } from '@angular/material/dialog';
 import { selectBoards } from '@app/redux/selectors/selectors';
 import { RouteService } from '@core/services/route.service';
+import { SearchService } from '@app/shared/services/search.service';
 
 @Component({
   selector: 'app-side-panel-boards',
@@ -30,6 +31,7 @@ export class SidePanelBoardsComponent implements OnInit, OnDestroy {
     private router: Router,
     private dialog: MatDialog,
     private route: RouteService,
+    public searchService: SearchService,
   ) {}
 
   ngOnInit(): void {

@@ -8,6 +8,7 @@
         [backgroundImgUrl]="boardsBackgroundImgsUrl[i]"
         [matTooltip]="board.description!"
         (click)="openBoard(board)"
+        (click)="searchService.searchString = ''"
       ></app-board-item>
     </div>
   </div>

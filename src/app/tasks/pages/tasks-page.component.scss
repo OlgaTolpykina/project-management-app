@@ -29,12 +29,11 @@
     border: 1px solid var(--primary);
     border-radius: 5px;
     cursor: pointer;
+    transition: all 0.8s;
   }
 
   &_item:hover {
     width: 95%;
-    height: 30px;
-    margin: 0;
     background-color: var(--amber-light);
   }
 
