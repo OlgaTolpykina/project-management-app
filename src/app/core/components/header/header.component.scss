@@ -81,7 +81,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 130px;
+  width: 103px;
   height: 40px;
   margin: 5px;
   padding: 3px;
@@ -101,6 +101,11 @@
   &:active {
     color: var(--amber-light);
   }
+}
+
+.active {
+  background-color: var(--amber-light);
+  border-radius: 5px;
 }
 
 .mat-button-toggle-group {

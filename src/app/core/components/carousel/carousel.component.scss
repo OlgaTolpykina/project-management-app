@@ -27,14 +27,27 @@
   border-radius: 0.5em;
 }
 
-.slide:hover {
-  transform: scale(1.025);
+.slide-img {
+  border-radius: 50%;
+}
+
+.slide-title {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 10px 0;
+
+  font-size: 18px;
+  font-style: italic;
 }
 
 .slide-description {
   width: 100%;
   text-align: center;
-  min-height: 150px;
+
+  font-size: 16px;
 }
 
 .control {
@@ -45,5 +58,11 @@
   }
   &.next {
     right: 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  .slide-description {
+    font-size: 15px;
   }
 }

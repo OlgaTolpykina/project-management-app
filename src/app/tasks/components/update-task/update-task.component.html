@@ -47,29 +47,6 @@
         <mat-error *ngIf="user?.hasError('required')">{{ t("user required") }}</mat-error>
       </mat-form-field>
     </div>
-
-    <div class="task-files-wrapper">
-      <span>{{ t("task-file") }}</span>
-      <ul>
-        <li *ngFor="let file of files">
-          {{ file.filename }}
-          <button mat-button type="button" (click)="onDownloadFile(file)">
-            <mat-icon>cloud_download</mat-icon>
-          </button>
-        </li>
-      </ul>
-      <button mat-button type="button" (click)="fileInput.click()">
-        <mat-icon>cloud_upload</mat-icon>Upload image
-      </button>
-      <input
-        hidden
-        #fileInput
-        type="file"
-        placeholder="Ulpload file"
-        (change)="onUploadFile($event)"
-        accept="image/jpeg, image/png"
-      />
-    </div>
   </mat-dialog-content>
 
   <mat-dialog-actions align="center">

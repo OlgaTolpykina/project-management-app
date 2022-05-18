@@ -47,14 +47,14 @@
             [placeholder]="'Password' | transloco"
             name="userPassword"
           />
-          <mat-icon matSuffix *ngIf="!showPassword" (click)="togglePasswordVisibility()"
+          <mat-icon matSuffix *ngIf="!showPassword" (click)="togglePasswordVisibility($event)"
             >visibility</mat-icon
           >
-          <mat-icon matSuffix *ngIf="showPassword" (click)="togglePasswordVisibility()"
+          <mat-icon matSuffix *ngIf="showPassword" (click)="togglePasswordVisibility($event)"
             >visibility_off</mat-icon
           >
           <mat-error
-            *ngIf="(registryFormGroup.controls['passwordFormControl'].errors?.['passwordStrength'] || 
+            *ngIf="(registryFormGroup.controls['passwordFormControl'].errors?.['passwordStrength'] ||
             registryFormGroup.controls['passwordFormControl'].errors?.['minlength'])"
           >
             {{ t("password strength message") }}
@@ -74,13 +74,13 @@
           <mat-icon
             matSuffix
             *ngIf="!showConfirmPassword"
-            (click)="toggleConfirmPasswordVisibility()"
+            (click)="toggleConfirmPasswordVisibility($event)"
             >visibility
           </mat-icon>
           <mat-icon
             matSuffix
             *ngIf="showConfirmPassword"
-            (click)="toggleConfirmPasswordVisibility()"
+            (click)="toggleConfirmPasswordVisibility($event)"
             >visibility_off
           </mat-icon>
           <mat-error
@@ -96,19 +96,35 @@
         </mat-form-field>
       </mat-card-content>
       <div class="buttons-container" *transloco="let t">
-        <a class="link" routerLink="{{ authService.redirectUrl }}" routerLinkActive="active">{{
-          t("Back")
-        }}</a>
-        <button type="submit" class="link button-link">{{ t("save") }}</button>
+        <a
+          class="link button-link"
+          routerLink="{{ authService.redirectUrl }}"
+          routerLinkActive="active"
+          >{{ t("Back") }}</a
+        >
+        <button
+          type="submit"
+          mat-button
+          class="link button-link register"
+          [disabled]="
+            this.registryFormGroup.controls['nameFormControl'].value ===
+              this.userSettings.userName &&
+            this.registryFormGroup.controls['loginFormControl'].value === this.userSettings.login
+          "
+        >
+          {{ t("save") }}
+        </button>
       </div>
     </form>
-    <button
-      type=""
-      class="link button-link delete"
-      (click)="authService.messageForUser = 'delete user prompt'"
-      routerLink="/auth/message"
-    >
-      {{ t("Delete Profile") }}
-    </button>
+    <div class="delete">
+      <button
+        mat-button
+        color="warn"
+        (click)="authService.messageForUser = 'delete user prompt'"
+        (click)="openDialog()"
+      >
+        {{ t("Delete Profile") }}
+      </button>
+    </div>
   </mat-card>
 </div>

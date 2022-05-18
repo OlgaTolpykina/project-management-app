@@ -7,10 +7,29 @@
       {{ t("board-title") }}: <span>{{ board$ | async }}</span>
     </p>
     <div class="tasks-buttons">
-      <button matRipple class="tasks-buttons_item">
+      <button matRipple class="tasks-buttons_item" (click)="toggleFilter()">
         <mat-icon>filter_list</mat-icon>
         <span>{{ t("filter") }}</span>
       </button>
+    </div>
+    <div class="tasks-filters" *ngIf="isFilterBlockShown">
+      <div class="filter-done">
+        <span>{{ t("filter-done") }}</span>
+        <input type="checkbox" #doneCheck (change)="onDoneChange(doneCheck.checked)" />
+      </div>
+      <div class="filter-exec">
+        <span class="filter-desc">{{ t("filter-exec") }}</span>
+        <mat-select
+          class="user-select"
+          #userSelect
+          (selectionChange)="onUserSelect(userSelect.value)"
+        >
+          <mat-option value="">{{ t("all-users") }}</mat-option>
+          <mat-option *ngFor="let user of users$ | async" [value]="user.id">{{
+            user.name
+          }}</mat-option>
+        </mat-select>
+      </div>
     </div>
     <div class="tasks-columns">
       <div
@@ -22,7 +41,7 @@
         (cdkDropListDropped)="drop($event)"
       >
         <div cdkDropListGroup>
-          <app-column *ngFor="let column of columns" [column]="column" cdkDrag></app-column>
+          <app-column *ngFor="let column of columns" [column]="column"></app-column>
         </div>
         <div class="column-wrapper">
           <button matRipple class="add-column" (click)="openDialog()">
