@@ -1,7 +1,7 @@
 .board {
   height: 100px;
   position: relative;
-  background-color: var(--amber-light);
+  background-color: var(--primary);
   background-size: cover;
   background-position: center;
   cursor: pointer;
@@ -25,4 +25,5 @@
   color: var(--white);
   position: absolute;
   bottom: 0;
+  padding: 0px;
 }
