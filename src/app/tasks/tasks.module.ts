@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { TasksRoutingModule } from './tasks-routing.module';
+import { BoardModule } from '@app/board/board.module';
 import { TasksPageComponent } from '@app/tasks/pages/tasks-page.component';
 import { SharedModule } from '@shared/shared.module';
 import { ColumnComponent } from './components/column/column.component';
@@ -12,6 +13,7 @@ import { CreateColumnComponent } from './components/create-column/create-column.
 import { UpdateTaskComponent } from './components/update-task/update-task.component';
 import { FilterExecPipe } from './pipes/filter-exec.pipe';
 import { FilterDonePipe } from './pipes/filter-done.pipe';
+import { SidePanelBoardsComponent } from './components/side-panel-boards/side-panel-boards.component';
 
 @NgModule({
   declarations: [
@@ -24,8 +26,9 @@ import { FilterDonePipe } from './pipes/filter-done.pipe';
     UpdateTaskComponent,
     FilterExecPipe,
     FilterDonePipe,
+    SidePanelBoardsComponent,
   ],
-  imports: [CommonModule, TasksRoutingModule, SharedModule],
-  exports: [TaskComponent],
+  imports: [CommonModule, TasksRoutingModule, SharedModule, BoardModule],
+  exports: [TaskComponent, SidePanelBoardsComponent],
 })
 export class TasksModule {}

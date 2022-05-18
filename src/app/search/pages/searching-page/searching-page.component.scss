@@ -11,12 +11,20 @@
 
   text-align: center;
   color: var(--primary);
-  font-size: 16px;
+  font-size: 14px;
   line-height: 30px;
 
   background-color: var(--primary-transparent-full);
   border-radius: 5px;
   transition: all 0.8s;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  button {
+    font-size: 14px;
+    width: 90%;
+    margin: 5px auto;
+  }
 
   .item {
     display: block;
@@ -97,8 +105,8 @@
 
   div {
     overflow: auto;
-    margin: inherit;
-    border-right: 1px solid var(--primary);
+    margin: 0;
+    border: 1px solid var(--primary);
 
     span {
       font-weight: 700;
