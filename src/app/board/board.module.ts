@@ -8,5 +8,6 @@ import { BoardRoutingModule } from './board-routing.module';
 @NgModule({
   declarations: [BoardItemComponent, BoardListComponent],
   imports: [CommonModule, SharedModule, BoardRoutingModule],
+  exports: [BoardItemComponent],
 })
 export class BoardModule {}

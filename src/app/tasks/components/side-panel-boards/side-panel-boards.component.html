@@ -1,0 +1,14 @@
+<ng-container>
+  <div class="boards" *transloco="let t">
+    <div class="boards-container" *ngIf="boards$ | async as boards">
+      <app-board-item
+        class="side-panel"
+        *ngFor="let board of boards; index as i"
+        [board]="board"
+        [backgroundImgUrl]="boardsBackgroundImgsUrl[i]"
+        [matTooltip]="board.description!"
+        (click)="openBoard(board)"
+      ></app-board-item>
+    </div>
+  </div>
+</ng-container>
