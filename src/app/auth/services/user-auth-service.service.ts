@@ -250,30 +250,22 @@ export class UserAuthServiceService {
   }
 
   handleError(error: HttpErrorResponse) {
-    if (error.error.statusCode === 0) {
-      console.log('An error occurred:', error.error);
-    } else {
-      console.log(
-        `Backend returned code ${error.error.statusCode}, body was: `,
-        error.error.message,
-      );
-      switch (error.error.statusCode) {
-        case 404:
-          this.getMessageForUser('signUp first');
-          break;
-        case 409:
-          this.getMessageForUser(`user exist`);
-          break;
-        case 403:
-          this.getMessageForUser('login&password not found');
-          break;
-        case 401:
-          this.getMessageForUser('Unauthorized', 'auth/login');
-          break;
-        default:
-          this.getMessageForUser(error.error?.message as string);
-          break;
-      }
+    switch (error.error.statusCode) {
+      case 404:
+        this.getMessageForUser('signUp first');
+        break;
+      case 409:
+        this.getMessageForUser(`user exist`);
+        break;
+      case 403:
+        this.getMessageForUser('login&password not found');
+        break;
+      case 401:
+        this.getMessageForUser('Unauthorized', 'auth/login');
+        break;
+      default:
+        this.getMessageForUser(error.error?.message as string);
+        break;
     }
     return throwError(() => {
       new Error('Something bad happened; please try again later.');

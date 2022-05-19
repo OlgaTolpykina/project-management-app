@@ -33,6 +33,12 @@
     </div>
   </mat-toolbar>
 </header>
+<mat-progress-bar
+  *ngIf="progressBar.isLoading$ | async"
+  mode="indeterminate"
+  color="accent"
+  class="progressBar"
+></mat-progress-bar>
 
 <ng-template #authorized>
   <div class="nav-right">
