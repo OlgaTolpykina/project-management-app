@@ -220,6 +220,7 @@ export class UserAuthServiceService {
             userPassword: '',
             userAuthToken: '',
           };
+          this.redirectUrl = null;
           this.getMessageForUser('delete profile', 'home');
         }
       });
