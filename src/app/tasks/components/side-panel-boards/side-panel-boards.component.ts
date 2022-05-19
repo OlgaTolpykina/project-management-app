@@ -63,7 +63,7 @@ export class SidePanelBoardsComponent implements OnInit, OnDestroy {
     const selectedBoardId = board.id!;
     this.store.dispatch(clearSelectedBoard());
     this.store.dispatch(setSelectedBoardId({ selectedBoardId }));
-    this.router.navigateByUrl('/b/' + selectedBoardId);
+    this.router.navigateByUrl('/board/' + selectedBoardId);
   }
 
   ngOnDestroy(): void {

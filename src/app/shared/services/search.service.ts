@@ -153,7 +153,7 @@ export class SearchService {
     const selectedBoardId = task.boardId!;
     this.store.dispatch(clearSelectedBoard());
     this.store.dispatch(setSelectedBoardId({ selectedBoardId }));
-    this.authService.router.navigateByUrl('/b/' + selectedBoardId);
+    this.authService.router.navigateByUrl('/board/' + selectedBoardId);
     this.searchString = '';
   }
 }
