@@ -1,7 +1,7 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
 import { RouteService } from '@core/services/route.service';
-import { ScrollService } from '@core/services/scroll.service';
+import { ScrollService } from '@core/services/scroll/scroll.service';
 import { Subscription } from 'rxjs';
 
 @Component({

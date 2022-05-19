@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { clearSelectedBoard, setSelectedBoardId } from '@app/redux/actions/board.actions';
 import { AppState } from '@app/redux/state.model';
-import { Subject, distinctUntilChanged, debounceTime } from 'rxjs';
-
-import { setSelectedBoardId, clearSelectedBoard } from '@app/redux/actions/board.actions';
-import { SearchObject } from '@shared/types/search-object.model';
-import { BoardService } from '@shared/services/board.service';
 import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
-import { Task } from '@shared/types/task.model';
-import { Board } from '@shared/types/board.model';
+import { Store } from '@ngrx/store';
 import { SortSettings } from '@shared/types/sort-settings.model';
+import { Subject, distinctUntilChanged, debounceTime } from 'rxjs';
+import { Board } from '../types/board.model';
+import { SearchObject } from '../types/search-object.model';
+import { Task } from '../types/task.model';
+import { BoardService } from './board.service';
 
 @Injectable({
   providedIn: 'root',
