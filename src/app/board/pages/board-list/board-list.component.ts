@@ -6,6 +6,7 @@ import { Board } from '@shared/types/board.model';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/redux/state.model';
+import { ProgressBarService } from '@core/services/loading/progress-bar.service';
 import { Router } from '@angular/router';
 import { setSelectedBoardId, clearSelectedBoard } from '@app/redux/actions/board.actions';
 import { CreateBoardComponent } from '@board/components/create-board/create-board.component';
@@ -28,6 +29,7 @@ export class BoardListComponent implements OnInit, OnDestroy {
   constructor(
     private backgroundImgService: BackgroundImgService,
     private store: Store<AppState>,
+    public progressBar: ProgressBarService,
     private router: Router,
     private dialog: MatDialog,
     private route: RouteService,

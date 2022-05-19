@@ -1,11 +1,12 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ScrollService } from '@core/services/scroll.service';
+import { ScrollService } from '@core/services/scroll/scroll.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { UserAuthServiceService } from '@auth/services/user-auth-service.service';
-import { SearchService } from '@shared/services/search.service';
 import { CreateBoardComponent } from '@board/components/create-board/create-board.component';
+import { ProgressBarService } from '@core/services/loading/progress-bar.service';
 import { RouteService } from '@core/services/route.service';
+import { SearchService } from '@shared/services/search.service';
 
 @Component({
   selector: 'app-header',
@@ -30,6 +31,7 @@ export class HeaderComponent implements OnInit {
     private scroll: ScrollService,
     public dialog: MatDialog,
     public authService: UserAuthServiceService,
+    public progressBar: ProgressBarService,
     private route: RouteService,
     public searchService: SearchService,
   ) {}
