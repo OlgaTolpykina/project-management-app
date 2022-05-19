@@ -246,7 +246,7 @@ export class UserAuthServiceService {
     this.openDialog();
     setTimeout(() => {
       this.dialog.closeAll();
-    }, 2000);
+    }, 2500);
   }
 
   openDialog(): void {

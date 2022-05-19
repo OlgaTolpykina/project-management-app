@@ -74,7 +74,6 @@ export class LoginPageComponent implements OnInit {
       Validators.required,
       Validators.minLength(8),
       this.validatePasswordStrength(),
-      // this.passwordMatchingValidator(),
     ]),
   });
 
