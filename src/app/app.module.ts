@@ -28,8 +28,8 @@ import { appState } from './redux/app.state';
       runtimeChecks: {
         strictStateImmutability: true,
         strictActionImmutability: true,
-        strictStateSerializability: true,
-        strictActionSerializability: true,
+        strictStateSerializability: false,
+        strictActionSerializability: false,
         strictActionWithinNgZone: true,
         strictActionTypeUniqueness: true,
       },
