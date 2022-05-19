@@ -34,6 +34,8 @@ export class UserRegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.userSettings = this.authService.userSettings;
+    this.registryFormGroup.controls['loginFormControl'].setValue(this.userSettings.login);
+    this.registryFormGroup.controls['nameFormControl'].setValue(this.userSettings.userName);
   }
 
   public showPassword: boolean = false;

@@ -33,6 +33,6 @@ export class AuthorizeGuard implements CanActivate {
       return this.router.parseUrl('/home');
     }
     this.authService.redirectUrl = url;
-    return this.router.parseUrl('/auth/login');
+    return this.router.parseUrl('/home');
   }
 }

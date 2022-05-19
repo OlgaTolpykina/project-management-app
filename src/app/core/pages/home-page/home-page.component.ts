@@ -18,6 +18,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   isEnabled = true;
 
+  userName: string = '';
+
   constructor(
     private scroll: ScrollService,
     public authService: UserAuthServiceService,
@@ -46,6 +48,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   onScrollToTop() {
     document.documentElement.scrollTop = 0;
+  }
+
+  onMoveToRegister() {
+    this.authService.userSettings.userName = this.userName;
   }
 
   ngOnDestroy(): void {

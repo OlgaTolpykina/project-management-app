@@ -214,6 +214,13 @@ export class UserAuthServiceService {
           this.logInOutUser('false');
           localStorage.removeItem('savedUser');
           localStorage.removeItem('token');
+          this.userSettings = {
+            login: '',
+            userName: '',
+            userPassword: '',
+            userAuthToken: '',
+          };
+          this.redirectUrl = null;
           this.getMessageForUser('delete profile', 'home');
         }
       });
@@ -235,11 +242,11 @@ export class UserAuthServiceService {
     this.changeMessage$.next(this.messageForUser);
     const backingUrl = this.redirectUrl ? this.redirectUrl : 'main';
     const url = redirectUrl ? redirectUrl : backingUrl;
+    this.router.navigateByUrl(url);
     this.openDialog();
-    this.router.navigate([url]);
     setTimeout(() => {
       this.dialog.closeAll();
-    }, 2000);
+    }, 2500);
   }
 
   openDialog(): void {
@@ -250,22 +257,26 @@ export class UserAuthServiceService {
   }
 
   handleError(error: HttpErrorResponse) {
-    switch (error.error.statusCode) {
-      case 404:
-        this.getMessageForUser('signUp first');
-        break;
-      case 409:
-        this.getMessageForUser(`user exist`);
-        break;
-      case 403:
-        this.getMessageForUser('login&password not found');
-        break;
-      case 401:
-        this.getMessageForUser('Unauthorized', 'auth/login');
-        break;
-      default:
-        this.getMessageForUser(error.error?.message as string);
-        break;
+    if (error.error.statusCode === 0) {
+      this.getMessageForUser('Unknown Error');
+    } else {
+      switch (error.error.statusCode) {
+        case 404:
+          this.getMessageForUser('signUp first');
+          break;
+        case 409:
+          this.getMessageForUser(`user exist`);
+          break;
+        case 403:
+          this.getMessageForUser('login&password not found');
+          break;
+        case 401:
+          this.getMessageForUser('Unauthorized', 'home');
+          break;
+        default:
+          this.getMessageForUser('Unknown Error');
+          break;
+      }
     }
     return throwError(() => {
       new Error('Something bad happened; please try again later.');
