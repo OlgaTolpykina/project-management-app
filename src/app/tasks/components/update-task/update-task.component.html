@@ -1,0 +1,67 @@
+<form
+  class="update-form"
+  *transloco="let t"
+  [formGroup]="taskForm"
+  (ngSubmit)="onUpdateTask()"
+  (keydown.enter)="$event.preventDefault()"
+>
+  <mat-dialog-content>
+    <div class="task-title-wrapper">
+      <mat-checkbox class="checkbox" formControlName="done"></mat-checkbox>
+      <mat-form-field *ngIf="isTitleEditEnable" appearance="fill">
+        <input
+          matInput
+          value="title"
+          formControlName="title"
+          placeholder="Enter task title"
+          (focusout)="onEdit()"
+          #titleinput
+          required
+        />
+        <mat-error *ngIf="title?.hasError('required')">{{ t("title required") }}</mat-error>
+        <mat-error *ngIf="title?.hasError('maxlength')">{{ t("title length") }}</mat-error>
+      </mat-form-field>
+      <span mat-dialog-title class="title" *ngIf="!isTitleEditEnable" (click)="onEdit()">
+        {{ title?.value }}
+        <mat-icon>edit</mat-icon>
+      </span>
+    </div>
+
+    <div class="task-desc-wrapper">
+      <label>{{ t("task-desc") }}</label>
+      <mat-form-field appearance="fill">
+        <textarea matInput formControlName="desc" class="desc" required></textarea>
+        <mat-error *ngIf="desc?.hasError('required')">{{ t("desc required") }}</mat-error>
+        <mat-error *ngIf="desc?.hasError('maxlength')">{{ t("desc length") }}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="task-user-wrapper">
+      <label>{{ t("task-user") }}</label>
+      <mat-form-field appearance="fill">
+        <mat-select formControlName="userId" required>
+          <mat-option *ngFor="let user of users$ | async" [value]="user.id">{{
+            user.name
+          }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="user?.hasError('required')">{{ t("user required") }}</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="center">
+    <button mat-button mat-dialog-close color="warn">{{ t("cancel") }}</button>
+    <button
+      mat-button
+      type="submit"
+      [disabled]="
+        title?.value === data.task?.title &&
+        done?.value === data.task?.done &&
+        desc?.value === data.task?.description &&
+        user?.value === data.task?.userId
+      "
+    >
+      {{ t("update") }}
+    </button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,11 @@
+.modal-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 160px;
+
+  text-align: center;
+  font-size: 25px;
+  line-height: 36px;
+  color: var(--primary);
+}

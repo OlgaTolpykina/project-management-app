@@ -1,0 +1,12 @@
+<mat-card
+  class="board"
+  *ngIf="board"
+  [ngStyle]="{ 'background-image': backgroundImgUrl ? 'url(' + backgroundImgUrl + ')' : '' }"
+>
+  <mat-card-title class="board-title">{{ board.title }}</mat-card-title>
+  <mat-card-actions align="end" *transloco="let t">
+    <button mat-button (click)="onDelete($event)" class="btn delete-btn">
+      {{ t("delete") }}
+    </button>
+  </mat-card-actions>
+</mat-card>

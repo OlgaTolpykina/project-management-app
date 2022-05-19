@@ -1,0 +1,53 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 50px;
+  padding: 0 10px;
+
+  // position: fixed;
+  // bottom: 0;
+
+  background-color: var(--white);
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-basis: 80%;
+  p {
+    margin: 0;
+    color: var(--primary);
+  }
+}
+
+.github-links {
+  display: flex;
+  justify-content: space-between;
+  flex-basis: 80%;
+}
+
+.link {
+  margin-right: 5px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--primary);
+
+  transition: all 0.2s ease-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+@media (max-width: 400px) {
+  :host {
+    font-size: 12px;
+  }
+
+  .rss-logo img {
+    width: 65px;
+  }
+}

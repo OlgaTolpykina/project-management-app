@@ -1,0 +1,72 @@
+@import "styles-const.scss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  height: 100%;
+  background: linear-gradient(0deg, var(--white), var(--background-gradient) 100%);
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+*::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--white);
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 30px;
+  border-radius: 30px;
+  background-color: var(--primary);
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drop-list-dragging .cdk-drag {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.custom-modal {
+  .mat-dialog-container {
+    border-top: 50px solid var(--primary);
+  }
+}
+
+.mat-button-focus-overlay {
+  background-color: transparent !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--primary) !important;
+  box-shadow: 0 0 0px 1000px var(--hover) inset !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--hover) inset !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}

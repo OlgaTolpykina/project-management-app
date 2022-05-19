@@ -1,0 +1,144 @@
+<ng-container *transloco="let t">
+  <div class="tasks-sidebar">
+    <button
+      class="sort-button"
+      (click)="searchService.searchString = ''"
+      (click)="searchService.searchSubmit()"
+    >
+      {{ t("Back") }}
+    </button>
+    <button routerLink="/main" class="sort-button" (click)="searchService.searchString = ''">
+      {{ t("allBoards") }}
+    </button>
+    <app-side-panel-boards></app-side-panel-boards>
+  </div>
+  <div class="search-container">
+    <div class="tasks-board">
+      <p class="">
+        {{ t("Search results") }}
+      </p>
+      <div class="sort-settings-container">
+        <div class="sort-settings">
+          {{ t("Sort by") }}:
+          <button
+            class="sort-button"
+            [class.active]="searchService.sortSettings.sortBy.toString() === 'title'"
+            (click)="searchService.sortFilteredSearchResult('title')"
+          >
+            <mat-icon
+              *ngIf="
+                !searchService.sortSettings.decrease &&
+                searchService.sortSettings.sortBy.toString() === 'title'
+              "
+              >arrow_drop_up</mat-icon
+            >
+            <mat-icon
+              *ngIf="
+                searchService.sortSettings.decrease &&
+                searchService.sortSettings.sortBy.toString() === 'title'
+              "
+              >arrow_drop_down</mat-icon
+            >
+            {{ t("title") }}
+          </button>
+          <button
+            class="sort-button"
+            [class.active]="searchService.sortSettings.sortBy.toString() === 'order'"
+            (click)="searchService.sortFilteredSearchResult('order')"
+          >
+            <mat-icon
+              *ngIf="
+                !searchService.sortSettings.decrease &&
+                searchService.sortSettings.sortBy.toString() === 'order'
+              "
+              >arrow_drop_up</mat-icon
+            >
+            <mat-icon
+              *ngIf="
+                searchService.sortSettings.decrease &&
+                searchService.sortSettings.sortBy.toString() === 'order'
+              "
+              >arrow_drop_down</mat-icon
+            >
+            {{ t("Order") }}
+          </button>
+          <button
+            class="sort-button"
+            [class.active]="searchService.sortSettings.sortBy.toString() === 'description'"
+            (click)="searchService.sortFilteredSearchResult('description')"
+          >
+            <mat-icon
+              *ngIf="
+                !searchService.sortSettings.decrease &&
+                searchService.sortSettings.sortBy.toString() === 'description'
+              "
+              >arrow_drop_up</mat-icon
+            >
+            <mat-icon
+              *ngIf="
+                searchService.sortSettings.decrease &&
+                searchService.sortSettings.sortBy.toString() === 'description'
+              "
+              >arrow_drop_down</mat-icon
+            >
+            {{ t("Description") }}
+          </button>
+          <button
+            class="sort-button"
+            [class.active]="searchService.sortSettings.sortBy.toString() === 'userName'"
+            (click)="searchService.sortFilteredSearchResult('userName')"
+          >
+            <mat-icon
+              *ngIf="
+                !searchService.sortSettings.decrease &&
+                searchService.sortSettings.sortBy.toString() === 'userName'
+              "
+              >arrow_drop_up</mat-icon
+            >
+            <mat-icon
+              *ngIf="
+                searchService.sortSettings.decrease &&
+                searchService.sortSettings.sortBy.toString() === 'userName'
+              "
+              >arrow_drop_down</mat-icon
+            >
+            {{ t("User") }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="search-result-container"
+      *ngIf="
+        searchService.filteredSearchResult.length === 0 &&
+        searchService.searchString.length >= searchService.MINIMAL_REQUEST_LENGTH
+      "
+    >
+      <p>{{ t("Sorry, nothing matches.") }}</p>
+      <p>{{ t("Try another search!") }}</p>
+    </div>
+    <div
+      class="search-result-container"
+      *ngIf="searchService.searchString.length >= searchService.MINIMAL_REQUEST_LENGTH"
+    >
+      <ng-container *ngFor="let task of searchService.filteredSearchResult">
+        <div class="task-container" (click)="searchService.onSelect(task)">
+          <div [class.done]="task.done === true">
+            <span class="task-header">{{ t("title") }}</span>
+            <p>{{ task.title }}</p>
+          </div>
+          <div>
+            <span class="task-header">{{ t("Description") }}</span>
+            <p>{{ task.description }}</p>
+          </div>
+          <div class="">
+            <span class="task-header">{{ t("User") }}</span>
+            <p>
+              <span>{{ task.userName }}</span>
+            </p>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>

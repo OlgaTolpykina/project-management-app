@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-title {
+  width: 100%;
+  text-align: center;
+}
+
+.modal-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 200px;
+}
+
+.mat-form-field {
+  width: 100%;
+}

@@ -1,0 +1,94 @@
+<header [class.nav-scroll]="scrolled" class="nav">
+  <mat-toolbar>
+    <a routerLink="/" class="logo">PMApp</a>
+    <mat-button-toggle-group name="language" aria-label="Text Language" fxHide.sm fxHide.xs>
+      <mat-button-toggle
+        value="en"
+        [checked]="transloco.getActiveLang() === 'en'"
+        (click)="changeLang('en')"
+        >EN</mat-button-toggle
+      >
+      <mat-button-toggle
+        value="ru"
+        [checked]="transloco.getActiveLang() === 'ru'"
+        (click)="changeLang('ru')"
+        >RU</mat-button-toggle
+      >
+    </mat-button-toggle-group>
+    <div *ngIf="!(authService.isAuthorized === 'true'); else authorized">
+      <div class="button-wrapper" *transloco="let t" fxHide.sm fxHide.xs>
+        <a matRipple routerLink="/" class="link button-link" (click)="onScrollToAnchor('team')">{{
+          t("team")
+        }}</a>
+        <a matRipple routerLink="/auth/login" class="link button-link">{{ t("login") }}</a>
+        <a matRipple routerLink="/auth/signUp" class="link button mat-elevation-z4">{{
+          t("signUp")
+        }}</a>
+      </div>
+    </div>
+    <div fxHide.gt-sm>
+      <button mat-icon-button (click)="onToggleSidenav()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+</header>
+<mat-progress-bar
+  *ngIf="progressBar.isLoading$ | async"
+  mode="indeterminate"
+  color="accent"
+  class="progressBar"
+></mat-progress-bar>
+
+<ng-template #authorized>
+  <div class="nav-right">
+    <mat-form-field *transloco="let t">
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="searchService.searchString"
+        (input)="searchService.searchSubmit()"
+      />
+      <mat-placeholder class="placeholder">{{ t("search") }}</mat-placeholder>
+    </mat-form-field>
+    <mat-icon (click)="searchService.searchString = ''" (click)="searchService.searchSubmit()"
+      >close</mat-icon
+    >
+    <div class="button-wrapper" *transloco="let t" fxHide.sm fxHide.xs>
+      <a
+        matRipple
+        routerLink="/home"
+        [class.active]="currentUrl === '/home'"
+        class="link button-link"
+        (click)="onScrollToAnchor('team')"
+        >{{ t("team") }}</a
+      >
+      <a
+        matRipple
+        routerLink="/main"
+        [class.active]="currentUrl === '/main'"
+        class="link button-link"
+        (click)="onScrollToAnchor('team')"
+        >{{ t("allBoards") }}</a
+      >
+      <a matRipple routerLink="/main" class="link button-link" (click)="openDialog()">{{
+        t("newBoard")
+      }}</a>
+      <a
+        matRipple
+        routerLink="/auth/editUser"
+        class="link button-link"
+        [class.active]="currentUrl === '/auth/editUser'"
+        (click)="authService.redirectUrl = authService.router.url"
+        >{{ t("editProfile") }}</a
+      >
+      <a
+        matRipple
+        (click)="authService.logInOutUser('false')"
+        (click)="authService.getMessageForUser('log Out', 'home')"
+        class="link button mat-elevation-z4"
+        >{{ t("logout") }}</a
+      >
+    </div>
+  </div>
+</ng-template>

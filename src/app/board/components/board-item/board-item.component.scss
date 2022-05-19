@@ -1,0 +1,29 @@
+.board {
+  height: 100px;
+  position: relative;
+  background-color: var(--primary);
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &-title {
+    font-size: 20px;
+    color: var(--white);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.btn {
+  color: var(--white);
+  position: absolute;
+  bottom: 0;
+  padding: 0px;
+}
