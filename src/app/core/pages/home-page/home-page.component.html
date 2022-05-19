@@ -9,11 +9,15 @@
     <p class="welcome-subtitle">{{ t("welcome-subtitle") }}</p>
     <div class="welcome-signup">
       <mat-form-field class="welcome-signup_email">
-        <input matInput type="email" placeholder="Email" />
+        <input matInput type="text" [placeholder]="'Name' | transloco" [(ngModel)]="userName" />
       </mat-form-field>
-      <a matRipple routerLink="/auth/signUp" class="link button mat-elevation-z4">{{
-        t("free-signUp")
-      }}</a>
+      <a
+        matRipple
+        routerLink="/auth/signUp"
+        class="link button mat-elevation-z4"
+        (click)="onMoveToRegister()"
+        >{{ t("free-signUp") }}</a
+      >
     </div>
   </section>
   <section class="team" id="team" *transloco="let t">
