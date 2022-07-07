@@ -64,18 +64,6 @@ export class UserAuthServiceService {
     this.isAuthorized = localStorage.getItem('isAuthorized')
       ? (localStorage.getItem('isAuthorized') as string)
       : 'false';
-    if (this.isAuthorized === 'true') {
-      this.userService
-        .getAllUsers()
-        .pipe(catchError((error) => this.handleError(error)))
-        .subscribe({
-          next: (users) => {
-            if (!(users instanceof Error)) {
-              this.users = users.length ? users : [];
-            }
-          },
-        });
-    }
     this.userSettings.userName =
       this.isAuthorized === 'true' ? (this.getSavedLocalUser()?.userName as string) : '';
     this.userSettings.userAuthToken =
@@ -229,6 +217,18 @@ export class UserAuthServiceService {
   async logInOutUser(status: string) {
     localStorage.setItem('isAuthorized', status);
     this.isAuthorized = status;
+    if (this.isAuthorized === 'true') {
+      await this.userService
+        .getAllUsers()
+        .pipe(catchError((error) => this.handleError(error)))
+        .subscribe({
+          next: (users) => {
+            if (!(users instanceof Error)) {
+              this.users = users.length ? users : [];
+            }
+          },
+        });
+    }
     const userStatus: boolean = status === 'true' ? true : false;
     if (!userStatus) {
       localStorage.removeItem('savedUser');
